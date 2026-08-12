@@ -1,0 +1,20 @@
+---
+import { ticker } from "../data/conteudo";
+
+// A lista é duplicada porque a animação desloca a faixa em -50%:
+// ao chegar no fim da primeira cópia, a segunda está exatamente no lugar.
+const itens = [...ticker, ...ticker];
+---
+
+<div class="marquee" aria-label="Pragas atendidas">
+  <div class="marquee__track">
+    {
+      itens.map((item, i) => (
+        <span class="marquee__item" aria-hidden={i >= ticker.length ? "true" : undefined}>
+          <i>•</i>
+          {item}
+        </span>
+      ))
+    }
+  </div>
+</div>

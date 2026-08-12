@@ -1,0 +1,110 @@
+---
+import "../styles/global.css";
+import { empresa, cobertura } from "../data/conteudo";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const socialImage = new URL(`${base}/og.png`, Astro.site);
+
+/**
+ * Dados estruturados de negócio local — é o que faz o Google mostrar telefone,
+ * endereço e área de atendimento direto no resultado da busca.
+ *
+ * HomeAndConstructionBusiness, e não PestControlService, porque a empresa
+ * também faz desentupimento, fossa e serviço elétrico.
+ *
+ * Campos vazios em conteudo.ts são removidos antes de serializar: emitir
+ * `"telephone": ""` é pior que não declarar o campo.
+ */
+const semVazios = (obj: Record<string, unknown>) =>
+  Object.fromEntries(Object.entries(obj).filter(([, v]) => v !== "" && v !== undefined));
+
+const schema = semVazios({
+  "@context": "https://schema.org",
+  "@type": "HomeAndConstructionBusiness",
+  name: empresa.nomeCompleto,
+  description,
+  telephone: empresa.telefoneExibicao,
+  email: empresa.email,
+  address: semVazios({
+    "@type": "PostalAddress",
+    streetAddress: empresa.endereco,
+    addressLocality: empresa.cidade,
+    addressRegion: empresa.uf,
+    addressCountry: "BR",
+  }),
+  areaServed: cobertura.cidades,
+  openingHours: empresa.horario,
+});
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#17527f" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content="1739" />
+    <meta property="og:image:height" content="909" />
+    <meta property="og:image:alt" content="Ebenézer — Dedetização e desentupimento em Betim e região" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <link rel="canonical" href={Astro.url} />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body>
+    <a href="#conteudo" class="pular">Pular para o conteúdo</a>
+    <slot />
+    <script>
+      document.documentElement.classList.add("js-ready");
+
+      const revealEls = document.querySelectorAll("[data-reveal]");
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              io.unobserve(entry.target);
+            }
+          }
+        },
+        { threshold: 0.15, rootMargin: "0px 0px -60px 0px" }
+      );
+      revealEls.forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>
+
+<style>
+  .pular {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+    padding: 0.9rem 1.4rem;
+    background: var(--color-brand-700);
+    color: #fff;
+    font-weight: 700;
+    border-radius: 0 0 var(--radius-sm) 0;
+  }
+
+  .pular:focus {
+    left: 0;
+  }
+</style>

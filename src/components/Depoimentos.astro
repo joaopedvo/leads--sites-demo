@@ -1,0 +1,92 @@
+---
+import { depoimentos } from "../data/conteudo";
+---
+
+<section class="section section--light" id="depoimentos">
+  <div class="container">
+    <div class="section__head" data-reveal>
+      <span class="eyebrow"><span class="eyebrow__dot"></span>Quem já chamou</span>
+      <h2 class="h2">O que dizem depois do serviço</h2>
+    </div>
+
+    <ul class="grade">
+      {
+        depoimentos.map((depoimento) => (
+          <li class="cartao" data-reveal>
+            <div class="estrelas" aria-label="5 de 5 estrelas">
+              {Array.from({ length: 5 }).map(() => (
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9-6.2-3.3-6.2 3.3L7 14.2l-5-4.9 6.9-1L12 2Z" />
+                </svg>
+              ))}
+            </div>
+            <blockquote class="cartao__texto">{depoimento.texto}</blockquote>
+            <footer class="cartao__autor">
+              <strong>{depoimento.autor}</strong>
+              <span>{depoimento.contexto}</span>
+            </footer>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  /* colunas explícitas: auto-fit criava faixa de 0px e sobrava gap na direita */
+  .grade {
+    display: grid;
+    gap: var(--space-2);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 620px) {
+    .grade {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .grade {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .cartao {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-paper-100);
+    background: var(--color-paper-000);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .estrelas {
+    display: flex;
+    gap: 0.15rem;
+    color: var(--color-accent-500);
+  }
+
+  .estrelas svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .cartao__texto {
+    margin: 0;
+    line-height: 1.65;
+    font-size: 1.02rem;
+  }
+
+  .cartao__autor {
+    display: grid;
+    gap: 0.15rem;
+    font-size: 0.9rem;
+  }
+
+  .cartao__autor span {
+    color: var(--color-text-onLight-muted);
+  }
+</style>

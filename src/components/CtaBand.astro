@@ -1,0 +1,84 @@
+---
+import { ctaFinal, empresa, linkWhatsapp } from "../data/conteudo";
+import IconeWhatsapp from "./IconeWhatsapp.astro";
+import Icone from "./Icone.astro";
+---
+
+<section class="cta section--dark" id="contato">
+  <div class="cta__brilho" aria-hidden="true"></div>
+  <div class="container cta__inner">
+    <span class="regua" aria-hidden="true" data-reveal>
+      <span></span><span></span><span></span>
+    </span>
+    <h2 class="h2 cta__titulo" data-reveal style="--atraso: 60ms">{ctaFinal.titulo}</h2>
+    <p class="lede cta__texto" data-reveal style="--atraso: 140ms">{ctaFinal.texto}</p>
+    <div class="cta__acoes" data-reveal="zoom" style="--atraso: 240ms">
+      <a class="btn btn--primary" href={linkWhatsapp()} target="_blank" rel="noopener">
+        <IconeWhatsapp />
+        {ctaFinal.botaoWhatsapp}: {empresa.whatsappExibicao}
+      </a>
+      <a class="btn btn--ghost-dark" href={`tel:+${empresa.telefone}`}>
+        <Icone nome="telefone" size={19} />
+        {ctaFinal.botaoTelefone}: {empresa.telefoneExibicao}
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    position: relative;
+    overflow: hidden;
+    padding-block: var(--space-6);
+  }
+
+  .cta__brilho {
+    position: absolute;
+    inset: auto -10% -60% -10%;
+    height: 90%;
+    background: radial-gradient(ellipse at 50% 80%, rgba(33, 121, 187, 0.3), transparent 60%);
+    pointer-events: none;
+  }
+
+  .cta__inner {
+    position: relative;
+    display: grid;
+    gap: var(--space-2);
+    justify-items: center;
+    text-align: center;
+  }
+
+  .cta__titulo {
+    max-width: 20ch;
+  }
+
+  .cta__texto {
+    max-width: 58ch;
+  }
+
+  .cta__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-1);
+    margin-top: var(--space-1);
+    width: 100%;
+  }
+
+  /*
+   * Rótulo + número não cabem numa linha em tela estreita, e a seção tem
+   * overflow: hidden — sem isto o telefone é cortado na borda.
+   */
+  @media (max-width: 560px) {
+    .cta__acoes .btn {
+      width: 100%;
+      white-space: normal;
+    }
+  }
+
+  @media (min-width: 561px) {
+    .cta__acoes {
+      width: auto;
+    }
+  }
+</style>

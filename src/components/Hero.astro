@@ -1,0 +1,316 @@
+---
+import { hero, empresa, imagens, linkWhatsapp } from "../data/conteudo";
+import IconeWhatsapp from "./IconeWhatsapp.astro";
+import Icone from "./Icone.astro";
+---
+
+<section class="hero section--dark" id="topo">
+  <!--
+    Arte de fundo. `data-parallax` desloca de leve na rolagem; a imagem é
+    decorativa (alt vazio) e fica atrás de um véu escuro para o texto manter
+    contraste mesmo quando entrar uma foto real e clara no lugar.
+  -->
+  <img
+    class="hero__arte"
+    src={imagens.hero.src}
+    alt={imagens.hero.alt}
+    data-parallax
+    fetchpriority="high"
+  />
+  <div class="hero__veu" aria-hidden="true"></div>
+  <div class="hero__brilho" aria-hidden="true"></div>
+
+  <div class="container hero__inner">
+    <div class="hero__texto">
+      <span class="eyebrow" data-entrada style="--atraso: 60ms">
+        <span class="eyebrow__dot"></span>
+        {hero.eyebrow}
+      </span>
+
+      <h1 class="h1 hero__titulo" data-entrada style="--atraso: 140ms">{hero.titulo}</h1>
+
+      <p class="lede hero__lede" data-entrada style="--atraso: 240ms">{hero.subtitulo}</p>
+
+      <div class="hero__acoes" data-entrada style="--atraso: 340ms">
+        <a class="btn btn--primary" href={linkWhatsapp()} target="_blank" rel="noopener">
+          <IconeWhatsapp />
+          {hero.ctaPrimario}
+        </a>
+        <a class="btn btn--ghost-dark" href="#servicos">{hero.ctaSecundario}</a>
+      </div>
+
+      <p class="hero__nota" data-entrada style="--atraso: 440ms">
+        {empresa.horario ? `${empresa.horario} · ` : ""}{hero.nota}
+      </p>
+    </div>
+
+    <!--
+      Painel de contato: preenche a coluna direita e, mais importante, coloca os
+      dois telefones acima da dobra, sem obrigar o visitante a rolar até o fim.
+    -->
+    <aside class="painel" data-entrada style="--atraso: 520ms">
+      <p class="painel__titulo">Fale com a gente agora</p>
+
+      <ul class="painel__contatos">
+        <li>
+          <a href={linkWhatsapp()} target="_blank" rel="noopener">
+            <span class="painel__icone painel__icone--zap"><IconeWhatsapp size={18} /></span>
+            <span class="painel__dados">
+              <strong>{empresa.whatsappExibicao}</strong>
+              <small>WhatsApp</small>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href={`tel:+${empresa.telefone}`}>
+            <span class="painel__icone"><Icone nome="telefone" size={18} /></span>
+            <span class="painel__dados">
+              <strong>{empresa.telefoneExibicao}</strong>
+              <small>Telefone fixo</small>
+            </span>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="painel__selos">
+        {
+          hero.selos.map((selo) => (
+            <li>
+              <Icone nome="check" size={17} class="check" />
+              {selo}
+            </li>
+          ))
+        }
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<script>
+  /*
+   * Parallax da arte de fundo: desloca no máximo ~90px enquanto o hero está na
+   * tela. Preso a requestAnimationFrame para não recalcular a cada evento de
+   * rolagem, e desligado se a pessoa pediu menos movimento no sistema.
+   */
+  const arte = document.querySelector<HTMLElement>("[data-parallax]");
+  const menosMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (arte && !menosMovimento) {
+    let pendente = false;
+
+    const posicionar = () => {
+      pendente = false;
+      const y = window.scrollY;
+      // para de calcular assim que o hero sai da tela
+      if (y > window.innerHeight) return;
+      arte.style.transform = `translate3d(0, ${y * 0.18}px, 0)`;
+    };
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (pendente) return;
+        pendente = true;
+        requestAnimationFrame(posicionar);
+      },
+      { passive: true }
+    );
+
+    posicionar();
+  }
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    /*
+     * O header deixou de ser transparente, então o hero não precisa mais subir
+     * atrás dele — o padding-top volta a ser só respiro.
+     */
+    padding-block: clamp(3rem, 2rem + 6vw, 5.5rem) var(--space-6);
+  }
+
+  .hero__arte {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* margem para o parallax deslocar sem descobrir a borda da seção */
+    scale: 1.08;
+    will-change: transform;
+  }
+
+  .hero__veu {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        100deg,
+        var(--color-ink-950) 12%,
+        rgba(7, 12, 20, 0.82) 46%,
+        rgba(7, 12, 20, 0.55) 100%
+      ),
+      linear-gradient(to top, var(--color-ink-950), transparent 42%);
+    pointer-events: none;
+  }
+
+  .hero__brilho {
+    position: absolute;
+    inset: -30% -10% auto -10%;
+    height: 75%;
+    background: radial-gradient(ellipse at 30% 40%, rgba(33, 121, 187, 0.28), transparent 62%);
+    pointer-events: none;
+  }
+
+  .hero__inner {
+    position: relative;
+    display: grid;
+    gap: var(--space-4);
+    align-items: center;
+  }
+
+  .hero__texto {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-3);
+  }
+
+  /* no celular o cap de 16ch só acrescentava uma linha de quebra a mais */
+  .hero__titulo {
+    max-width: none;
+  }
+
+  .hero__lede {
+    max-width: 52ch;
+  }
+
+  .hero__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    width: 100%;
+  }
+
+  /* empilhados com larguras diferentes ficavam desalinhados; iguala os dois */
+  @media (max-width: 560px) {
+    .hero__acoes .btn {
+      flex: 1 1 100%;
+    }
+  }
+
+  @media (min-width: 561px) {
+    .hero__acoes {
+      width: auto;
+    }
+  }
+
+  .hero__nota {
+    font-size: 0.9rem;
+    color: var(--color-text-onDark-muted);
+  }
+
+  .painel {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(145deg, rgba(33, 121, 187, 0.14), rgba(255, 255, 255, 0.035));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 28px 60px -36px rgba(0, 0, 0, 0.8);
+  }
+
+  .painel__titulo {
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-onDark-muted);
+  }
+
+  .painel__contatos {
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .painel__contatos a {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: border-color 0.3s var(--ease-premium), background-color 0.3s var(--ease-premium),
+      transform 0.3s var(--ease-premium);
+  }
+
+  .painel__contatos a:hover {
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.22);
+    transform: translateX(4px);
+  }
+
+  .painel__contatos a:hover .painel__icone {
+    transform: scale(1.08);
+  }
+
+  .painel__icone {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-text-onDark);
+    flex-shrink: 0;
+    transition: transform 0.3s var(--ease-premium);
+  }
+
+  .painel__icone--zap {
+    background: rgba(37, 211, 102, 0.16);
+    color: var(--color-whatsapp);
+  }
+
+  .painel__dados {
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  .painel__dados strong {
+    font-size: 1.12rem;
+    letter-spacing: -0.01em;
+  }
+
+  .painel__dados small {
+    font-size: 0.78rem;
+    color: var(--color-text-onDark-muted);
+  }
+
+  .painel__selos {
+    display: grid;
+    gap: 0.6rem;
+    padding-top: var(--space-1);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.93rem;
+    font-weight: 600;
+  }
+
+  .painel__selos li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  @media (min-width: 900px) {
+    .hero__inner {
+      grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);
+      gap: var(--space-5);
+    }
+
+    .hero__titulo {
+      max-width: 16ch;
+    }
+  }
+</style>

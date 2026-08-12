@@ -1,0 +1,472 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500&display=swap");
+
+:root {
+  /*
+   * Paleta tirada do logo da Ebenézer, não escolhida no olho:
+   * o azul do lettering é #2179bb e o vermelho das barras é #c21a21,
+   * amostrados pixel a pixel do arquivo que o cliente mandou.
+   */
+  --color-brand-900: #0a2438;
+  --color-brand-800: #0f3859;
+  --color-brand-700: #17527f;
+  --color-brand-600: #1c66a0;
+  --color-brand-500: #2179bb; /* azul exato do logo */
+  --color-brand-400: #4d9bd6;
+  --color-brand-300: #a3cdea;
+  --color-brand-100: #e6f1f9;
+
+  /*
+   * Vermelho da marca. No logo ele é a cor das barras — detalhe, não massa.
+   * Usar do mesmo jeito aqui: régua, marcador, nunca fundo de botão.
+   */
+  --color-brand-red: #c21a21;
+  --color-brand-red-claro: #e0565c;
+
+  /* Âmbar — só estrela de avaliação, onde vermelho leria como nota ruim. */
+  --color-accent-500: #f59e0b;
+  --color-accent-100: #fef3c7;
+
+  /*
+   * Os escuros são azul-marinho da marca, não preto neutro: puxados do mesmo
+   * matiz do azul do logo (#2179bb) para o site inteiro ler como "a cor deles".
+   */
+  --color-ink-950: #05192c;
+  --color-ink-900: #0a2338;
+  --color-ink-800: #10314b;
+  --color-ink-700: #1a4363;
+  --color-ink-600: #3a5f80;
+
+  --color-paper-000: #ffffff;
+  --color-paper-050: #f3f7fb;
+  --color-paper-100: #e2eaf3;
+
+  --color-text-onDark: #f1f6fa;
+  --color-text-onDark-muted: #a8bdd0;
+  --color-text-onLight: #0d1c2b;
+  --color-text-onLight-muted: #506478;
+
+  /* verde do WhatsApp: fica fora da paleta de propósito, é cor de marca deles */
+  --color-whatsapp: #25d366;
+
+  --font-display: "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
+  --radius-pill: 999px;
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 3rem;
+  --space-6: 5rem;
+  --space-7: 7.5rem;
+
+  --container-w: min(1200px, 92vw);
+
+  --shadow-soft: 0 1px 2px rgba(16, 24, 34, 0.04), 0 20px 40px -20px rgba(16, 24, 34, 0.12);
+  --shadow-card: 0 1px 2px rgba(16, 24, 34, 0.04), 0 30px 60px -30px rgba(16, 24, 34, 0.25);
+  --shadow-glow: 0 20px 45px -18px rgba(33, 121, 187, 0.45);
+
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* compensa o header fixo ao pular para uma âncora */
+  scroll-padding-top: 84px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--color-paper-000);
+  color: var(--color-text-onLight);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  margin: 0;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* o <ol> do "como funciona" herdava padding-inline-start: 40px e saía
+   desalinhado do resto da página */
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-brand-400);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.container {
+  width: var(--container-w);
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: var(--space-6);
+  position: relative;
+}
+
+.section--dark {
+  background: var(--color-ink-950);
+  color: var(--color-text-onDark);
+}
+
+.section--light {
+  background: var(--color-paper-000);
+  color: var(--color-text-onLight);
+}
+
+.section--tint {
+  background: var(--color-paper-050);
+  color: var(--color-text-onLight);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-brand-100);
+  color: var(--color-brand-700);
+}
+
+.section--dark .eyebrow {
+  background: rgba(33, 121, 187, 0.16);
+  color: var(--color-brand-400);
+}
+
+/*
+ * As três barrinhas vermelhas do logo, em miniatura, dentro do pill.
+ * O elemento é a barra do meio; ::before e ::after são as de cima e de baixo.
+ * Sem mudança de marcação — o mesmo <span class="eyebrow__dot"> de antes.
+ */
+.eyebrow__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-brand-500);
+  display: inline-block;
+}
+
+.section--dark .eyebrow__dot {
+  background: var(--color-brand-400);
+}
+
+/*
+ * Régua da marca: as barras do logo em tamanho de elemento de página.
+ * Usar como assinatura visual, nunca como divisória genérica.
+ */
+.regua {
+  display: none;
+}
+
+.regua span {
+  display: block;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-brand-red);
+}
+
+.section--dark .regua span {
+  background: var(--color-brand-red-claro);
+}
+
+.h1 {
+  font-size: clamp(2.4rem, 1.6rem + 3.8vw, 4.4rem);
+}
+
+.h2 {
+  font-size: clamp(2rem, 1.5rem + 2.2vw, 3.1rem);
+}
+
+.h3 {
+  font-size: clamp(1.2rem, 1.08rem + 0.65vw, 1.5rem);
+  font-weight: 700;
+}
+
+.lede {
+  font-size: clamp(1.05rem, 0.98rem + 0.35vw, 1.28rem);
+  color: var(--color-text-onDark-muted);
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.section--light .lede,
+.section--tint .lede {
+  color: var(--color-text-onLight-muted);
+}
+
+.section__head {
+  max-width: 62ch;
+  display: grid;
+  /* sem isto o .eyebrow (inline-flex) estica até a largura da coluna */
+  justify-items: start;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 1.7rem;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: 1rem;
+  border: 1px solid transparent;
+  transition: transform 0.25s var(--ease-premium), box-shadow 0.25s var(--ease-premium),
+    background-color 0.25s var(--ease-premium), border-color 0.25s var(--ease-premium),
+    color 0.25s var(--ease-premium);
+  white-space: nowrap;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn--primary {
+  background: linear-gradient(135deg, var(--color-brand-500), var(--color-brand-600));
+  color: #fff;
+  box-shadow: var(--shadow-glow);
+}
+
+.btn--primary:hover {
+  background: var(--color-brand-400);
+}
+
+.btn--ghost-dark {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.18);
+  color: var(--color-text-onDark);
+}
+
+.btn--ghost-dark:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.btn--ghost-light {
+  background: transparent;
+  border-color: rgba(16, 24, 34, 0.14);
+  color: var(--color-text-onLight);
+}
+
+.btn--ghost-light:hover {
+  border-color: var(--color-text-onLight);
+  background: rgba(16, 24, 34, 0.04);
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn--sm {
+  padding: 0.7rem 1.25rem;
+  font-size: 0.9rem;
+}
+
+.check {
+  color: var(--color-brand-500);
+  flex-shrink: 0;
+}
+
+/* Selo do ícone no topo dos cards. A cor vem do contexto da seção. */
+.chip {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: var(--color-brand-100);
+  color: var(--color-brand-600);
+  flex-shrink: 0;
+  transition: transform 0.4s var(--ease-premium), background-color 0.4s var(--ease-premium),
+    color 0.4s var(--ease-premium);
+}
+
+.section--dark .chip {
+  background: rgba(33, 121, 187, 0.15);
+  color: var(--color-brand-400);
+}
+
+/* estado do chip quando o card que o contém está sob o mouse */
+.chip--ativo {
+  background: var(--color-brand-500);
+  color: #fff;
+  transform: scale(1.06) rotate(-4deg);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/*
+ * Entrada por rolagem.
+ *
+ * `data-reveal` sozinho sobe; com valor, muda a direção. `--atraso` encadeia os
+ * itens de uma lista — quem monta a lista define o passo, não este arquivo.
+ */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+}
+
+[data-reveal="zoom"] {
+  transform: scale(0.94);
+}
+
+[data-reveal="direita"] {
+  transform: translateX(32px);
+}
+
+[data-reveal="esquerda"] {
+  transform: translateX(-32px);
+}
+
+.js-ready [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.75s var(--ease-premium), transform 0.75s var(--ease-premium);
+  transition-delay: var(--atraso, 0ms);
+}
+
+/*
+ * Animação de entrada do topo: o hero não espera rolagem, roda no carregamento.
+ * Só existe com JS pronto, senão o conteúdo ficaria invisível se o script falhar.
+ */
+@keyframes sobe {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.js-ready [data-entrada] {
+  opacity: 0;
+  animation: sobe 0.8s var(--ease-premium) forwards;
+  animation-delay: var(--atraso, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  .js-ready [data-entrada] {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* Faixa de ticker infinito com as pragas atendidas */
+.marquee {
+  background: var(--color-ink-950);
+  color: var(--color-text-onDark-muted);
+  overflow: hidden;
+  white-space: nowrap;
+  padding-block: 1rem;
+  border-block: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.marquee__track {
+  display: inline-flex;
+  animation: marquee 32s linear infinite;
+  will-change: transform;
+}
+
+.marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding-inline: 1.4rem;
+}
+
+.marquee__item i {
+  color: var(--color-brand-red-claro);
+  font-style: normal;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track {
+    animation: none;
+  }
+}

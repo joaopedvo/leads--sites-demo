@@ -1,0 +1,151 @@
+---
+import { empresa, navegacao, cobertura, logo, linkWhatsapp } from "../data/conteudo";
+
+const ano = new Date().getFullYear();
+
+// Campos vazios em conteudo.ts simplesmente não aparecem, em vez de virar
+// linha em branco ou "undefined" no rodapé.
+---
+
+<footer class="rodape">
+  <div class="container rodape__inner">
+    <div class="rodape__bloco">
+      <img
+        class="rodape__logo"
+        src={logo.branco}
+        alt={logo.alt}
+        width={logo.largura}
+        height={logo.altura}
+        loading="lazy"
+      />
+      {empresa.endereco && <p class="rodape__linha">{empresa.endereco}</p>}
+      {empresa.horario && <p class="rodape__linha">{empresa.horario}</p>}
+      <p class="rodape__linha">
+        <a href={`tel:+${empresa.telefone}`}>{empresa.telefoneExibicao}</a>
+      </p>
+      <p class="rodape__linha">
+        <a href={linkWhatsapp()} target="_blank" rel="noopener">{empresa.whatsappExibicao}</a>
+        <span class="rodape__tag">WhatsApp</span>
+      </p>
+      {
+        empresa.email && (
+          <p class="rodape__linha">
+            <a href={`mailto:${empresa.email}`}>{empresa.email}</a>
+          </p>
+        )
+      }
+      {
+        empresa.instagram && (
+          <p class="rodape__linha">
+            <a href={empresa.instagram} target="_blank" rel="noopener">
+              Instagram
+            </a>
+          </p>
+        )
+      }
+    </div>
+
+    <div class="rodape__bloco">
+      <strong class="rodape__titulo">Navegar</strong>
+      <ul class="rodape__lista">
+        {navegacao.map((item) => <li><a href={item.href}>{item.rotulo}</a></li>)}
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </div>
+
+    <div class="rodape__bloco">
+      <strong class="rodape__titulo">Onde atendemos</strong>
+      <ul class="rodape__lista">
+        {cobertura.cidades.map((cidade) => <li>{cidade}</li>)}
+      </ul>
+    </div>
+  </div>
+
+  <div class="container rodape__base">
+    {empresa.licenca && <p>{empresa.licenca}</p>}
+    <p>© {ano} {empresa.nomeCompleto}. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<style>
+  .rodape {
+    background: var(--color-ink-950);
+    color: var(--color-text-onDark-muted);
+    padding-top: var(--space-5);
+    font-size: 0.93rem;
+    line-height: 1.65;
+  }
+
+  .rodape__inner {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: 1fr;
+    padding-bottom: var(--space-4);
+  }
+
+  @media (min-width: 560px) {
+    .rodape__inner {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 900px) {
+    .rodape__inner {
+      /* a coluna de contato é mais larga: é a que tem as linhas mais longas */
+      grid-template-columns: 1.4fr 1fr 1fr;
+    }
+  }
+
+  .rodape__bloco {
+    display: grid;
+    gap: 0.5rem;
+    align-content: start;
+  }
+
+  .rodape__logo {
+    height: 34px;
+    width: auto;
+    margin-bottom: 0.4rem;
+  }
+
+  .rodape__titulo {
+    color: var(--color-text-onDark);
+  }
+
+  .rodape__linha {
+    max-width: 34ch;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .rodape__tag {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-pill);
+    background: rgba(37, 211, 102, 0.16);
+    color: var(--color-whatsapp);
+  }
+
+  .rodape__lista {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .rodape a:hover {
+    color: var(--color-brand-400);
+  }
+
+  .rodape__base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-1);
+    padding-block: var(--space-2);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.85rem;
+  }
+</style>

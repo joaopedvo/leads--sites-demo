@@ -1,0 +1,91 @@
+---
+import { diferenciais } from "../data/conteudo";
+import Icone from "./Icone.astro";
+import type { NomeIcone } from "./icones";
+
+// Mesmo ajuste da grade de serviços: 5 itens em 3 colunas deixam 2 órfãos,
+// e dar 2 colunas ao primeiro fecha a grade exata.
+const destacaPrimeiro = diferenciais.itens.length === 5;
+---
+
+<section class="section section--dark" id="diferenciais">
+  <div class="container">
+    <div class="section__head" data-reveal>
+      <span class="eyebrow"><span class="eyebrow__dot"></span>{diferenciais.eyebrow}</span>
+      <h2 class="h2">{diferenciais.titulo}</h2>
+    </div>
+
+    <ul class:list={["lista", destacaPrimeiro && "lista--destaque"]}>
+      {
+        diferenciais.itens.map((item, i) => (
+          <li class="item" data-reveal="zoom" style={`--atraso: ${i * 90}ms`}>
+            <span class="chip">
+              <Icone nome={item.icone as NomeIcone} size={26} />
+            </span>
+            <div>
+              <h3 class="h3">{item.titulo}</h3>
+              <p class="item__texto">{item.texto}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>("#diferenciais .item").forEach((item) => {
+    const chip = item.querySelector(".chip");
+    if (!chip) return;
+    item.addEventListener("pointerenter", () => chip.classList.add("chip--ativo"));
+    item.addEventListener("pointerleave", () => chip.classList.remove("chip--ativo"));
+  });
+</script>
+
+<style>
+  .lista {
+    display: grid;
+    gap: var(--space-2);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 620px) {
+    .lista {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .lista--destaque > .item:first-child {
+      grid-column: span 2;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .lista {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .item {
+    display: flex;
+    gap: var(--space-2);
+    align-items: flex-start;
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    background: var(--color-ink-900);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    transition: transform 0.4s var(--ease-premium), border-color 0.4s var(--ease-premium),
+      background-color 0.4s var(--ease-premium);
+  }
+
+  .item:hover {
+    transform: translateY(-5px);
+    border-color: rgba(77, 155, 214, 0.42);
+    background: var(--color-ink-800);
+  }
+
+  .item__texto {
+    margin-top: 0.6rem;
+    color: var(--color-text-onDark-muted);
+    line-height: 1.6;
+  }
+</style>

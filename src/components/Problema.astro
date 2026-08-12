@@ -1,0 +1,102 @@
+---
+import { problema, imagens } from "../data/conteudo";
+---
+
+<section class="section section--tint" id="problema">
+  <div class="container problema__inner">
+    <div class="problema__coluna">
+      <div class="problema__texto" data-reveal>
+        <span class="eyebrow"><span class="eyebrow__dot"></span>{problema.eyebrow}</span>
+        <h2 class="h2">{problema.titulo}</h2>
+        <p class="lede">{problema.texto}</p>
+      </div>
+
+      <p class="problema__destaque" data-reveal style="--atraso: 140ms">
+        {problema.destaque}
+      </p>
+    </div>
+
+    <figure class="problema__figura" data-reveal="direita" style="--atraso: 100ms">
+      <img src={imagens.problema.src} alt={imagens.problema.alt} loading="lazy" decoding="async" />
+    </figure>
+  </div>
+</section>
+
+<style>
+  .problema__inner {
+    display: grid;
+    gap: var(--space-4);
+    align-items: center;
+    min-width: 0;
+  }
+
+  .problema__coluna {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .problema__texto {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-2);
+    max-width: 60ch;
+  }
+
+  .problema__destaque {
+    position: relative;
+    padding: var(--space-3);
+    padding-left: var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-paper-000);
+    color: var(--color-brand-900);
+    border: 1px solid var(--color-brand-300);
+    font-size: clamp(1.1rem, 1rem + 0.5vw, 1.3rem);
+    font-weight: 700;
+    line-height: 1.5;
+    max-width: 56ch;
+  }
+
+  /* régua vermelha: o vermelho do logo é exatamente isso, uma barra */
+  .problema__destaque::before {
+    content: "";
+    position: absolute;
+    left: var(--space-2);
+    top: var(--space-3);
+    bottom: var(--space-3);
+    width: 4px;
+    border-radius: 2px;
+    background: var(--color-brand-500);
+  }
+
+  .problema__figura {
+    margin: 0;
+    min-width: 0;
+    max-width: 100%;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--color-brand-300);
+  }
+
+  /*
+   * Proporção fixa + object-fit: cover. É o que faz uma foto real do cliente
+   * entrar no lugar da arte sem quebrar o layout, seja qual for o recorte dela.
+   */
+  .problema__figura img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    transition: transform 0.9s var(--ease-premium);
+  }
+
+  .problema__figura:hover img {
+    transform: scale(1.04);
+  }
+
+  @media (min-width: 980px) {
+    .problema__inner {
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: var(--space-5);
+    }
+  }
+</style>

@@ -1,0 +1,106 @@
+---
+import { processo } from "../data/conteudo";
+---
+
+<section class="section section--light" id="processo">
+  <div class="container">
+    <div class="section__head" data-reveal>
+      <span class="eyebrow"><span class="eyebrow__dot"></span>{processo.eyebrow}</span>
+      <h2 class="h2">{processo.titulo}</h2>
+    </div>
+
+    <ol class="passos" role="list">
+      {
+        processo.etapas.map((etapa, i) => (
+          <li class="passo" data-reveal style={`--atraso: ${i * 120}ms`}>
+            <span class="passo__num">{etapa.passo}</span>
+            <h3 class="h3">{etapa.titulo}</h3>
+            <p class="passo__texto">{etapa.texto}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .passos {
+    display: grid;
+    gap: var(--space-2);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 760px) {
+    .passos {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .passo {
+    position: relative;
+    display: grid;
+    gap: 0.7rem;
+    align-content: start;
+    padding: var(--space-3);
+    background: var(--color-paper-050);
+    border: 1px solid var(--color-paper-100);
+    border-radius: var(--radius-md);
+    transition: transform 0.4s var(--ease-premium), box-shadow 0.4s var(--ease-premium),
+      border-color 0.4s var(--ease-premium);
+  }
+
+  .passo:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-soft);
+    border-color: var(--color-brand-300);
+  }
+
+  /*
+   * Fio ligando um passo ao seguinte. Só no layout de 3 colunas, e nunca depois
+   * do último — daí o :not(:last-child).
+   */
+  @media (min-width: 760px) {
+    .passo:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: calc(var(--space-3) + 1.1rem);
+      right: calc(var(--space-2) * -1);
+      width: var(--space-2);
+      height: 2px;
+      background: var(--color-brand-300);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.6s var(--ease-premium);
+      transition-delay: calc(var(--atraso, 0ms) + 350ms);
+    }
+
+    .passo.is-visible:not(:last-child)::after {
+      transform: scaleX(1);
+    }
+  }
+
+  .passo__num {
+    font-size: 2.2rem;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--color-brand-300);
+    transition: color 0.4s var(--ease-premium);
+  }
+
+  .passo:hover .passo__num {
+    color: var(--color-brand-500);
+  }
+
+  .passo__texto {
+    color: var(--color-text-onLight-muted);
+    line-height: 1.6;
+    font-size: 0.98rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .passo:not(:last-child)::after {
+      transform: scaleX(1);
+    }
+  }
+</style>

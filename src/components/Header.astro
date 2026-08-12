@@ -1,0 +1,157 @@
+---
+import { navegacao, logo, linkWhatsapp } from "../data/conteudo";
+import IconeWhatsapp from "./IconeWhatsapp.astro";
+---
+
+<header class="cabecalho" data-cabecalho>
+  <div class="container cabecalho__inner">
+    <a href="#topo" class="marca">
+      <img
+        src={logo.cor}
+        alt={logo.alt}
+        width={logo.largura}
+        height={logo.altura}
+        fetchpriority="high"
+      />
+    </a>
+
+    <nav class="cabecalho__nav" aria-label="Seções do site">
+      {navegacao.map((item) => <a href={item.href}>{item.rotulo}</a>)}
+    </nav>
+
+    <a
+      class="btn btn--primary btn--sm cabecalho__cta"
+      href={linkWhatsapp()}
+      target="_blank"
+      rel="noopener"
+    >
+      <IconeWhatsapp size={16} />
+      <span class="cabecalho__cta-longo">Orçamento</span>
+      <span class="cabecalho__cta-curto">WhatsApp</span>
+    </a>
+  </div>
+</header>
+
+<script>
+  const cabecalho = document.querySelector("[data-cabecalho]");
+  if (cabecalho) {
+    const marcarRolagem = () => {
+      cabecalho.classList.toggle("is-rolado", window.scrollY > 12);
+    };
+    marcarRolagem();
+    window.addEventListener("scroll", marcarRolagem, { passive: true });
+  }
+</script>
+
+<style>
+  /*
+   * Header branco, e não transparente sobre o hero escuro: é o que faz o logo
+   * colorido aparecer. A versão branca do logo continua no rodapé, onde o
+   * fundo é escuro.
+   */
+  .cabecalho {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--color-paper-000);
+    border-bottom: 1px solid var(--color-paper-100);
+    transition: box-shadow 0.3s var(--ease-premium);
+  }
+
+  .cabecalho.is-rolado {
+    box-shadow: 0 1px 0 var(--color-paper-100), 0 12px 28px -18px rgba(13, 28, 43, 0.4);
+  }
+
+  .cabecalho__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-block: 0.85rem;
+  }
+
+  .marca {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  /*
+   * Altura fixa e largura automática: o logo é 6,8:1, então travar a altura é
+   * o que mantém ele previsível. width/height no <img> reservam o espaço e
+   * evitam o salto de layout enquanto o arquivo carrega.
+   */
+  .marca img {
+    height: 28px;
+    width: auto;
+    transition: transform 0.35s var(--ease-premium), opacity 0.35s var(--ease-premium);
+  }
+
+  .marca:hover img {
+    transform: scale(1.04);
+    opacity: 0.85;
+  }
+
+  @media (min-width: 560px) {
+    .marca img {
+      height: 34px;
+    }
+  }
+
+  .cabecalho__nav {
+    display: none;
+    gap: var(--space-3);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-onLight-muted);
+  }
+
+  .cabecalho__nav a {
+    position: relative;
+    transition: color 0.2s var(--ease-premium);
+  }
+
+  .cabecalho__nav a:hover {
+    color: var(--color-brand-700);
+  }
+
+  /* sublinhado vermelho que entra pela esquerda e sai pela direita */
+  .cabecalho__nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -5px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--color-brand-500);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.32s var(--ease-premium);
+  }
+
+  .cabecalho__nav a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  @media (min-width: 900px) {
+    .cabecalho__nav {
+      display: flex;
+    }
+  }
+
+  .cabecalho__cta {
+    display: inline-flex;
+    padding: 0.68rem 0.9rem;
+  }
+
+  .cabecalho__cta-longo {
+    display: none;
+  }
+
+  @media (min-width: 560px) {
+    .cabecalho__cta-longo { display: inline; }
+    .cabecalho__cta-curto { display: none; }
+  }
+</style>

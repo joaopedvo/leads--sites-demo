@@ -1,0 +1,166 @@
+---
+import { servicos, servicosHead, linkWhatsapp } from "../data/conteudo";
+import Icone from "./Icone.astro";
+import type { NomeIcone } from "./icones";
+
+/**
+ * Com 5 serviços, uma grade de 3 colunas deixa 2 cards órfãos na última linha.
+ * Dando ao primeiro card a largura de 2 colunas, viram 6 células — fecha exato
+ * em 3 colunas (2 linhas) e em 2 colunas (3 linhas). Se a lista mudar de
+ * tamanho, conferir se ainda fecha antes de manter o destaque.
+ */
+const destacaPrimeiro = servicos.length === 5;
+---
+
+<section class="section section--light" id="servicos">
+  <div class="container">
+    <div class="section__head" data-reveal>
+      <span class="eyebrow"><span class="eyebrow__dot"></span>{servicosHead.eyebrow}</span>
+      <h2 class="h2">{servicosHead.titulo}</h2>
+    </div>
+
+    <ul class:list={["grade", destacaPrimeiro && "grade--destaque"]}>
+      {
+        servicos.map((servico, i) => (
+          <li class="cartao" data-reveal style={`--atraso: ${i * 80}ms`}>
+            <span class="chip">
+              <Icone nome={servico.icone as NomeIcone} size={26} />
+            </span>
+
+            <h3 class="h3">{servico.titulo}</h3>
+            <p class="cartao__resumo">{servico.resumo}</p>
+
+            <ul class="cartao__itens">
+              {servico.itens.map((item) => (
+                <li>
+                  <Icone nome="check" size={16} class="check" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+            <a
+              class="cartao__link"
+              href={linkWhatsapp(`Olá! Quero um orçamento de ${servico.cta}.`)}
+              target="_blank"
+              rel="noopener"
+            >
+              Orçar {servico.cta}
+              <Icone nome="seta" size={17} class="cartao__seta" />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<script>
+  // o chip reage ao hover do card inteiro, que é a área que o mouse persegue
+  document.querySelectorAll<HTMLElement>("#servicos .cartao").forEach((cartao) => {
+    const chip = cartao.querySelector(".chip");
+    if (!chip) return;
+    cartao.addEventListener("pointerenter", () => chip.classList.add("chip--ativo"));
+    cartao.addEventListener("pointerleave", () => chip.classList.remove("chip--ativo"));
+  });
+</script>
+
+<style>
+  /*
+   * Colunas explícitas em vez de auto-fit: o auto-fit criava uma faixa extra
+   * de 0px e o gap dela sobrava como espaço morto na direita do container.
+   */
+  .grade {
+    display: grid;
+    gap: var(--space-2);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 620px) {
+    .grade {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grade--destaque > .cartao:first-child {
+      grid-column: span 2;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .grade {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    /* o card largo não pode virar uma linha de texto de 70ch */
+    .grade--destaque > .cartao:first-child .cartao__resumo {
+      max-width: 52ch;
+    }
+
+    .grade--destaque > .cartao:first-child .cartao__itens {
+      grid-auto-flow: column;
+      grid-auto-columns: max-content;
+      gap: var(--space-3);
+    }
+  }
+
+  .cartao {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    background: var(--color-paper-050);
+    border: 1px solid var(--color-paper-100);
+    overflow: hidden;
+    transition: transform 0.4s var(--ease-premium), box-shadow 0.4s var(--ease-premium),
+      border-color 0.4s var(--ease-premium), background-color 0.4s var(--ease-premium);
+  }
+
+  .cartao:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-card);
+    border-color: var(--color-brand-300);
+    background: var(--color-paper-000);
+  }
+
+  .cartao__resumo {
+    color: var(--color-text-onLight-muted);
+    line-height: 1.6;
+  }
+
+  .cartao__itens {
+    display: grid;
+    gap: 0.5rem;
+    font-size: 0.93rem;
+    font-weight: 600;
+  }
+
+  .cartao__itens li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .cartao__link {
+    margin-top: auto;
+    padding-top: var(--space-1);
+    font-weight: 700;
+    color: var(--color-brand-700);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  /*
+   * :global porque a seta é renderizada pelo componente Icone — o atributo de
+   * escopo deste arquivo não chega nela.
+   */
+  .cartao__link :global(.cartao__seta) {
+    transition: transform 0.3s var(--ease-premium);
+  }
+
+  .cartao:hover :global(.cartao__seta) {
+    transform: translateX(5px);
+  }
+</style>

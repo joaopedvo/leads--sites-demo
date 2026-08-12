@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img">
+  <title>Arte de fundo</title>
+
+  <defs>
+    <linearGradient id="fundo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#123048" />
+      <stop offset="0.55" stop-color="#0f3859" />
+      <stop offset="1" stop-color="#0a2438" />
+    </linearGradient>
+
+    <radialGradient id="brilho" cx="0.3" cy="0.28" r="0.62">
+      <stop offset="0" stop-color="#2179bb" stop-opacity="0.55" />
+      <stop offset="1" stop-color="#2179bb" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="brilho2" cx="0.82" cy="0.78" r="0.5">
+      <stop offset="0" stop-color="#4d9bd6" stop-opacity="0.3" />
+      <stop offset="1" stop-color="#4d9bd6" stop-opacity="0" />
+    </radialGradient>
+
+    <pattern id="grade" width="56" height="56" patternUnits="userSpaceOnUse">
+      <path d="M56 0H0v56" fill="none" stroke="#ffffff" stroke-opacity="0.045" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#fundo)" />
+  <rect width="1600" height="1000" fill="url(#grade)" />
+  <rect width="1600" height="1000" fill="url(#brilho)" />
+  <rect width="1600" height="1000" fill="url(#brilho2)" />
+
+  <!-- arcos concêntricos: sugerem alcance/cobertura sem ilustrar nada literal -->
+  <g fill="none" stroke="#8dc3e6" stroke-opacity="0.16" stroke-width="1.5">
+    <circle cx="1230" cy="760" r="170" />
+    <circle cx="1230" cy="760" r="290" />
+    <circle cx="1230" cy="760" r="410" />
+    <circle cx="1230" cy="760" r="530" />
+  </g>
+
+  <!--
+    Barras: o motivo do próprio logo da Ebenézer, em escala grande.
+    Antes havia um escudo aqui, que era invenção minha — isto vem da marca real.
+    Em azul-claro e não no vermelho da marca: vermelho translúcido sobre
+    azul-escuro vira marrom. O vermelho do logo é cor de fundo claro.
+  -->
+  <g fill="#a3cdea" fill-opacity="0.16">
+    <rect x="1060" y="150" width="300" height="22" rx="11" />
+    <rect x="1060" y="206" width="300" height="22" rx="11" />
+    <rect x="1060" y="262" width="300" height="22" rx="11" />
+    <rect x="1060" y="330" width="470" height="22" rx="11" />
+  </g>
+
+  <g fill="#a3cdea" fill-opacity="0.1">
+    <rect x="120" y="880" width="240" height="16" rx="8" />
+    <rect x="120" y="920" width="380" height="16" rx="8" />
+  </g>
+
+  <!-- gotas soltas, bem discretas -->
+  <g fill="none" stroke="#a3cdea" stroke-opacity="0.14" stroke-width="1.6" stroke-linejoin="round">
+    <path transform="translate(220 640) scale(4.2)" d="M12 3c0 0 6 6.4 6 10.4a6 6 0 0 1-12 0C6 9.4 12 3 12 3Z" />
+    <path transform="translate(430 300) scale(2.6)" d="M12 3c0 0 6 6.4 6 10.4a6 6 0 0 1-12 0C6 9.4 12 3 12 3Z" />
+    <path transform="translate(700 780) scale(3.1)" d="M12 3c0 0 6 6.4 6 10.4a6 6 0 0 1-12 0C6 9.4 12 3 12 3Z" />
+  </g>
+</svg>

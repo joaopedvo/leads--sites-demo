@@ -1,0 +1,96 @@
+---
+import { cobertura, linkWhatsapp } from "../data/conteudo";
+import Icone from "./Icone.astro";
+---
+
+<section class="section section--tint" id="cobertura">
+  <div class="container cobertura__inner">
+    <div class="cobertura__texto" data-reveal>
+      <span class="eyebrow"><span class="eyebrow__dot"></span>{cobertura.eyebrow}</span>
+      <h2 class="h2">{cobertura.titulo}</h2>
+      <p class="lede">{cobertura.texto}</p>
+      <a
+        class="btn btn--ghost-light"
+        href={linkWhatsapp("Olá! Vocês atendem o meu bairro?")}
+        target="_blank"
+        rel="noopener"
+      >
+        Perguntar sobre o meu bairro
+      </a>
+    </div>
+
+    <ul class="cobertura__cidades">
+      {
+        cobertura.cidades.map((cidade, i) => (
+          <li data-reveal="zoom" style={`--atraso: ${i * 90}ms`}>
+            <Icone nome="pin" size={18} />
+            {cidade}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .cobertura__inner {
+    display: grid;
+    gap: var(--space-4);
+    align-items: center;
+  }
+
+  .cobertura__texto {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-2);
+    max-width: 54ch;
+  }
+
+  .cobertura__cidades {
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .cobertura__cidades li {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: var(--space-2);
+    background: var(--color-paper-000);
+    border: 1px solid var(--color-paper-100);
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    transition: transform 0.35s var(--ease-premium), border-color 0.35s var(--ease-premium),
+      box-shadow 0.35s var(--ease-premium);
+  }
+
+  .cobertura__cidades li:hover {
+    transform: translateY(-3px);
+    border-color: var(--color-brand-300);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .cobertura__cidades :global(svg) {
+    color: var(--color-brand-600);
+    flex-shrink: 0;
+    transition: transform 0.35s var(--ease-premium);
+  }
+
+  .cobertura__cidades li:hover :global(svg) {
+    transform: scale(1.15) translateY(-1px);
+  }
+
+  @media (min-width: 620px) {
+    .cobertura__cidades {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 900px) {
+    .cobertura__inner {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--space-5);
+      align-items: start;
+    }
+  }
+</style>

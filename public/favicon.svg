@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!--
+    Miniatura da marca: "E" serifado azul + régua vermelha, sobre branco.
+    É a mesma lógica do logo (lettering serifado azul, barras vermelhas), que o
+    lettering inteiro não sobrevive a 16px.
+
+    Fundo branco e não azul: o logo vive sobre claro, e assim o azul e o
+    vermelho da marca aparecem os dois. As formas são retas, sem canto
+    arredondado — serifa é reta, e a 16px arredondamento vira borrão.
+  -->
+  <rect width="32" height="32" rx="7" fill="#ffffff" />
+
+  <g fill="#17527f">
+    <!-- haste com serifas em cima e embaixo -->
+    <rect x="10.2" y="5.6" width="3.6" height="14.8" />
+    <rect x="8.6" y="5.6" width="6.8" height="2.6" />
+    <rect x="8.6" y="17.8" width="6.8" height="2.6" />
+
+    <!-- braço superior + serifa vertical na ponta -->
+    <rect x="10.2" y="5.6" width="11.4" height="2.6" />
+    <rect x="19.8" y="5.6" width="1.8" height="3.8" />
+
+    <!-- braço do meio, mais curto, como na tipografia serifada -->
+    <rect x="10.2" y="11.6" width="8" height="2.4" />
+    <rect x="17" y="10.4" width="1.6" height="4.4" />
+
+    <!-- braço inferior, o mais longo -->
+    <rect x="10.2" y="17.8" width="12.4" height="2.6" />
+    <rect x="20.8" y="16.4" width="1.8" height="4" />
+  </g>
+
+  <!-- a régua vermelha do logo -->
+  <rect x="8.6" y="23.2" width="14.8" height="2.6" fill="#c21a21" />
+</svg>
