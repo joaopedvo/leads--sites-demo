@@ -2,7 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 
 const whatsapp = 'https://wa.me/5511953408436?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20VSC%20e%20quero%20agendar%20uma%20avalia%C3%A7%C3%A3o.';
-const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+const asset = (path: string) => `${basePath}/${path}`;
 const services = [
   ['01', 'Mecânica geral', 'Manutenção preventiva e corretiva para qualquer marca e modelo.'],
   ['02', 'Freios e suspensão', 'Controle, estabilidade e segurança revisados nos mínimos detalhes.'],
