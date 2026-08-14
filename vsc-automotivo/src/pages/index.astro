@@ -1,0 +1,240 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const whatsapp = 'https://wa.me/5511953408436?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20VSC%20e%20quero%20agendar%20uma%20avalia%C3%A7%C3%A3o.';
+const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
+const services = [
+  ['01', 'Mecânica geral', 'Manutenção preventiva e corretiva para qualquer marca e modelo.'],
+  ['02', 'Freios e suspensão', 'Controle, estabilidade e segurança revisados nos mínimos detalhes.'],
+  ['03', 'Alinhamento e balanceamento', 'Mais conforto ao dirigir e desgaste uniforme dos pneus.'],
+  ['04', 'Elétrica e diagnóstico', 'Leitura precisa de falhas e soluções para os sistemas eletrônicos.'],
+  ['05', 'Óleo e filtros', 'Produtos adequados e troca no intervalo correto para proteger o motor.'],
+  ['06', 'Ar-condicionado', 'Manutenção, higienização e eficiência térmica para todos os trajetos.']
+];
+---
+
+<Layout title="VSC Serviços Automotivos | Oficina em Santo André" description="Mecânica, revisão, freios, alinhamento, elétrica e ar-condicionado em Santo André. Agende sua avaliação na VSC.">
+  <div class="demo-bar"><span>Projeto demonstrativo</span><b>Site conceito criado para apresentação · informações sujeitas à validação</b></div>
+
+  <div class="site-loader" aria-hidden="true">
+    <div class="loader-inner">
+      <img class="loader-logo" src={asset('images/logo-vsc.png')} alt="" />
+      <div class="loader-line"><span></span></div>
+      <small>Serviços automotivos · Santo André</small>
+    </div>
+  </div>
+
+  <header class="header" data-header>
+    <a href="#inicio" class="logo" aria-label="VSC — início"><img src={asset('images/logo-vsc.png')} alt="VSC Serviços Automotivos" /></a>
+    <nav aria-label="Navegação principal">
+      <a href="#sobre">A VSC</a><a href="#servicos">Serviços</a><a href="#processo">Como funciona</a><a href="#contato">Contato</a>
+    </nav>
+    <a href={whatsapp} class="nav-cta" target="_blank" rel="noopener">Agendar <span>↗</span></a>
+    <button class="menu" aria-label="Abrir menu" aria-expanded="false"><i></i><i></i></button>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-copy">
+        <p class="kicker" data-reveal><span></span> Oficina automotiva · Santo André</p>
+        <h1><span data-line>Precisão para</span><span data-line>o seu carro.</span><span data-line><em>Confiança</em> para você.</span></h1>
+        <div class="hero-note" data-reveal>
+          <p>Experiência técnica, diagnóstico claro e o cuidado de quem trabalha há mais de 25 anos para manter você em movimento.</p>
+          <a href={whatsapp} target="_blank" rel="noopener">Agendar avaliação <b>↗</b></a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img src={asset('images/hero-oficina.webp')} alt="Oficina automotiva moderna com veículo em avaliação" fetchpriority="high" />
+        <div class="hero-badge"><strong>25<sup>+</sup></strong><span>anos de<br/>experiência</span></div>
+        <p>Diagnóstico · Mecânica · Segurança</p>
+      </div>
+      <a href="#sobre" class="scroll">Role para descobrir <span>↓</span></a>
+    </section>
+
+    <section class="manifesto" id="sobre">
+      <div class="section-label" data-reveal>01 <span>A VSC</span></div>
+      <div class="manifesto-copy">
+        <h2 data-reveal>Seu carro não precisa de promessas. Precisa do <em>cuidado certo.</em></h2>
+        <div class="manifesto-text" data-reveal>
+          <p>Na VSC, cada serviço começa com uma boa conversa e uma avaliação responsável. Você entende o que precisa ser feito, por que precisa ser feito e aprova antes de começarmos.</p>
+          <p>É assim que construímos relações duradouras em Santo André: com transparência, experiência e trabalho bem-feito.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="image-break" aria-label="Diagnóstico automotivo profissional">
+      <img src={asset('images/diagnostico.jpg')} alt="Profissionais realizando diagnóstico eletrônico em um veículo" loading="lazy" data-parallax />
+      <div class="image-caption"><span>Precisão antes da decisão</span><p>Tecnologia ajuda a encontrar o problema. Experiência ajuda a escolher a solução certa.</p></div>
+    </section>
+
+    <section class="services" id="servicos">
+      <div class="services-head">
+        <div class="section-label" data-reveal>02 <span>Serviços</span></div>
+        <h2 data-reveal>Da revisão de rotina ao diagnóstico mais preciso.</h2>
+        <p data-reveal>Uma oficina completa para cuidar do desempenho, do conforto e, principalmente, da sua segurança.</p>
+      </div>
+      <div class="services-layout">
+        <div class="service-list">
+          {services.map(([number, title, text]) => (
+            <article class="service-row" data-reveal>
+              <span>{number}</span><h3>{title}</h3><p>{text}</p><b>↗</b>
+            </article>
+          ))}
+        </div>
+        <aside class="service-photo" data-reveal>
+          <img src={asset('images/servico-freios.webp')} alt="Manutenção profissional do sistema de freios" loading="lazy" />
+          <div><span>Segurança em cada detalhe</span><strong>Seu carro pronto para responder quando você mais precisa.</strong></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="promise">
+      <p class="kicker" data-reveal><span></span> O jeito VSC de cuidar</p>
+      <h2 data-reveal>Sem surpresa.<br/>Sem complicação.<br/><em>Só clareza.</em></h2>
+      <div class="promise-items">
+        <div data-reveal><b>01</b><h3>Avaliação responsável</h3><p>Investigamos os sinais antes de recomendar qualquer intervenção.</p></div>
+        <div data-reveal><b>02</b><h3>Orientação transparente</h3><p>Você recebe uma explicação objetiva e decide como deseja seguir.</p></div>
+        <div data-reveal><b>03</b><h3>Execução cuidadosa</h3><p>Serviço realizado com atenção, conferência e compromisso técnico.</p></div>
+      </div>
+    </section>
+
+    <section class="process" id="processo">
+      <div class="process-title"><div class="section-label" data-reveal>03 <span>Como funciona</span></div><h2 data-reveal>Da mensagem à estrada em quatro passos.</h2></div>
+      <ol>
+        <li data-reveal><span>01</span><strong>Chame no WhatsApp</strong><p>Conte o que está acontecendo com seu veículo.</p></li>
+        <li data-reveal><span>02</span><strong>Agende a avaliação</strong><p>Escolha o melhor momento para trazer o carro.</p></li>
+        <li data-reveal><span>03</span><strong>Aprove o serviço</strong><p>Entenda a recomendação antes de autorizar.</p></li>
+        <li data-reveal><span>04</span><strong>Siga tranquilo</strong><p>Retire seu carro revisado e pronto para rodar.</p></li>
+      </ol>
+    </section>
+
+    <section class="contact" id="contato">
+      <div class="contact-copy">
+        <p class="kicker" data-reveal><span></span> Agende sua avaliação</p>
+        <h2 data-reveal>Mais tranquilidade começa com uma <em>boa avaliação.</em></h2>
+        <p class="contact-intro" data-reveal>Conte o que está acontecendo com seu carro. A equipe da VSC orienta você e encontra o melhor horário para a avaliação.</p>
+        <a class="contact-action" href={whatsapp} target="_blank" rel="noopener" data-reveal><span>Conversar pelo WhatsApp</span><b>↗</b></a>
+      </div>
+      <div class="contact-visual" data-reveal>
+        <img src={asset('images/veiculo-vsc.png')} alt="Veículo em manutenção dentro de uma oficina" loading="lazy" />
+        <div class="contact-card">
+          <div><small>WhatsApp</small><strong>(11) 95340-8436</strong></div>
+          <div><small>Funcionamento</small><strong>Seg–Sex · 08h às 18h</strong></div>
+          <div><small>Endereço</small><strong>Rua Oratório, 483 · Santo André</strong></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-main">
+      <img src={asset('images/logo-vsc.png')} alt="VSC Serviços Automotivos" />
+      <p>Rua Oratório, 483 — Bangu<br/>Santo André, SP · 09280-550</p>
+      <p><a href="tel:+551143162840">(11) 4316-2840</a><br/><a href="mailto:contato@vscauto.com.br">contato@vscauto.com.br</a></p>
+      <p><a href="https://www.instagram.com/vsc.automotivo/" target="_blank" rel="noopener">Instagram ↗</a><br/><a href="https://www.facebook.com/vscautobr/" target="_blank" rel="noopener">Facebook ↗</a></p>
+    </div>
+    <div class="footer-meta"><span>© 2026 VSC Serviços Automotivos</span><span>CNPJ 13.364.877/0001-03</span></div>
+  </footer>
+
+  <script>
+    import gsap from 'gsap';
+    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const header = document.querySelector('[data-header]');
+    const menu = document.querySelector('.menu');
+    menu?.addEventListener('click', () => {
+      const open = document.body.classList.toggle('menu-open');
+      menu.setAttribute('aria-expanded', String(open));
+    });
+    document.querySelectorAll('nav a').forEach(a => a.addEventListener('click', () => document.body.classList.remove('menu-open')));
+    addEventListener('scroll', () => header?.classList.toggle('scrolled', scrollY > 30), { passive: true });
+
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.body.classList.add('ready');
+
+    if (reduceMotion) {
+      gsap.set('.site-loader', { display: 'none' });
+      gsap.set('[data-reveal], [data-line]', { clearProps: 'all', autoAlpha: 1 });
+    } else {
+      gsap.set(document.body, { overflow: 'hidden' });
+      const intro = gsap.timeline({ defaults: { ease: 'power4.out' } });
+      intro
+        .to('.loader-line span', { scaleX: 1, duration: .7, ease: 'power2.inOut' })
+        .to('.loader-logo, .loader-inner small', { y: -10, autoAlpha: 0, duration: .35, stagger: .04 }, '+=.08')
+        .to('.site-loader', { yPercent: -100, duration: .7, ease: 'power4.inOut' })
+        .set('.site-loader', { display: 'none' })
+        .set(document.body, { clearProps: 'overflow' })
+        .fromTo('.header', { y: -28, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .7 })
+        .fromTo('[data-line]', { y: 58, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .9, stagger: .09, clearProps: 'transform', }, '-=.45')
+        .fromTo('.hero .kicker, .hero-note', { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .8, stagger: .12 }, '-=.65')
+        .fromTo('.hero-visual', { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 1.2 }, '-=.9')
+        .fromTo('.hero-badge', { scale: 0, rotate: -28 }, { scale: 1, rotate: -8, duration: .7, ease: 'back.out(1.6)' }, '-=.35');
+
+      gsap.utils.toArray('[data-reveal]').forEach((element) => {
+        if (element.closest('.hero')) return;
+        gsap.fromTo(element,
+          { y: 44, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: .85, ease: 'power3.out', scrollTrigger: { trigger: element, start: 'top 88%', once: true } }
+        );
+      });
+
+      gsap.utils.toArray('.manifesto h2, .services-head h2, .promise h2, .process-title h2, .contact h2').forEach((title) => {
+        gsap.fromTo(title,
+          { clipPath: 'inset(0 0 100% 0)', y: 34 },
+          { clipPath: 'inset(0 0 0% 0)', y: 0, duration: 1.05, ease: 'power4.out', scrollTrigger: { trigger: title, start: 'top 84%', once: true } }
+        );
+      });
+
+      gsap.utils.toArray('.image-break, .service-photo, .contact-visual').forEach((frame) => {
+        const image = frame.querySelector('img');
+        if (!image) return;
+        gsap.fromTo(frame,
+          { clipPath: 'inset(0 0 18% 0)' },
+          { clipPath: 'inset(0 0 0% 0)', duration: 1, ease: 'power3.out', scrollTrigger: { trigger: frame, start: 'top 84%', once: true } }
+        );
+        gsap.fromTo(image,
+          { scale: 1.12, yPercent: -2 },
+          { scale: 1.03, yPercent: 2, ease: 'none', scrollTrigger: { trigger: frame, start: 'top bottom', end: 'bottom top', scrub: 1.1 } }
+        );
+      });
+
+      gsap.fromTo('.service-row',
+        { x: -28, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: .65, stagger: .08, ease: 'power3.out', scrollTrigger: { trigger: '.service-list', start: 'top 82%', once: true } }
+      );
+      gsap.fromTo('.promise-items > div',
+        { y: 42, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: .75, stagger: .14, ease: 'power3.out', scrollTrigger: { trigger: '.promise-items', start: 'top 84%', once: true } }
+      );
+      gsap.fromTo('.process li',
+        { y: 36, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: .7, stagger: .12, ease: 'power3.out', scrollTrigger: { trigger: '.process ol', start: 'top 86%', once: true } }
+      );
+
+      gsap.to('.hero-visual img', {
+        scale: 1.08,
+        yPercent: 4,
+        ease: 'none',
+        scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 }
+      });
+
+      document.querySelectorAll('.nav-cta, .hero-note a, .contact-action').forEach((button) => {
+        const moveX = gsap.quickTo(button, 'x', { duration: .35, ease: 'power3.out' });
+        const moveY = gsap.quickTo(button, 'y', { duration: .35, ease: 'power3.out' });
+        const arrow = button.querySelector('b, span:last-child');
+        button.addEventListener('pointermove', (event) => {
+          const rect = button.getBoundingClientRect();
+          moveX((event.clientX - rect.left - rect.width / 2) * .08);
+          moveY((event.clientY - rect.top - rect.height / 2) * .12);
+        });
+        button.addEventListener('pointerenter', () => arrow && gsap.to(arrow, { x: 5, y: -5, duration: .25 }));
+        button.addEventListener('pointerleave', () => {
+          moveX(0); moveY(0);
+          if (arrow) gsap.to(arrow, { x: 0, y: 0, duration: .3 });
+        });
+      });
+    }
+  </script>
+</Layout>
