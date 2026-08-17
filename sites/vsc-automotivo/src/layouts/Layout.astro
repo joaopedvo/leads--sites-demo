@@ -16,6 +16,10 @@ const logoPath = `${basePath}/images/logo-vsc.png`;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    {/* Demo de proposta: não pode ser indexado nem concorrer com o site real
+        do cliente nas buscas. Um robots.txt aqui seria ignorado — o Pages só
+        respeita /robots.txt na raiz do domínio, que não pertence a este repo. */}
+    <meta name="robots" content="noindex, nofollow" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#03070c" />
     <link rel="icon" href={logoPath} />

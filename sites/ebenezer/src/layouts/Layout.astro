@@ -48,6 +48,10 @@ const schema = semVazios({
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {/* Demo de proposta: não pode ser indexado nem concorrer com o site real
+        do cliente nas buscas. Um robots.txt aqui seria ignorado — o Pages só
+        respeita /robots.txt na raiz do domínio, que não pertence a este repo. */}
+    <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
     <title>{title}</title>
     <meta name="description" content={description} />

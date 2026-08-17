@@ -26,20 +26,25 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: |
-            package-lock.json
-            vsc-automotivo/package-lock.json
+          cache-dependency-path: sites/*/package-lock.json
 
-      - name: Install workspace dependencies
-        run: npm ci
+      # Descobre os demos pelo sistema de arquivos: criar uma pasta em sites/
+      # basta para o demo entrar no ar. Nada aqui precisa ser editado.
+      - name: Build de cada demo
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          for dir in sites/*/; do
+            slug=$(basename "$dir")
+            echo "::group::build $slug"
+            (cd "$dir" && npm ci && npm run build)
+            mkdir -p "dist/$slug"
+            cp -r "$dir"dist/. "dist/$slug/"
+            echo "::endgroup::"
+          done
 
-      - name: Install dependencies
-        run: npm ci
-        working-directory: vsc-automotivo
-
-      - name: Build
-        run: npm run build
-        working-directory: vsc-automotivo
+      - name: Gerar índice da galeria
+        run: node scripts/gerar-indice.mjs
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -47,7 +52,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: vsc-automotivo/dist
+          path: dist
 
   deploy:
     environment:
