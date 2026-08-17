@@ -10,6 +10,13 @@ import type { NomeIcone } from "./icones";
  * tamanho, conferir se ainda fecha antes de manter o destaque.
  */
 const destacaPrimeiro = servicos.length === 5;
+
+/**
+ * Com 4 serviços, 3 colunas deixam o último card sozinho com dois vazios ao
+ * lado. Em 2 colunas fecha um quadrado exato, então no desktop a grade cai
+ * para duas colunas em vez de esticar a linha.
+ */
+const grade2x2 = servicos.length === 4;
 ---
 
 <section class="section section--light" id="servicos">
@@ -19,7 +26,7 @@ const destacaPrimeiro = servicos.length === 5;
       <h2 class="h2">{servicosHead.titulo}</h2>
     </div>
 
-    <ul class:list={["grade", destacaPrimeiro && "grade--destaque"]}>
+    <ul class:list={["grade", destacaPrimeiro && "grade--destaque", grade2x2 && "grade--2x2"]}>
       {
         servicos.map((servico, i) => (
           <li class="cartao" data-reveal style={`--atraso: ${i * 80}ms`}>
@@ -89,6 +96,15 @@ const destacaPrimeiro = servicos.length === 5;
   @media (min-width: 1000px) {
     .grade {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grade--2x2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* mesma razão do card largo: 2 colunas dão uma medida longa demais pra ler */
+    .grade--2x2 .cartao__resumo {
+      max-width: 52ch;
     }
 
     /* o card largo não pode virar uma linha de texto de 70ch */

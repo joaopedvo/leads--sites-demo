@@ -146,7 +146,7 @@ rodapé. As duas entre parênteses só aparecem quando têm conteúdo.
 ## SEO
 
 O `<head>` emite `HomeAndConstructionBusiness` (e não `PestControlService`,
-porque a empresa também faz desentupimento, fossa e serviço elétrico) com nome,
+porque a empresa também faz desentupimento, fossa e limpeza de caixa d'água) com nome,
 telefone, cidade e área atendida. Campos vazios são removidos antes de
 serializar, para não declarar `"telephone": ""`.
 
