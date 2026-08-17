@@ -18,8 +18,6 @@ export const desenhos = {
   gota: `<path d="M12 3c0 0 6 6.4 6 10.4a6 6 0 0 1-12 0C6 9.4 12 3 12 3Z"/><path d="M9.5 13.5a2.5 2.5 0 0 0 2.5 2.5"/>`,
   // reservatório cilíndrico — caixa de gordura e fossa
   tanque: `<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/><path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/>`,
-  // raio — manutenção elétrica
-  raio: `<path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/>`,
   // relógio — anos de mercado
   relogio: `<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>`,
   // folha — produto antialérgico

@@ -181,14 +181,6 @@ export const servicos = [
     resumo: "Limpeza de caixa de gordura, fossa séptica e fossa negra.",
     itens: ["Caixa de gordura", "Fossa séptica", "Fossa negra"],
   },
-  {
-    titulo: "Manutenção elétrica",
-    icone: "raio",
-    cta: "manutenção elétrica",
-    resumo:
-      "Serviços elétricos para imóveis residenciais, prediais e empresariais.",
-    itens: ["Residencial", "Predial", "Empresarial"],
-  },
 ];
 
 export const diferenciais = {
