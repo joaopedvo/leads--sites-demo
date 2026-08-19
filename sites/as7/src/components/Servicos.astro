@@ -1,5 +1,5 @@
 ---
-import { gruposServicos, servicosHead, linkWhatsapp } from "../data/conteudo";
+import { gruposServicos, linkWhatsapp } from "../data/conteudo";
 import Icone from "./Icone.astro";
 import type { NomeIcone } from "./icones";
 
@@ -8,19 +8,23 @@ import type { NomeIcone } from "./icones";
  * Os grupos têm 5, 5 e 11 itens: em grid de três colunas, todos esticam até a
  * altura do maior e os dois primeiros ficam com um vazio enorme no meio.
  * Em linha, cada grupo tem a altura do próprio conteúdo e o problema some.
+ *
+ * A lista numerada é o "How we work" do Auria: cada frente já resumida nos
+ * cards de Pilares.astro volta aqui por extenso, com todos os itens do
+ * cliente.
  */
 ---
 
-<section class="secao secao--branca" id="servicos">
+<section class="secao secao--branca" id="detalhe-servicos">
   <div class="container">
     <div class="cabeca__linha">
-      <div class="cabeca" style="margin-bottom: 0; max-width: 12ch">
-        <span class="rotulo rotulo--marcado" data-surge>{servicosHead.rotulo}</span>
-        <h2 class="d2" data-texto>{servicosHead.titulo}</h2>
+      <div class="cabeca" style="margin-bottom: 0; max-width: none">
+        <span class="rotulo rotulo--marcado" data-surge>Em detalhe</span>
+        <h2 class="d2" data-texto>Cada frente,<br />por extenso</h2>
       </div>
 
       <p class="corpo cabeca__apoio" data-surge style="--atraso: 120ms">
-        {servicosHead.apoio}
+        Os 21 serviços da AS7, organizados como no site atual — nada foi resumido.
       </p>
     </div>
 

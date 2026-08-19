@@ -1,63 +1,50 @@
-@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap");
 
+/*
+ * Redesenho no clima do Auria (auria-template.webflow.io): base creme, tinta
+ * quase preta, tipografia Geist + Roboto Mono, sem cor de acento. O site
+ * anterior já era monocromático por causa do logo (ver histórico) — este
+ * redesenho leva isso até o fim e tira o verde-sálvia que só existia porque
+ * "algo" precisava marcar o interativo. Aqui quem marca é o próprio contraste
+ * creme/preto, como na referência.
+ */
 :root {
-  /*
-   * Cinzas amostrados do próprio logo da AS7, pixel a pixel:
-   * #898988 é a cor do monograma, #b5b5b5 e #e3e3e3 são os tons claros.
-   * A paleta inteira sai daí — o site é monocromático de propósito, porque a
-   * marca é monocromática. Cor entra só no acento dos badges.
-   */
-  --cinza-500: #898988; /* o cinza do logo */
-  --cinza-400: #b5b5b5;
-  --cinza-300: #cfcfce;
-  --cinza-200: #e3e3e3;
-  --cinza-100: #ebebea;
+  --cinza-500: #8c8a82;
+  --cinza-400: #aeaba1;
+  --cinza-300: #d6d2c7;
+  --cinza-200: #e4dfd5;
+  --cinza-100: #ece7db;
 
-  --tinta-950: #161615; /* preto quase puro, levemente quente como o logo */
-  --tinta-900: #232322;
-  --tinta-800: #33332f;
-  --tinta-600: #55524f;
+  --tinta-950: #111110; /* preto quase puro, levemente quente */
+  --tinta-900: #1c1b18;
+  --tinta-800: #2c2a25;
+  --tinta-600: #4c4a42;
 
   --papel-000: #ffffff;
-  --papel-050: #f7f7f6;
-  --papel-100: #f0f0ee;
+  --papel-050: #f8f6f1;
+  --papel-100: #f3efe6; /* creme — o fundo da referência */
 
-  /*
-   * Acento. O logo é cinza puro, então não existe cor de marca para herdar —
-   * esta é uma escolha, e por isso vem com regra.
-   *
-   * Verde-sálvia, levemente quente, para conviver com o cinza quente do logo
-   * (#898988). Um verde frio brigaria com ele.
-   *
-   * ONDE A COR PODE ENTRAR:
-   *   badge circular, pílula, sublinhado de link, foco, marcador de lista,
-   *   fio do cartão, pontos do marquee, seleção de texto.
-   * ONDE NÃO PODE:
-   *   fundo de seção, fundo de botão, título, texto corrido.
-   * A hierarquia continua sendo feita por preto, branco e cinza. A cor só
-   * marca o que é interativo ou o que é rótulo.
-   */
-  --acento-50: #f1f5f0;
-  --acento-100: #dde8dc;
-  --acento-300: #a3c0a4;
-  --acento-500: #5c8a63;
-  --acento-700: #3a6142;
-  --acento-900: #23402c;
+  /* sem acento de cor: hierarquia só por preto, branco e cinza, como no Auria */
+  --acento-50: var(--cinza-100);
+  --acento-100: var(--cinza-100);
+  --acento-300: var(--cinza-300);
+  --acento-500: var(--tinta-950);
+  --acento-700: var(--tinta-950);
+  --acento-900: var(--tinta-950);
 
-  /* nomes antigos mantidos para não quebrar o que já os usa */
   --acento: var(--acento-100);
   --acento-forte: var(--acento-700);
 
-  --texto-claro: #f7f7f6;
-  --texto-claro-suave: #a8a8a4;
+  --texto-claro: #f6f4ef;
+  --texto-claro-suave: #a9a69c;
   --texto-escuro: var(--tinta-950);
-  --texto-escuro-suave: #6b6b67;
+  --texto-escuro-suave: #6d6a61;
 
-  --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
-  --sans: "Inter", system-ui, -apple-system, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --serif: "Geist", Arial, sans-serif;
+  --sans: "Geist", Arial, -apple-system, sans-serif;
+  --mono: "Roboto Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
-  --r-sm: 8px;
+  --r-sm: 10px;
   --r-md: 16px;
   --r-lg: 24px;
   --r-xl: 32px;
@@ -124,12 +111,12 @@ body {
 
   background: linear-gradient(
     180deg,
-    #f4f6f1 0%,
-    #f8f7f4 14%,
-    #f2f5f0 34%,
-    #f8f7f5 54%,
-    #f1f4ef 74%,
-    #f7f7f6 100%
+    #f5f2ea 0%,
+    #f8f6f1 16%,
+    #f3efe5 38%,
+    #f8f6f1 58%,
+    #f2eee3 78%,
+    #f8f6f1 100%
   );
   background-attachment: fixed;
 }
@@ -166,16 +153,20 @@ button {
 }
 
 :focus-visible {
-  outline: 2px solid var(--acento-500);
+  outline: 2px solid var(--tinta-950);
   outline-offset: 3px;
   border-radius: 3px;
+}
+
+.secao--escura :focus-visible {
+  outline-color: var(--papel-000);
 }
 
 /* ---------- tipografia ---------- */
 
 /*
- * Serifada só no display, peso normal. As referências não usam negrito em
- * título nenhum — o peso vem do tamanho e do contraste da letra, não da gordura.
+ * Geist peso 500, nunca 700: o peso vem do tamanho e do tracking negativo, não
+ * da gordura da letra — mesmo princípio da referência.
  */
 h1,
 h2,
@@ -183,9 +174,9 @@ h3,
 h4 {
   margin: 0;
   font-family: var(--serif);
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.04;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
 /*
@@ -194,17 +185,19 @@ h4 {
  */
 .d1 {
   font-size: clamp(2.9rem, 1.9rem + 4.4vw, 5.4rem);
-  letter-spacing: -0.035em;
+  letter-spacing: -0.045em;
 }
 
 /*
- * Palavra em itálico dentro do título. Instrument Serif tem um itálico
- * desenhado, e alternar romano/itálico é o recurso editorial clássico para
- * dar ênfase sem apelar para negrito ou cor.
+ * Palavra em destaque dentro do título: sem serifada com itálico desenhado,
+ * o recurso editorial vira peso mais leve + cor suave, no lugar do romano/
+ * itálico. Mesma função — marcar ênfase sem negrito nem cor de marca.
  */
 .italico {
-  font-style: italic;
-  letter-spacing: -0.01em;
+  font-style: normal;
+  font-weight: 400;
+  color: var(--texto-escuro-suave);
+  letter-spacing: -0.03em;
 }
 
 .d2 {
@@ -233,8 +226,8 @@ h4 {
 }
 
 /*
- * Rótulo de abertura de seção: ganha um ponto verde antes. É a menor dose de
- * cor possível e serve de marcador visual repetido em toda a página.
+ * Rótulo de abertura de seção: ganha um ponto preto antes, como o "+" do
+ * Auria antes de "HOW WE WORK". Marcador repetido, sem cor de marca.
  */
 .rotulo--marcado::before {
   content: "";
@@ -247,7 +240,7 @@ h4 {
   background: var(--acento-500);
 }
 
-/* no escuro o verde médio some; sobe um degrau na escala */
+/* no escuro o ponto clareia para continuar visível sobre o preto */
 .secao--escura .rotulo--marcado::before {
   background: var(--acento-300);
 }
@@ -324,9 +317,9 @@ h4 {
 }
 
 /*
- * No escuro o gradiente é o inverso do claro: um brilho verde saindo de um
+ * No escuro o gradiente é o inverso do claro: um brilho creme saindo de um
  * canto e uma clareada fria do lado oposto. Duas fontes de luz em vez de uma
- * tiram o aspecto de retângulo preto.
+ * tiram o aspecto de retângulo preto — mesmo recurso do fundo escuro do Auria.
  */
 .secao--escura::after {
   content: "";
@@ -335,7 +328,7 @@ h4 {
   z-index: -1;
   background: radial-gradient(
       ellipse 58% 62% at 12% 8%,
-      rgba(92, 138, 99, 0.26),
+      rgba(243, 239, 230, 0.1),
       transparent 64%
     ),
     radial-gradient(ellipse 50% 55% at 92% 92%, rgba(196, 176, 146, 0.12), transparent 62%),
@@ -366,7 +359,7 @@ h4 {
 /* ---------- botões ---------- */
 
 /*
- * Preto chapado, texto em mono maiúsculo e seta. É o botão das referências.
+ * Preto chapado, texto em mono maiúsculo e seta, em pílula — o botão do Auria.
  * O deslocamento da seta no hover é o único movimento — sem escala, sem sombra.
  */
 .btn {
@@ -374,8 +367,8 @@ h4 {
   display: inline-flex;
   align-items: center;
   gap: 0.7rem;
-  padding: 1.05rem 1.6rem;
-  border-radius: var(--r-sm);
+  padding: 1.05rem 1.7rem;
+  border-radius: var(--r-pill);
   font-family: var(--mono);
   font-size: 0.78rem;
   font-weight: 500;
@@ -469,7 +462,7 @@ h4 {
   padding-bottom: 2px;
 }
 
-/* fio de base sempre presente, em cinza; o verde cresce por cima no hover */
+/* fio de base sempre presente, em cinza; o preto cresce por cima no hover */
 .link-sub::before {
   content: "";
   position: absolute;
@@ -534,15 +527,16 @@ h4 {
   height: 19px;
 }
 
+/* destaque neutro: preto sobre creme, invertido no escuro — sem cor de marca */
 .badge--acento {
-  background: var(--acento-100);
+  background: var(--tinta-950);
   border-color: transparent;
-  color: var(--acento-700);
+  color: var(--texto-claro);
 }
 
 .secao--escura .badge--acento {
-  background: rgba(92, 138, 99, 0.24);
-  color: var(--acento-300);
+  background: var(--papel-000);
+  color: var(--tinta-950);
 }
 
 .badge--cheio {
@@ -566,8 +560,8 @@ h4 {
 }
 
 .pilula--acento {
-  background: var(--acento-100);
-  color: var(--acento-700);
+  background: var(--tinta-950);
+  color: var(--texto-claro);
 }
 
 .secao--escura .pilula {
@@ -631,13 +625,13 @@ h4 {
 
 /* seleção de texto na cor da marca — detalhe pequeno, sinal claro de cuidado */
 ::selection {
-  background: var(--acento-100);
-  color: var(--acento-900);
+  background: var(--tinta-950);
+  color: var(--texto-claro);
 }
 
 .secao--escura ::selection {
-  background: var(--acento-500);
-  color: var(--papel-000);
+  background: var(--papel-000);
+  color: var(--tinta-950);
 }
 
 /*

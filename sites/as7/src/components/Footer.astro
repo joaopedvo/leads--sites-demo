@@ -74,6 +74,16 @@ const href = (d: string) => (d.startsWith("#") ? `${base}/${d}` : `${base}${d}`)
     padding-top: var(--e5);
   }
 
+  /*
+   * O rodapé vem logo depois de Contato, outra seção escura — cada
+   * `secao--escura` desenha o próprio brilho radial (::after), e duas
+   * seguidas criam uma emenda clara visível na fronteira entre as duas.
+   * Aqui a cor fica só o preto chapado + grão, sem o brilho.
+   */
+  .rodape::after {
+    background: none;
+  }
+
   .rodape__grade {
     display: grid;
     gap: var(--e4);

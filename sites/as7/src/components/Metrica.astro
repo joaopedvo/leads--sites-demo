@@ -1,0 +1,163 @@
+---
+import { provas } from "../data/conteudo";
+
+/*
+ * A faixa escura de métricas do Auria ("Operational performance at world
+ * scale") vem sem inventar número novo: as três provas que a AS7 já afirma
+ * (fundação, anos de experiência, serviços) ganham a mesma escala visual,
+ * com o gráfico decorativo no lugar do stock photo que não existe.
+ *
+ * A linha desenha do zero quando entra na tela, reaproveitando o mesmo
+ * IntersectionObserver que já revela o resto da página (Layout.astro): o
+ * comprimento real do traçado vira --comprimento, e a transição de
+ * stroke-dashoffset faz o resto — sem JS novo.
+ */
+const pontos: [number, number][] = [
+  [0, 120], [60, 108], [120, 112], [180, 86], [240, 92], [300, 58],
+  [360, 66], [420, 34], [480, 42], [540, 14], [600, 20],
+];
+
+const comprimento = pontos.reduce((total, [x, y], i) => {
+  if (i === 0) return 0;
+  const [px, py] = pontos[i - 1];
+  return total + Math.hypot(x - px, y - py);
+}, 0);
+
+const pontosAtributo = pontos.map(([x, y]) => `${x},${y}`).join(" ");
+---
+
+<section class="secao secao--escura faixa">
+  <div class="container">
+    <div class="faixa__cabeca">
+      <span class="rotulo rotulo--marcado" data-surge>Estrutura</span>
+      <h2 class="d2 faixa__titulo" data-texto>Anos de rotina, em números</h2>
+    </div>
+
+    <div class="faixa__grafico" data-surge="escala" style="--atraso: 120ms" aria-hidden="true">
+      <svg viewBox="0 0 600 140" preserveAspectRatio="none" class="faixa__linha">
+        <polyline
+          points={pontosAtributo}
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          style={`--comprimento: ${comprimento.toFixed(1)}`}
+          class="faixa__traco"
+        />
+        {
+          pontos.map(([x, y], i) => (
+            <circle cx={x} cy={y} r="2.5" fill="currentColor" class="faixa__ponto" style={`--atraso: ${i * 90}ms`} />
+          ))
+        }
+      </svg>
+    </div>
+
+    <ul class="faixa__provas">
+      {
+        provas.map((p, i) => (
+          <li data-surge style={`--atraso: ${i * 90}ms`}>
+            <span class="faixa__valor" aria-label={`${p.valor}${p.sufixo} ${p.rotulo}`}>
+              <span aria-hidden="true" data-conta={p.valor} data-sufixo={p.sufixo}>
+                {p.valor}{p.sufixo}
+              </span>
+            </span>
+            <span class="rotulo">{p.rotulo}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .faixa__cabeca {
+    display: grid;
+    gap: var(--e2);
+    max-width: 26ch;
+  }
+
+  .faixa__titulo {
+    max-width: 12ch;
+  }
+
+  .faixa__grafico {
+    margin-top: var(--e4);
+    color: rgba(246, 244, 239, 0.32);
+  }
+
+  .faixa__linha {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+  }
+
+  /* traço escondido atrás do próprio comprimento; a transição revela do início ao fim */
+  .faixa__traco {
+    stroke-dasharray: var(--comprimento);
+    stroke-dashoffset: var(--comprimento);
+    transition: stroke-dashoffset 1.7s var(--curva);
+    transition-delay: 200ms;
+  }
+
+  /* .dentro só existe depois do JS rodar, então o prefixo .js é redundante
+     aqui — e um seletor cruzando para fora do componente (a classe .js mora
+     na <html>, escrita pelo Layout) nunca bateria dentro de um <style>
+     escopado do Astro. */
+  .faixa__grafico.dentro .faixa__traco {
+    stroke-dashoffset: 0;
+  }
+
+  /* cada ponto "pousa" pouco depois da linha alcançar aquele trecho */
+  .faixa__ponto {
+    opacity: 0;
+    transform: scale(0.3);
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: opacity 0.45s var(--curva), transform 0.45s var(--curva);
+    transition-delay: calc(var(--atraso, 0ms) + 200ms);
+  }
+
+  .faixa__grafico.dentro .faixa__ponto {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faixa__traco {
+      stroke-dashoffset: 0 !important;
+    }
+
+    .faixa__ponto {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+
+  .faixa__provas {
+    display: grid;
+    gap: var(--e4);
+    margin-top: var(--e4);
+    padding-top: var(--e4);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .faixa__valor {
+    display: block;
+    font-family: var(--serif);
+    font-size: clamp(2.4rem, 1.9rem + 2vw, 3.4rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 0.5rem;
+  }
+
+  @media (min-width: 700px) {
+    .faixa__provas {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--e3);
+    }
+  }
+</style>

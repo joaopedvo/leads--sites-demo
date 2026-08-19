@@ -1,0 +1,156 @@
+---
+import { linkWhatsapp } from "../data/conteudo";
+
+/*
+ * PROPOSTA — seção nova, no molde do "Frequently asked questions" do Auria.
+ * As perguntas evitam qualquer compromisso que a AS7 não afirmou (preço,
+ * prazo, praça de atuação): só processo e canais, que já constam em
+ * conteudo.ts. Precisa do aval do cliente antes de ir ao ar, como o resto do
+ * texto proposto no site.
+ */
+const perguntas = [
+  {
+    pergunta: "Quais áreas a AS7 cobre?",
+    resposta:
+      "Três frentes: a rotina obrigatória de contabilidade e tributos, soluções em finanças para o que vem depois do balanço, e um grupo de temas que normalmente só aparece na fiscalização — societário, folha, classificação fiscal e correlatos.",
+  },
+  {
+    pergunta: "Como funciona a troca de escritório de contabilidade?",
+    resposta:
+      "O levantamento do histórico fiscal e contábil começa em paralelo à operação atual, para não haver interrupção de obrigação nenhuma durante a transição.",
+  },
+  {
+    pergunta: "O que é o Informativo?",
+    resposta:
+      "Publicações sobre tributos, obrigações e gestão financeira, escritas para quem toca a empresa — sem jargão que só interessa a quem já é da área.",
+  },
+  {
+    pergunta: "Como falo com o escritório?",
+    resposta:
+      "Pelo WhatsApp, telefone ou e-mail — todos no rodapé da página. O diagnóstico inicial parte de uma mensagem contando o porte e o regime tributário da empresa.",
+  },
+];
+---
+
+<section class="secao secao--branca" id="faq">
+  <div class="container container--estreita">
+    <div class="cabeca" style="margin-bottom: var(--e4)">
+      <span class="rotulo rotulo--marcado" data-surge>Dúvidas</span>
+      <h2 class="d2" data-texto>Perguntas frequentes</h2>
+    </div>
+
+    <div class="faq__lista">
+      {
+        perguntas.map((p, i) => (
+          <details class="faq__item" data-surge style={`--atraso: ${i * 70}ms`}>
+            <summary class="faq__pergunta">
+              <span class="d4 faq__texto">{p.pergunta}</span>
+              <span class="faq__icone" aria-hidden="true">
+                <span />
+                <span />
+              </span>
+            </summary>
+            <p class="corpo faq__resposta">{p.resposta}</p>
+          </details>
+        ))
+      }
+    </div>
+
+    <p class="faq__rodape">
+      Não achou a resposta?
+      <a class="link-sub" href={linkWhatsapp("Olá! Tenho uma dúvida sobre a AS7.")} target="_blank" rel="noopener">
+        Fale pelo WhatsApp
+      </a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .container--estreita {
+    width: var(--largura-estreita);
+    margin-inline: auto;
+  }
+
+  .faq__lista {
+    border-top: 1px solid var(--cinza-200);
+  }
+
+  .faq__item {
+    border-bottom: 1px solid var(--cinza-200);
+  }
+
+  .faq__item::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__pergunta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--e2);
+    padding-block: var(--e3);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .faq__texto {
+    max-width: 42ch;
+  }
+
+  .faq__icone {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 1px solid var(--cinza-300);
+    transition: background-color 0.4s var(--curva), border-color 0.4s var(--curva),
+      transform 0.4s var(--curva);
+  }
+
+  .faq__icone span {
+    position: absolute;
+    background: var(--tinta-950);
+    transition: background-color 0.4s var(--curva), transform 0.4s var(--curva);
+  }
+
+  .faq__icone span:first-child {
+    width: 11px;
+    height: 1.5px;
+  }
+
+  .faq__icone span:last-child {
+    width: 1.5px;
+    height: 11px;
+  }
+
+  .faq__item[open] .faq__icone {
+    background: var(--tinta-950);
+    transform: rotate(180deg);
+  }
+
+  .faq__item[open] .faq__icone span {
+    background: var(--texto-claro);
+  }
+
+  .faq__item[open] .faq__icone span:last-child {
+    transform: scaleY(0);
+  }
+
+  .faq__resposta {
+    max-width: 56ch;
+    padding-bottom: var(--e3);
+  }
+
+  .faq__rodape {
+    margin-top: var(--e4);
+    font-size: 0.96rem;
+    color: var(--texto-escuro-suave);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+</style>

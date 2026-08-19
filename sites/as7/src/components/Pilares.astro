@@ -1,0 +1,72 @@
+---
+import { gruposServicos, servicosHead } from "../data/conteudo";
+import Icone from "./Icone.astro";
+import type { NomeIcone } from "./icones";
+
+/*
+ * Os três cards logo abaixo da faixa de serviços, no lugar do bloco
+ * "BUSINESS ADVISORY" do Auria. Mesmo conteúdo dos três grupos que reaparece
+ * detalhado em Servicos.astro — a referência também resume as mesmas frentes
+ * duas vezes, primeiro em cards curtos, depois em lista numerada.
+ */
+---
+
+<section class="secao secao--branca pilares" id="servicos">
+  <div class="container">
+    <div class="cabeca cabeca--centro" style="margin-bottom: var(--e4)">
+      <span class="rotulo rotulo--marcado" data-surge>{servicosHead.rotulo}</span>
+      <h2 class="d2" data-texto>{servicosHead.titulo}</h2>
+      <p class="corpo" data-surge style="--atraso: 100ms">{servicosHead.apoio}</p>
+    </div>
+
+    <div class="pilares__grade">
+      {
+        gruposServicos.map((grupo, i) => (
+          <article class="pilar" data-surge style={`--atraso: ${i * 100}ms`}>
+            <span class="badge badge--cheio" aria-hidden="true">
+              <Icone nome={grupo.icone as NomeIcone} size={19} />
+            </span>
+            <h3 class="d4">{grupo.titulo}</h3>
+            <p class="corpo pilar__texto">{grupo.resumo}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .pilares__grade {
+    display: grid;
+    gap: var(--e2);
+  }
+
+  .pilar {
+    display: grid;
+    justify-items: start;
+    gap: var(--e2);
+    padding: var(--e3);
+    border-radius: var(--r-lg);
+    background: var(--papel-000);
+    border: 1px solid var(--cinza-200);
+    transition: border-color 0.4s var(--curva), box-shadow 0.4s var(--curva),
+      transform 0.4s var(--curva);
+  }
+
+  .pilar:hover {
+    border-color: var(--cinza-400);
+    box-shadow: var(--sombra-card);
+    transform: translateY(-4px);
+  }
+
+  .pilar__texto {
+    font-size: 0.96rem;
+  }
+
+  @media (min-width: 780px) {
+    .pilares__grade {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--e3);
+    }
+  }
+</style>

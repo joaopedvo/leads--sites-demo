@@ -68,30 +68,46 @@ Dados de contato, CNPJ e endereço vieram da página `/contato/` do site atual.
 
 ## Identidade visual
 
-O logo da AS7 é **monocromático cinza** — não existe cor de marca definida. O
-azul do site atual (`#1863dc`) vem das configurações globais do Elementor, não
-da marca.
+Segunda versão do redesign, no clima do template
+[Auria](https://auria-template.webflow.io/) (business advisory, Webflow): base
+creme, tinta quase preta, tipografia Geist + Roboto Mono, estrutura em faixas
+alternando claro/escuro. A primeira versão era monocromática por causa do
+logo da AS7 (cinza puro, sem cor de marca definida — o azul do site atual
+vem do tema do Elementor, não da marca); esta versão leva isso até o fim e
+tira até o acento dessaturado que a v1 usava em badges e pílulas. Quem marca o
+interativo agora é o próprio contraste creme/preto, como na referência.
 
-Então a paleta saiu do próprio logo, amostrada pixel a pixel: **`#898988`** é a
-cor do monograma, com `#b5b5b5` e `#e3e3e3` nos tons claros. O site é
-monocromático de propósito, porque a marca é. Preto quase puro (`#161615`) nos
-botões, off-white (`#f7f7f6`) na base, e um único acento dessaturado
-(`--acento`) que só preenche badge circular e pílula pequena.
+**Paleta:** creme (`#f3efe6`) na base, preto quase puro (`#111110`) nas seções
+escuras e nos botões, branco nos cartões. Cinzas quentes entre os dois para
+texto de apoio e bordas. Sem acento de cor nenhum.
 
-**Tipografia em três papéis:**
+**Tipografia em dois papéis:**
 
 | Fonte | Onde |
 |---|---|
-| Instrument Serif | títulos, números, valores de contato |
-| Inter | corpo de texto |
-| IBM Plex Mono | micro-rótulos em maiúsculo, botões, datas |
+| Geist | títulos, números, corpo de texto |
+| Roboto Mono | micro-rótulos em maiúsculo, botões, datas |
 
-Nenhum título usa negrito: o peso vem do tamanho e do contraste da serifada, não
-da gordura da letra.
+Peso 500 no máximo — nenhum título usa negrito nem itálico. O peso vem do
+tamanho e do tracking negativo, mesmo princípio da v1, só que sem a serifada.
 
 **Regra de tamanho de texto:** título de seção até 5 palavras, linha de apoio
 até 20. O texto longo do cliente não foi descartado — foi para onde texto longo
 funciona (a seção "Sobre" e as publicações), em vez de virar manchete.
+
+**Seções novas desta versão**, para reproduzir a estrutura do Auria com
+conteúdo real da AS7 em vez de inventar do zero:
+
+| Seção | Conteúdo | Equivalente no Auria |
+|---|---|---|
+| `Pilares.astro` | os 3 grupos de serviço, resumidos em card | "Business advisory" (3 cards) |
+| `Servicos.astro` | os mesmos 3 grupos, por extenso — não mudou de conteúdo, só de cabeçalho | "How we work" (lista numerada) |
+| `Metrica.astro` | as provas (fundação, anos, serviços) na faixa escura com gráfico decorativo | "Operational performance" |
+| `Faq.astro` | 4 perguntas — **PROPOSTA, precisa de aval do cliente** | "Frequently asked questions" |
+
+Não existe seção de preço: o Auria publica plano mensal fixo, mas nada em
+`conteudo.ts` autoriza afirmar valor nenhum. Reproduzir esse bloco seria
+inventar um compromisso financeiro que a AS7 não fez.
 
 ## Movimento
 
@@ -120,6 +136,7 @@ ambiente de teste, onde a aba não compositava e o observador nunca disparava.
 - [ ] Fotos reais do escritório e da equipe — hoje não há nenhuma imagem própria
 - [ ] Qual é o telefone e o e-mail oficiais (o site atual usa dois de cada)
 - [ ] Aprovação dos textos do Informativo pelo responsável técnico
+- [ ] Aprovação das 4 perguntas do FAQ (`Faq.astro`) — proposta, sem input do cliente
 - [ ] Depoimentos ou casos — o site não tem prova social nenhuma
 - [ ] Se o azul é cor de marca ou herança do tema
 
