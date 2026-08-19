@@ -1,0 +1,297 @@
+---
+import { getCollection, render } from "astro:content";
+import type { GetStaticPaths } from "astro";
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import CardPost from "../../components/CardPost.astro";
+import { empresa, linkWhatsapp } from "../../data/conteudo";
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts = await getCollection("informativo");
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+};
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+const dataLegivel = post.data.data.toLocaleDateString("pt-BR", {
+  day: "2-digit",
+  month: "long",
+  year: "numeric",
+});
+const dataISO = post.data.data.toISOString().slice(0, 10);
+
+const relacionados = (await getCollection("informativo"))
+  .filter((p) => p.id !== post.id)
+  .sort((a, b) => b.data.data.getTime() - a.data.data.getTime())
+  .slice(0, 2);
+---
+
+<Layout title={`${post.data.titulo} — ${empresa.nome}`} description={post.data.resumo}>
+  <Header />
+
+  <!-- barra de progresso da leitura, fina, presa no topo -->
+  <div class="progresso" data-progresso aria-hidden="true"></div>
+
+  <main id="conteudo">
+    <article>
+      <header class="capa secao--papel">
+        <div class="container">
+          <div class="capa__interno">
+            <a class="link-sub voltar" href={`${base}/informativo/`}>
+              <span aria-hidden="true">←</span> Informativo
+            </a>
+
+            <div class="capa__meta" data-surge>
+              <span class="pilula">{post.data.categoria}</span>
+              <time class="rotulo" datetime={dataISO}>{dataLegivel}</time>
+              <span class="rotulo capa__tempo">{post.data.tempoLeitura} min de leitura</span>
+            </div>
+
+            <h1 class="d1 capa__titulo" data-texto>{post.data.titulo}</h1>
+            <p class="corpo-g capa__lead" data-surge style="--atraso: 140ms">
+              {post.data.resumo}
+            </p>
+          </div>
+        </div>
+      </header>
+
+      <div class="secao secao--branca">
+        <div class="container">
+          <div class="texto">
+            <Content />
+          </div>
+
+          <aside class="chamada" data-surge="escala">
+            <span class="rotulo chamada__rotulo">Próximo passo</span>
+            <p class="d3 chamada__titulo">Esse assunto afeta a sua empresa?</p>
+            <p class="corpo chamada__texto">
+              A AS7 faz o diagnóstico e diz o que dá para melhorar, sem compromisso.
+            </p>
+            <div class="chamada__acoes">
+              <a
+                class="btn btn--claro"
+                href={linkWhatsapp(`Olá! Li a publicação "${post.data.titulo}" e queria falar sobre isso.`)}
+                target="_blank"
+                rel="noopener"
+              >
+                Falar no WhatsApp
+                <span class="btn__seta" aria-hidden="true">→</span>
+              </a>
+              <a class="btn btn--contorno" href={`tel:+${empresa.telefone}`}>
+                {empresa.telefoneExibicao}
+              </a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </article>
+
+    {
+      relacionados.length > 0 && (
+        <section class="secao secao--papel">
+          <div class="container">
+            <div class="cabeca" style="margin-bottom: var(--e4)">
+              <span class="rotulo" data-surge>Continue lendo</span>
+            </div>
+            <div class="relacionados">
+              {relacionados.map((p, i) => (
+                <div class="relacionados__celula" data-surge style={`--atraso: ${i * 90}ms`}>
+                  <CardPost
+                    id={p.id}
+                    titulo={p.data.titulo}
+                    resumo={p.data.resumo}
+                    data={p.data.data}
+                    categoria={p.data.categoria}
+                    tempoLeitura={p.data.tempoLeitura}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  // Progresso de leitura: proporção do artigo já percorrida.
+  const barra = document.querySelector<HTMLElement>("[data-progresso]");
+  const artigo = document.querySelector("article");
+
+  if (barra && artigo) {
+    let pendente = false;
+    const medir = () => {
+      pendente = false;
+      const r = artigo.getBoundingClientRect();
+      const total = r.height - window.innerHeight;
+      const feito = total > 0 ? Math.min(Math.max(-r.top / total, 0), 1) : 0;
+      barra.style.transform = `scaleX(${feito})`;
+    };
+    addEventListener(
+      "scroll",
+      () => {
+        if (pendente) return;
+        pendente = true;
+        requestAnimationFrame(medir);
+      },
+      { passive: true }
+    );
+    addEventListener("resize", medir, { passive: true });
+    medir();
+  }
+</script>
+
+<style>
+  .progresso {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--tinta-950);
+    transform: scaleX(0);
+    transform-origin: left;
+    z-index: 70;
+  }
+
+  .capa {
+    padding-block: var(--e4) var(--e5);
+  }
+
+  .capa__interno {
+    display: grid;
+    justify-items: start;
+    gap: var(--e2);
+  }
+
+  .voltar {
+    color: var(--texto-escuro-suave);
+    margin-bottom: var(--e2);
+  }
+
+  .capa__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .capa__tempo {
+    color: var(--cinza-400);
+  }
+
+  .capa__titulo {
+    max-width: 18ch;
+  }
+
+  .capa__lead {
+    max-width: 52ch;
+  }
+
+  /*
+   * ~70 caracteres por linha, medido no navegador. Em rem e não em ch porque
+   * `ch` mede a largura do "0", mais estreita que a média real.
+   */
+  .texto {
+    max-width: 40rem;
+    font-size: 1.08rem;
+    line-height: 1.75;
+  }
+
+  .texto :global(h2) {
+    margin-top: var(--e4);
+    margin-bottom: var(--e2);
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.5rem, 1.3rem + 0.8vw, 1.95rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .texto :global(p) {
+    margin-bottom: var(--e2);
+    color: var(--tinta-800);
+  }
+
+  .texto :global(ul) {
+    display: grid;
+    gap: 0.7rem;
+    margin-bottom: var(--e2);
+  }
+
+  .texto :global(li) {
+    position: relative;
+    padding-left: 1.4rem;
+    color: var(--tinta-800);
+  }
+
+  .texto :global(li)::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.85em;
+    width: 12px;
+    height: 1px;
+    background: var(--cinza-400);
+  }
+
+  .texto :global(strong) {
+    font-weight: 600;
+    color: var(--tinta-950);
+  }
+
+  .chamada {
+    margin-top: var(--e5);
+    max-width: 40rem;
+    padding: var(--e4);
+    border-radius: var(--r-xl);
+    background: var(--tinta-950);
+    color: var(--texto-claro);
+    display: grid;
+    gap: var(--e1);
+  }
+
+  .chamada__rotulo {
+    color: var(--texto-claro-suave);
+    margin-bottom: var(--e1);
+  }
+
+  .chamada__texto {
+    color: var(--texto-claro-suave);
+    max-width: 44ch;
+  }
+
+  .chamada__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: var(--e2);
+  }
+
+  .relacionados {
+    display: grid;
+    gap: var(--e2);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 760px) {
+    .relacionados {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .relacionados__celula {
+    display: flex;
+  }
+
+  .relacionados__celula > :global(*) {
+    width: 100%;
+  }
+</style>

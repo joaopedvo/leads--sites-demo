@@ -1,0 +1,815 @@
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap");
+
+:root {
+  /*
+   * Cinzas amostrados do próprio logo da AS7, pixel a pixel:
+   * #898988 é a cor do monograma, #b5b5b5 e #e3e3e3 são os tons claros.
+   * A paleta inteira sai daí — o site é monocromático de propósito, porque a
+   * marca é monocromática. Cor entra só no acento dos badges.
+   */
+  --cinza-500: #898988; /* o cinza do logo */
+  --cinza-400: #b5b5b5;
+  --cinza-300: #cfcfce;
+  --cinza-200: #e3e3e3;
+  --cinza-100: #ebebea;
+
+  --tinta-950: #161615; /* preto quase puro, levemente quente como o logo */
+  --tinta-900: #232322;
+  --tinta-800: #33332f;
+  --tinta-600: #55524f;
+
+  --papel-000: #ffffff;
+  --papel-050: #f7f7f6;
+  --papel-100: #f0f0ee;
+
+  /*
+   * Acento. O logo é cinza puro, então não existe cor de marca para herdar —
+   * esta é uma escolha, e por isso vem com regra.
+   *
+   * Verde-sálvia, levemente quente, para conviver com o cinza quente do logo
+   * (#898988). Um verde frio brigaria com ele.
+   *
+   * ONDE A COR PODE ENTRAR:
+   *   badge circular, pílula, sublinhado de link, foco, marcador de lista,
+   *   fio do cartão, pontos do marquee, seleção de texto.
+   * ONDE NÃO PODE:
+   *   fundo de seção, fundo de botão, título, texto corrido.
+   * A hierarquia continua sendo feita por preto, branco e cinza. A cor só
+   * marca o que é interativo ou o que é rótulo.
+   */
+  --acento-50: #f1f5f0;
+  --acento-100: #dde8dc;
+  --acento-300: #a3c0a4;
+  --acento-500: #5c8a63;
+  --acento-700: #3a6142;
+  --acento-900: #23402c;
+
+  /* nomes antigos mantidos para não quebrar o que já os usa */
+  --acento: var(--acento-100);
+  --acento-forte: var(--acento-700);
+
+  --texto-claro: #f7f7f6;
+  --texto-claro-suave: #a8a8a4;
+  --texto-escuro: var(--tinta-950);
+  --texto-escuro-suave: #6b6b67;
+
+  --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --sans: "Inter", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --r-sm: 8px;
+  --r-md: 16px;
+  --r-lg: 24px;
+  --r-xl: 32px;
+  --r-pill: 999px;
+
+  --e1: 0.5rem;
+  --e2: 1rem;
+  --e3: 1.5rem;
+  --e4: 2.5rem;
+  --e5: 4rem;
+  --e6: 6.5rem;
+  --e7: 9rem;
+
+  --largura: min(1240px, 92vw);
+  --largura-estreita: min(760px, 92vw);
+
+  /*
+   * Sombras em camadas, não uma só. Sombra única fica com cara de caixa
+   * flutuando; três camadas com opacidade decrescente imitam luz de verdade.
+   */
+  --sombra-card: 0 1px 1px rgba(22, 22, 21, 0.03), 0 4px 8px -4px rgba(22, 22, 21, 0.06),
+    0 24px 48px -28px rgba(22, 22, 21, 0.18);
+  --sombra-flutua: 0 1px 1px rgba(22, 22, 21, 0.04), 0 8px 16px -8px rgba(22, 22, 21, 0.08),
+    0 32px 56px -32px rgba(22, 22, 21, 0.22), 0 64px 90px -60px rgba(22, 22, 21, 0.3);
+
+  /*
+   * Grão. Um ruído sutil sobre os fundos escuros tira o aspecto de cor chapada
+   * — é o detalhe que mais separa "wireframe pintado" de peça acabada.
+   */
+  --grao: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23r)'/%3E%3C/svg%3E");
+
+  /* uma curva só para o site inteiro: consistência de movimento */
+  --curva: cubic-bezier(0.16, 1, 0.3, 1);
+  --curva-suave: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+/*
+ * UM gradiente para a página inteira, na altura toda do documento.
+ *
+ * Antes cada seção tinha o próprio fundo, e as bordas não casavam: dava uma
+ * emenda horizontal visível entre uma seção e a seguinte. Com o gradiente aqui
+ * e as seções claras transparentes, o campo é contínuo do topo ao rodapé.
+ *
+ * As seções escuras continuam opacas e cortam o gradiente de propósito — é o
+ * que cria o ritmo da página.
+ */
+body {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--texto-escuro);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
+  background: linear-gradient(
+    180deg,
+    #f4f6f1 0%,
+    #f8f7f4 14%,
+    #f2f5f0 34%,
+    #f8f7f5 54%,
+    #f1f4ef 74%,
+    #f7f7f6 100%
+  );
+  background-attachment: fixed;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--acento-500);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ---------- tipografia ---------- */
+
+/*
+ * Serifada só no display, peso normal. As referências não usam negrito em
+ * título nenhum — o peso vem do tamanho e do contraste da letra, não da gordura.
+ */
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+}
+
+/*
+ * Quanto maior a letra, mais apertado o espacejamento. Título grande com
+ * tracking de texto corrido é uma das coisas que mais entrega desenho cru.
+ */
+.d1 {
+  font-size: clamp(2.9rem, 1.9rem + 4.4vw, 5.4rem);
+  letter-spacing: -0.035em;
+}
+
+/*
+ * Palavra em itálico dentro do título. Instrument Serif tem um itálico
+ * desenhado, e alternar romano/itálico é o recurso editorial clássico para
+ * dar ênfase sem apelar para negrito ou cor.
+ */
+.italico {
+  font-style: italic;
+  letter-spacing: -0.01em;
+}
+
+.d2 {
+  font-size: clamp(2.2rem, 1.6rem + 2.8vw, 3.6rem);
+  letter-spacing: -0.028em;
+}
+
+.d3 {
+  font-size: clamp(1.5rem, 1.3rem + 0.9vw, 1.95rem);
+}
+
+.d4 {
+  font-size: clamp(1.15rem, 1.05rem + 0.4vw, 1.3rem);
+  line-height: 1.2;
+}
+
+/* micro-rótulo em mono maiúsculo — a assinatura do estilo das referências */
+.rotulo {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--texto-escuro-suave);
+}
+
+/*
+ * Rótulo de abertura de seção: ganha um ponto verde antes. É a menor dose de
+ * cor possível e serve de marcador visual repetido em toda a página.
+ */
+.rotulo--marcado::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 0.6rem;
+  vertical-align: 0.1em;
+  background: var(--acento-500);
+}
+
+/* no escuro o verde médio some; sobe um degrau na escala */
+.secao--escura .rotulo--marcado::before {
+  background: var(--acento-300);
+}
+
+.secao--escura .rotulo {
+  color: var(--texto-claro-suave);
+}
+
+.corpo {
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: var(--texto-escuro-suave);
+}
+
+.corpo-g {
+  font-size: clamp(1.06rem, 1rem + 0.32vw, 1.22rem);
+  line-height: 1.6;
+  color: var(--texto-escuro-suave);
+}
+
+.secao--escura .corpo,
+.secao--escura .corpo-g {
+  color: var(--texto-claro-suave);
+}
+
+/* ---------- estrutura ---------- */
+
+.container {
+  width: var(--largura);
+  margin-inline: auto;
+}
+
+.estreito {
+  width: var(--largura-estreita);
+  margin-inline: auto;
+}
+
+.secao {
+  padding-block: var(--e6);
+  position: relative;
+}
+
+@media (min-width: 900px) {
+  .secao {
+    padding-block: var(--e7);
+  }
+}
+
+/*
+ * Seções claras são transparentes: quem pinta é o gradiente do body. Sem isso
+ * cada uma voltaria a ser um bloco de cor sólida com emenda na borda.
+ */
+.secao--papel,
+.secao--branca {
+  background: transparent;
+}
+
+.secao--escura {
+  position: relative;
+  isolation: isolate;
+  background: var(--tinta-950);
+  color: var(--texto-claro);
+}
+
+/* grão por cima do preto chapado */
+.secao--escura::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--grao);
+  opacity: 0.055;
+  pointer-events: none;
+}
+
+/*
+ * No escuro o gradiente é o inverso do claro: um brilho verde saindo de um
+ * canto e uma clareada fria do lado oposto. Duas fontes de luz em vez de uma
+ * tiram o aspecto de retângulo preto.
+ */
+.secao--escura::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+      ellipse 58% 62% at 12% 8%,
+      rgba(92, 138, 99, 0.26),
+      transparent 64%
+    ),
+    radial-gradient(ellipse 50% 55% at 92% 92%, rgba(196, 176, 146, 0.12), transparent 62%),
+    radial-gradient(ellipse 80% 45% at 50% 0%, rgba(255, 255, 255, 0.06), transparent 72%);
+  pointer-events: none;
+}
+
+/* cabeçalho de seção: rótulo em cima, título serifado embaixo */
+.cabeca {
+  display: grid;
+  justify-items: start;
+  gap: var(--e2);
+  max-width: 26ch;
+  margin-bottom: var(--e5);
+}
+
+.cabeca--centro {
+  justify-items: center;
+  text-align: center;
+  max-width: 22ch;
+  margin-inline: auto;
+}
+
+.cabeca--larga {
+  max-width: 34ch;
+}
+
+/* ---------- botões ---------- */
+
+/*
+ * Preto chapado, texto em mono maiúsculo e seta. É o botão das referências.
+ * O deslocamento da seta no hover é o único movimento — sem escala, sem sombra.
+ */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1.05rem 1.6rem;
+  border-radius: var(--r-sm);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.35s var(--curva), border-color 0.35s var(--curva);
+}
+
+/*
+ * Preenchimento que sobe de baixo no hover, em vez de trocar a cor de fundo
+ * seco. É o mesmo custo de CPU e a diferença de acabamento é grande.
+ */
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: translateY(101%);
+  transition: transform 0.45s var(--curva);
+}
+
+.btn:hover::before {
+  transform: translateY(0);
+}
+
+.btn__seta {
+  display: inline-block;
+  transition: transform 0.35s var(--curva);
+}
+
+.btn:hover .btn__seta {
+  transform: translateX(4px);
+}
+
+.btn--escuro {
+  background: var(--tinta-950);
+  color: var(--texto-claro);
+}
+
+.btn--escuro::before {
+  background: var(--tinta-800);
+}
+
+.btn--claro {
+  background: var(--papel-000);
+  color: var(--tinta-950);
+}
+
+.btn--claro::before {
+  background: var(--cinza-200);
+}
+
+.btn--contorno {
+  border-color: var(--cinza-300);
+  color: var(--tinta-950);
+}
+
+.btn--contorno::before {
+  background: var(--tinta-950);
+}
+
+.btn--contorno:hover {
+  border-color: var(--tinta-950);
+  color: var(--texto-claro);
+}
+
+.secao--escura .btn--contorno {
+  border-color: rgba(255, 255, 255, 0.22);
+  color: var(--texto-claro);
+}
+
+.secao--escura .btn--contorno::before {
+  background: var(--papel-000);
+}
+
+.secao--escura .btn--contorno:hover {
+  color: var(--tinta-950);
+  border-color: var(--papel-000);
+}
+
+/* link discreto com sublinhado que cresce */
+.link-sub {
+  position: relative;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding-bottom: 2px;
+}
+
+/* fio de base sempre presente, em cinza; o verde cresce por cima no hover */
+.link-sub::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--cinza-300);
+}
+
+.link-sub::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--acento-500);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s var(--curva);
+}
+
+.link-sub:hover {
+  color: var(--acento-700);
+}
+
+.link-sub:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.secao--escura .link-sub::before {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.secao--escura .link-sub::after {
+  background: var(--acento-300);
+}
+
+.secao--escura .link-sub:hover {
+  color: var(--acento-300);
+}
+
+/* ---------- badge circular ---------- */
+
+.badge {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--cinza-300);
+  color: var(--tinta-950);
+  flex-shrink: 0;
+  transition: background-color 0.4s var(--curva), border-color 0.4s var(--curva),
+    transform 0.4s var(--curva);
+}
+
+.badge svg {
+  width: 19px;
+  height: 19px;
+}
+
+.badge--acento {
+  background: var(--acento-100);
+  border-color: transparent;
+  color: var(--acento-700);
+}
+
+.secao--escura .badge--acento {
+  background: rgba(92, 138, 99, 0.24);
+  color: var(--acento-300);
+}
+
+.badge--cheio {
+  background: var(--cinza-100);
+  border-color: transparent;
+}
+
+/* ---------- pílula pequena ---------- */
+
+.pilula {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--r-pill);
+  background: var(--cinza-100);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--texto-escuro-suave);
+}
+
+.pilula--acento {
+  background: var(--acento-100);
+  color: var(--acento-700);
+}
+
+.secao--escura .pilula {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--texto-claro-suave);
+}
+
+/* ---------- linha divisória fina ---------- */
+
+.regua {
+  height: 1px;
+  background: var(--cinza-200);
+  border: 0;
+  margin: 0;
+}
+
+.secao--escura .regua {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.oculto-visual {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ================= fundo ================= */
+
+/*
+ * O fundo da página é UM gradiente só, definido em `body`. Não existe mais
+ * fundo por seção: cada uma tinha o seu, e as bordas não casavam — dava uma
+ * emenda horizontal visível entre uma seção e a seguinte.
+ *
+ * O que sobrou aqui é só a textura, que é uniforme e por isso não emenda.
+ */
+
+/*
+ * Grão global: camada fixa cobrindo a viewport, em multiply e opacidade baixa.
+ * Tira o aspecto de cor chapada do gradiente inteiro de uma vez.
+ */
+.grao-global {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background-image: var(--grao);
+  opacity: 0.055;
+  mix-blend-mode: multiply;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grao-global {
+    opacity: 0.03;
+  }
+}
+
+/* ================= acabamento ================= */
+
+/* seleção de texto na cor da marca — detalhe pequeno, sinal claro de cuidado */
+::selection {
+  background: var(--acento-100);
+  color: var(--acento-900);
+}
+
+.secao--escura ::selection {
+  background: var(--acento-500);
+  color: var(--papel-000);
+}
+
+/*
+ * Numeral fantasma: número grande em contorno, atrás do conteúdo. Dá escala e
+ * ritmo à seção sem acrescentar nenhuma informação nova.
+ */
+.numeral {
+  font-family: var(--serif);
+  font-size: clamp(4rem, 3rem + 5vw, 7.5rem);
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--cinza-300);
+  user-select: none;
+  pointer-events: none;
+}
+
+.secao--escura .numeral {
+  -webkit-text-stroke-color: rgba(255, 255, 255, 0.16);
+}
+
+/* aspas decorativas para citação */
+.aspas {
+  display: block;
+  font-family: var(--serif);
+  font-size: 4.5rem;
+  line-height: 0.6;
+  color: var(--cinza-500);
+  opacity: 0.5;
+  user-select: none;
+}
+
+/* as marcas de canto "+" saíram junto com as grades e guias */
+
+/* ================= movimento ================= */
+
+/*
+ * Três primitivas, e só três — mais que isso vira ruído:
+ *   [data-surge]        entra subindo quando aparece na tela
+ *   [data-texto]        título revelado palavra a palavra, saindo de uma máscara
+ *   [data-conta]        número que corre até o valor final
+ * `--atraso` encadeia itens de uma lista.
+ */
+
+[data-surge] {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+[data-surge="escala"] {
+  transform: scale(0.97);
+}
+
+[data-surge="lado"] {
+  transform: translateX(28px);
+}
+
+/*
+ * Cascata: entra descendo e vindo um pouco da esquerda. Combinada com um
+ * `--atraso` crescente item a item, dá a leitura de queda em sequência em vez
+ * de bloco inteiro aparecendo de uma vez.
+ */
+[data-surge="cascata"] {
+  opacity: 0;
+  transform: translate3d(-12px, 16px, 0);
+}
+
+.js [data-surge].dentro {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.8s var(--curva), transform 0.8s var(--curva);
+  transition-delay: var(--atraso, 0ms);
+}
+
+/* revelação por palavra: a máscara é o span externo, o movimento é o interno */
+.palavra {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.palavra > span {
+  display: inline-block;
+  transform: translateY(105%);
+  transition: transform 0.9s var(--curva);
+  transition-delay: var(--atraso, 0ms);
+}
+
+.js [data-texto].dentro .palavra > span {
+  transform: translateY(0);
+}
+
+/* sem JS o título precisa estar visível de qualquer jeito */
+html:not(.js) .palavra > span {
+  transform: none;
+}
+
+/* imagem que revela por máscara e ainda dá um zoom lento */
+.moldura {
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1.1s var(--curva);
+}
+
+.js .moldura.dentro {
+  clip-path: inset(0 0 0 0);
+}
+
+.moldura img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.08);
+  transition: transform 1.4s var(--curva);
+}
+
+.js .moldura.dentro img {
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+  [data-surge],
+  .palavra > span,
+  .moldura,
+  .moldura img {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+}
+
+/* ---------- marquee ---------- */
+
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.marquee__trilho {
+  display: inline-flex;
+  align-items: center;
+  animation: correr 44s linear infinite;
+  will-change: transform;
+}
+
+.marquee:hover .marquee__trilho {
+  animation-play-state: paused;
+}
+
+@keyframes correr {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__trilho {
+    animation: none;
+  }
+}

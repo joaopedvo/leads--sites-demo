@@ -1,0 +1,129 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import CardPost from "../../components/CardPost.astro";
+import { empresa, informativoHead } from "../../data/conteudo";
+
+const posts = (await getCollection("informativo")).sort(
+  (a, b) => b.data.data.getTime() - a.data.data.getTime()
+);
+
+const categorias = [...new Set(posts.map((p) => p.data.categoria))].sort();
+---
+
+<Layout
+  title={`Informativo — ${empresa.nomeCompleto}`}
+  description="Publicações da AS7 sobre tributos, obrigações fiscais e gestão financeira para empresas."
+>
+  <Header />
+
+  <main id="conteudo">
+    <section class="capa secao--papel">
+      <div class="container">
+        <div class="capa__interno">
+          <span class="rotulo rotulo--marcado" data-surge>{informativoHead.rotulo}</span>
+          <h1 class="d1 capa__titulo" data-texto>{informativoHead.titulo}</h1>
+          <p class="corpo-g capa__lead" data-surge style="--atraso: 140ms">
+            {informativoHead.texto}
+          </p>
+
+          <ul class="capa__categorias" data-surge style="--atraso: 220ms">
+            {categorias.map((c) => <li class="pilula">{c}</li>)}
+            <li class="rotulo capa__contagem">
+              {posts.length} publicaç{posts.length === 1 ? "ão" : "ões"}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="secao secao--branca">
+      <div class="container">
+        <div class="lista">
+          {
+            posts.map((post, i) => (
+              <div class="lista__celula" data-surge style={`--atraso: ${(i % 3) * 90}ms`}>
+                <CardPost
+                  id={post.id}
+                  titulo={post.data.titulo}
+                  resumo={post.data.resumo}
+                  data={post.data.data}
+                  categoria={post.data.categoria}
+                  tempoLeitura={post.data.tempoLeitura}
+                />
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .capa {
+    padding-block: var(--e5) var(--e6);
+  }
+
+  /*
+   * O max-width fica no filho, nunca no .container: o container tem
+   * margin-inline auto, e limitar a largura dele centralizaria o bloco,
+   * quebrando o alinhamento com a lista de baixo.
+   */
+  .capa__interno {
+    display: grid;
+    justify-items: start;
+    gap: var(--e2);
+  }
+
+  .capa__titulo {
+    max-width: 16ch;
+  }
+
+  .capa__lead {
+    max-width: 50ch;
+  }
+
+  .capa__categorias {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: var(--e2);
+  }
+
+  .capa__contagem {
+    color: var(--cinza-400);
+    margin-left: 0.4rem;
+  }
+
+  .lista {
+    display: grid;
+    gap: var(--e2);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 700px) {
+    .lista {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1040px) {
+    .lista {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .lista__celula {
+    display: flex;
+  }
+
+  .lista__celula > :global(*) {
+    width: 100%;
+  }
+</style>

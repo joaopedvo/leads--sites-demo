@@ -1,0 +1,166 @@
+---
+import { empresa, navegacao, linkWhatsapp } from "../data/conteudo";
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const href = (d: string) => (d.startsWith("#") ? `${base}/${d}` : `${base}${d}`);
+---
+
+<header class="topo" data-topo>
+  <div class="container topo__interno">
+    <a class="marca" href={`${base}/`} aria-label={empresa.nomeCompleto}>
+      <img
+        src={`${base}/img/logo-as7.png`}
+        alt={empresa.nomeCompleto}
+        width="240"
+        height="126"
+      />
+    </a>
+
+    <nav class="menu" aria-label="Seções do site">
+      {navegacao.map((item) => (
+        <a class="menu__item" href={href(item.href)}>
+          <span data-eco={item.rotulo}>{item.rotulo}</span>
+        </a>
+      ))}
+    </nav>
+
+    <a class="btn btn--escuro topo__cta" href={linkWhatsapp()} target="_blank" rel="noopener">
+      Falar agora
+      <span class="btn__seta" aria-hidden="true">→</span>
+    </a>
+  </div>
+</header>
+
+<script>
+  /*
+   * O header some ao descer e volta ao subir. Libera altura de tela na leitura
+   * e devolve a navegação no gesto em que a pessoa procura por ela.
+   */
+  const topo = document.querySelector<HTMLElement>("[data-topo]");
+  if (topo) {
+    let anterior = window.scrollY;
+    let pendente = false;
+
+    const avaliar = () => {
+      pendente = false;
+      const y = window.scrollY;
+      topo.classList.toggle("topo--solto", y > 12);
+      // só esconde depois de passar do topo, para não piscar no início
+      topo.classList.toggle("topo--oculto", y > anterior && y > 260);
+      anterior = y;
+    };
+
+    addEventListener(
+      "scroll",
+      () => {
+        if (pendente) return;
+        pendente = true;
+        requestAnimationFrame(avaliar);
+      },
+      { passive: true }
+    );
+    avaliar();
+  }
+</script>
+
+<style>
+  .topo {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    background: color-mix(in srgb, var(--papel-050) 82%, transparent);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid transparent;
+    transition: transform 0.45s var(--curva), border-color 0.4s var(--curva),
+      background-color 0.4s var(--curva);
+  }
+
+  .topo--solto {
+    border-bottom-color: var(--cinza-200);
+  }
+
+  .topo--oculto {
+    transform: translateY(-100%);
+  }
+
+  .topo__interno {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--e3);
+    padding-block: 0.85rem;
+  }
+
+  .marca img {
+    height: 42px;
+    width: auto;
+    transition: opacity 0.35s var(--curva);
+  }
+
+  .marca:hover img {
+    opacity: 0.6;
+  }
+
+  @media (min-width: 620px) {
+    .marca img {
+      height: 48px;
+    }
+  }
+
+  .menu {
+    display: none;
+    gap: var(--e3);
+  }
+
+  /*
+   * O item do menu troca de posição por baixo de uma máscara: o texto sobe e
+   * some, e a cópia entra por baixo. Mesmo princípio da revelação dos títulos.
+   */
+  .menu__item {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    height: 1.2em;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--texto-escuro-suave);
+  }
+
+  .menu__item span {
+    position: relative;
+    display: block;
+    transition: transform 0.45s var(--curva);
+  }
+
+  /* a cópia fica exatamente uma altura abaixo e sobe junto */
+  .menu__item span::after {
+    content: attr(data-eco);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    color: var(--tinta-950);
+  }
+
+  .menu__item:hover span {
+    transform: translateY(-100%);
+  }
+
+  @media (min-width: 960px) {
+    .menu {
+      display: flex;
+    }
+  }
+
+  .topo__cta {
+    display: none;
+    padding: 0.8rem 1.2rem;
+  }
+
+  @media (min-width: 560px) {
+    .topo__cta {
+      display: inline-flex;
+    }
+  }
+</style>

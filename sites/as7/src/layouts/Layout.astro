@@ -1,0 +1,220 @@
+---
+import "../styles/global.css";
+import { empresa } from "../data/conteudo";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "AccountingService",
+  name: empresa.nomeCompleto,
+  description,
+  telephone: empresa.telefoneExibicao,
+  email: empresa.email,
+  foundingDate: String(empresa.fundacao),
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: empresa.endereco,
+    addressLocality: empresa.cidade,
+    addressRegion: empresa.uf,
+    postalCode: empresa.cep,
+    addressCountry: "BR",
+  },
+  areaServed: `${empresa.cidade} e região`,
+  sameAs: [empresa.instagram],
+};
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/png" href={`${base}/img/logo-as7.png`} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#161615" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+
+  <body>
+    <a href="#conteudo" class="pular">Pular para o conteúdo</a>
+    <slot />
+
+    <!-- textura de papel sobre a página inteira; ver .grao-global no CSS -->
+    <div class="grao-global" aria-hidden="true"></div>
+
+    <script>
+      const raiz = document.documentElement;
+      raiz.classList.add("js");
+
+      const menosMovimento = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      /*
+       * Quebra o título em palavras antes de observar. Cada palavra vira uma
+       * máscara com o texto dentro, e o atraso escalonado faz a linha subir em
+       * cascata. Feito no cliente porque depende do texto já renderizado.
+       */
+      if (!menosMovimento) {
+        document.querySelectorAll<HTMLElement>("[data-texto]").forEach((titulo) => {
+          /*
+           * Percorre só os nós de texto, então marcação interna sobrevive —
+           * é o que permite usar <em class="italico"> dentro do título sem que
+           * a quebra em palavras apague o itálico.
+           */
+          const percorredor = document.createTreeWalker(titulo, NodeFilter.SHOW_TEXT);
+          const nos: Text[] = [];
+          let no = percorredor.nextNode();
+          while (no) {
+            if (no.textContent?.trim()) nos.push(no as Text);
+            no = percorredor.nextNode();
+          }
+
+          let indice = 0;
+          for (const alvo of nos) {
+            const palavras = (alvo.textContent ?? "").split(/(\s+)/);
+            const fragmento = document.createDocumentFragment();
+
+            for (const pedaco of palavras) {
+              if (!pedaco) continue;
+              if (/^\s+$/.test(pedaco)) {
+                // espaço fica fora da máscara, senão as palavras colam
+                fragmento.appendChild(document.createTextNode(pedaco));
+                continue;
+              }
+              const fora = document.createElement("span");
+              fora.className = "palavra";
+              const dentro = document.createElement("span");
+              dentro.textContent = pedaco;
+              dentro.style.setProperty("--atraso", `${indice * 55}ms`);
+              indice += 1;
+              fora.appendChild(dentro);
+              fragmento.appendChild(fora);
+            }
+
+            alvo.replaceWith(fragmento);
+          }
+        });
+      }
+
+      const animaveis = document.querySelectorAll("[data-surge], [data-texto], .moldura");
+      const revelar = (el: Element) => el.classList.add("dentro");
+
+      /*
+       * Rede de segurança. O estado inicial de tudo que anima é invisível, então
+       * qualquer falha do observador esconderia a página inteira em vez de só
+       * perder a animação. Duas proteções:
+       *   1. navegador sem IntersectionObserver revela tudo na hora;
+       *   2. o que sobrar sem marcar depois de 2,5s é revelado à força.
+       * Já aconteceu aqui: aba não compositada nunca dispara o observador.
+       */
+      if (!("IntersectionObserver" in window)) {
+        animaveis.forEach(revelar);
+      } else {
+        const observador = new IntersectionObserver(
+          (entradas) => {
+            for (const entrada of entradas) {
+              if (!entrada.isIntersecting) continue;
+              revelar(entrada.target);
+              observador.unobserve(entrada.target);
+            }
+          },
+          { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+        );
+
+        animaveis.forEach((el) => observador.observe(el));
+
+        setTimeout(() => {
+          animaveis.forEach((el) => {
+            if (!el.classList.contains("dentro")) revelar(el);
+          });
+        }, 2500);
+      }
+
+      /*
+       * Contador. Anima só uma vez, e respeita quem pediu menos movimento —
+       * nesse caso escreve o valor final direto.
+       */
+      const contadores = document.querySelectorAll<HTMLElement>("[data-conta]");
+
+      const escreverFinal = (el: HTMLElement) => {
+        el.textContent = `${Number(el.dataset.conta || "0")}${el.dataset.sufixo || ""}`;
+      };
+
+      // mesma rede de segurança: número que não anima ainda tem que aparecer
+      if (!("IntersectionObserver" in window)) {
+        contadores.forEach(escreverFinal);
+      }
+
+      const obsConta = new IntersectionObserver(
+        (entradas) => {
+          for (const entrada of entradas) {
+            if (!entrada.isIntersecting) continue;
+            const el = entrada.target as HTMLElement;
+            obsConta.unobserve(el);
+
+            const alvo = Number(el.dataset.conta || "0");
+            const sufixo = el.dataset.sufixo || "";
+            if (menosMovimento) {
+              escreverFinal(el);
+              continue;
+            }
+
+            const duracao = 1100;
+            const inicio = performance.now();
+            const passo = (agora: number) => {
+              const t = Math.min((agora - inicio) / duracao, 1);
+              // desaceleração no fim, para o número "assentar"
+              const suave = 1 - Math.pow(1 - t, 3);
+              el.textContent = `${Math.round(alvo * suave)}${sufixo}`;
+              if (t < 1) requestAnimationFrame(passo);
+            };
+            requestAnimationFrame(passo);
+          }
+        },
+        { threshold: 0.6 }
+      );
+      contadores.forEach((el) => obsConta.observe(el));
+
+      // um "0" preso na tela é pior que não animar
+      setTimeout(() => {
+        contadores.forEach((el) => {
+          if (el.textContent === "0") escreverFinal(el);
+        });
+      }, 2500);
+    </script>
+  </body>
+</html>
+
+<style>
+  .pular {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+    padding: 0.9rem 1.4rem;
+    background: var(--tinta-950);
+    color: var(--texto-claro);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .pular:focus {
+    left: 0;
+  }
+</style>

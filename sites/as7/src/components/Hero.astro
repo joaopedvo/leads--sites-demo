@@ -1,0 +1,289 @@
+---
+import { hero, provas, empresa, canais, linkWhatsapp } from "../data/conteudo";
+import Icone from "./Icone.astro";
+import type { NomeIcone } from "./icones";
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const principais = canais.slice(0, 2);
+---
+
+<section class="hero secao--papel" id="topo">
+  <div class="container hero__grade">
+    <div class="hero__texto">
+      <span class="rotulo rotulo--marcado" data-surge>{hero.rotulo}</span>
+
+      <h1 class="d1 hero__titulo" data-texto>
+        {
+          hero.tituloPartes.map((parte, i) => (
+            <>
+              {i > 0 && " "}
+              {parte.italico ? <em class="italico">{parte.texto}</em> : parte.texto}
+            </>
+          ))
+        }
+      </h1>
+
+      <p class="corpo-g hero__lead" data-surge style="--atraso: 140ms">
+        {hero.subtitulo}
+      </p>
+
+      <div class="hero__acoes" data-surge style="--atraso: 220ms">
+        <a class="btn btn--escuro" href={linkWhatsapp()} target="_blank" rel="noopener">
+          {hero.ctaPrimario}
+          <span class="btn__seta" aria-hidden="true">→</span>
+        </a>
+        <a class="btn btn--contorno" href={`${base}/#servicos`}>
+          {hero.ctaSecundario}
+          <span class="btn__seta" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <ul class="provas" data-surge style="--atraso: 300ms">
+        {
+          provas.map((p) => (
+            <li class="provas__item">
+              <span class="badge badge--cheio" aria-hidden="true">
+                <Icone nome={p.icone as NomeIcone} size={18} />
+              </span>
+              <span class="provas__dados">
+                <span class="provas__valor" aria-label={`${p.valor}${p.sufixo} ${p.rotulo}`}>
+                  <span aria-hidden="true" data-conta={p.valor} data-sufixo={p.sufixo}>
+                    {p.valor}{p.sufixo}
+                  </span>
+                </span>
+                <span class="rotulo">{p.rotulo}</span>
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!--
+      Sem foto do escritório, a coluna direita é um cartão de dados reais em vez
+      de enfeite: os dois canais de contato acima da dobra.
+    -->
+    <aside class="cartao" data-surge="escala" style="--atraso: 180ms">
+      <div class="cartao__topo">
+        <span class="pilula pilula--acento">Atendimento</span>
+        <span class="rotulo">
+          {empresa.cidade}/{empresa.uf}
+        </span>
+      </div>
+
+      <ul class="cartao__canais">
+        {
+          principais.map((c) => (
+            <li>
+              <a
+                class="cartao__linha"
+                href={c.href}
+                target={c.externo ? "_blank" : undefined}
+                rel={c.externo ? "noopener" : undefined}
+              >
+                <span class="badge" aria-hidden="true">
+                  <Icone nome={c.icone as NomeIcone} size={18} />
+                </span>
+                <span class="cartao__info">
+                  <span class="rotulo">{c.rotulo}</span>
+                  <span class="cartao__valor">{c.valor}</span>
+                </span>
+                <span class="cartao__seta" aria-hidden="true">
+                  <Icone nome="setaCanto" size={16} />
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <hr class="regua" />
+
+      <p class="cartao__nota">
+        <Icone nome="pino" size={15} />
+        {empresa.endereco} — {empresa.bairro}
+      </p>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-top: var(--e5);
+    padding-bottom: var(--e6);
+  }
+
+  .hero__grade {
+    display: grid;
+    gap: var(--e4);
+    align-items: center;
+  }
+
+  .hero__texto {
+    display: grid;
+    justify-items: start;
+    gap: var(--e3);
+  }
+
+  /* título curto: cabe numa linha em desktop, duas no celular */
+  .hero__titulo {
+    max-width: 12ch;
+  }
+
+  .hero__lead {
+    max-width: 38ch;
+  }
+
+  .hero__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .provas {
+    display: grid;
+    gap: var(--e2);
+    width: 100%;
+    margin-top: var(--e2);
+    padding-top: var(--e3);
+    border-top: 1px solid var(--cinza-200);
+  }
+
+  @media (min-width: 520px) {
+    .provas {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .provas__item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .provas__dados {
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  .provas__valor {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cartao {
+    position: relative;
+    display: grid;
+    gap: var(--e3);
+    padding: var(--e3);
+    border-radius: var(--r-xl);
+    background: var(--papel-000);
+    border: 1px solid var(--cinza-200);
+    box-shadow: var(--sombra-flutua);
+  }
+
+  /* fio escuro curto no topo: ancora o cartão e quebra a borda uniforme */
+  .cartao::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: var(--e3);
+    width: 56px;
+    height: 3px;
+    background: var(--acento-500);
+    border-radius: 0 0 3px 3px;
+  }
+
+  @media (min-width: 940px) {
+    .cartao::before {
+      left: var(--e4);
+    }
+  }
+
+  .cartao__topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--e2);
+  }
+
+  .cartao__canais {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .cartao__linha {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.75rem;
+    margin: -0.75rem;
+    border-radius: var(--r-md);
+    transition: background-color 0.35s var(--curva);
+  }
+
+  .cartao__linha:hover {
+    background: var(--papel-050);
+  }
+
+  .cartao__linha:hover .badge {
+    background: var(--tinta-950);
+    border-color: var(--tinta-950);
+    color: var(--texto-claro);
+  }
+
+  .cartao__info {
+    display: grid;
+    gap: 0.1rem;
+    min-width: 0;
+  }
+
+  .cartao__valor {
+    font-family: var(--serif);
+    font-size: 1.45rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .cartao__seta {
+    margin-left: auto;
+    color: var(--cinza-400);
+    transition: transform 0.35s var(--curva), color 0.35s var(--curva);
+  }
+
+  .cartao__linha:hover .cartao__seta {
+    transform: translate(2px, -2px);
+    color: var(--tinta-950);
+  }
+
+  .cartao__nota {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--texto-escuro-suave);
+  }
+
+  .cartao__nota :global(svg) {
+    flex-shrink: 0;
+    color: var(--cinza-400);
+  }
+
+  @media (min-width: 940px) {
+    .hero {
+      padding-top: var(--e6);
+    }
+
+    .hero__grade {
+      grid-template-columns: 1.25fr 0.85fr;
+      gap: var(--e5);
+    }
+
+    .cartao {
+      padding: var(--e4);
+    }
+  }
+</style>

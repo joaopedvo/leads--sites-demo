@@ -1,0 +1,262 @@
+---
+import { contato, empresa, canais } from "../data/conteudo";
+import Icone from "./Icone.astro";
+import type { NomeIcone } from "./icones";
+---
+
+<section class="secao secao--escura" id="contato">
+  <div class="container contato__grade">
+    <div class="contato__texto">
+      <span class="rotulo rotulo--marcado" data-surge>{contato.rotulo}</span>
+      <h2 class="d2 contato__titulo" data-texto>{contato.titulo}</h2>
+      <p class="corpo-g contato__lead" data-surge style="--atraso: 140ms">
+        {contato.texto}
+      </p>
+
+      <ul class="canais" data-surge style="--atraso: 220ms">
+        {
+          canais.map((c) => (
+            <li>
+              <a
+                class="canais__linha"
+                href={c.href}
+                target={c.externo ? "_blank" : undefined}
+                rel={c.externo ? "noopener" : undefined}
+              >
+                <span class="badge" aria-hidden="true">
+                  <Icone nome={c.icone as NomeIcone} size={18} />
+                </span>
+                <span class="canais__info">
+                  <span class="rotulo">{c.rotulo}</span>
+                  <span class="canais__valor">{c.valor}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+        <li class="canais__local">
+          <span class="badge" aria-hidden="true">
+            <Icone nome="pino" size={18} />
+          </span>
+          <span class="canais__info">
+            <span class="rotulo">Escritório</span>
+            <span class="canais__endereco">
+              {empresa.endereco} — {empresa.bairro}<br />
+              {empresa.cidade}/{empresa.uf}
+            </span>
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <!--
+      Demonstração: o formulário não envia. Em produção precisa de backend e de
+      aviso de tratamento de dados — escritório contábil recebe dado sensível
+      por este canal.
+    -->
+    <form class="form" data-surge="escala" style="--atraso: 160ms" data-demo>
+      <div class="campo">
+        <label for="nome" class="rotulo">{contato.campos.nome}</label>
+        <input id="nome" name="nome" type="text" autocomplete="name" required />
+      </div>
+
+      <div class="campo campo--par">
+        <div class="campo">
+          <label for="fone" class="rotulo">{contato.campos.fone}</label>
+          <input id="fone" name="fone" type="tel" autocomplete="tel" required />
+        </div>
+        <div class="campo">
+          <label for="email" class="rotulo">{contato.campos.email}</label>
+          <input id="email" name="email" type="email" autocomplete="email" required />
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="mensagem" class="rotulo">{contato.campos.mensagem}</label>
+        <textarea id="mensagem" name="mensagem" rows="4" required></textarea>
+      </div>
+
+      <button class="btn btn--claro" type="submit">
+        {contato.campos.enviar}
+        <span class="btn__seta" aria-hidden="true">→</span>
+      </button>
+
+      <p class="form__aviso" data-aviso role="status"></p>
+    </form>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>("[data-demo]");
+  const aviso = document.querySelector<HTMLElement>("[data-aviso]");
+
+  form?.addEventListener("submit", (evento) => {
+    evento.preventDefault();
+    if (aviso) {
+      aviso.textContent =
+        "Página de demonstração — o formulário não envia. Use o WhatsApp ou o telefone ao lado.";
+    }
+  });
+</script>
+
+<style>
+  .contato__grade {
+    display: grid;
+    gap: var(--e4);
+    align-items: start;
+  }
+
+  @media (min-width: 940px) {
+    .contato__grade {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--e5);
+    }
+  }
+
+  .contato__texto {
+    display: grid;
+    justify-items: start;
+    gap: var(--e2);
+  }
+
+  .contato__titulo {
+    max-width: 14ch;
+  }
+
+  .contato__lead {
+    max-width: 44ch;
+  }
+
+  .canais {
+    display: grid;
+    gap: var(--e3);
+    width: 100%;
+    margin-top: var(--e3);
+    padding-top: var(--e3);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  @media (min-width: 620px) {
+    .canais {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .canais__linha,
+  .canais__local {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    min-width: 0;
+  }
+
+  .canais__linha {
+    padding: 0.6rem;
+    margin: -0.6rem;
+    border-radius: var(--r-md);
+    transition: background-color 0.35s var(--curva);
+  }
+
+  .canais__linha:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .canais .badge {
+    border-color: rgba(255, 255, 255, 0.2);
+    color: var(--texto-claro);
+  }
+
+  .canais__linha:hover .badge {
+    background: var(--papel-000);
+    border-color: var(--papel-000);
+    color: var(--tinta-950);
+  }
+
+  .canais__info {
+    display: grid;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+
+  .canais__valor {
+    font-size: 1.02rem;
+    line-height: 1.3;
+    word-break: break-word;
+  }
+
+  .canais__endereco {
+    font-size: 0.92rem;
+    line-height: 1.45;
+    color: var(--texto-claro-suave);
+  }
+
+  .form {
+    display: grid;
+    gap: var(--e2);
+    padding: var(--e4);
+    border-radius: var(--r-xl);
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .campo {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .campo--par {
+    grid-template-columns: 1fr;
+    gap: var(--e2);
+  }
+
+  @media (min-width: 560px) {
+    .campo--par {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .form label {
+    color: var(--texto-claro-suave);
+  }
+
+  input,
+  textarea {
+    font-family: var(--sans);
+    font-size: 0.98rem;
+    color: var(--texto-claro);
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0;
+    padding: 0.7rem 0;
+    resize: vertical;
+    transition: border-color 0.35s var(--curva);
+  }
+
+  /* campo como linha, não como caixa — combina com o resto do desenho */
+  input:hover,
+  textarea:hover {
+    border-bottom-color: rgba(255, 255, 255, 0.42);
+  }
+
+  /* a linha do campo ativo é o único verde do formulário */
+  input:focus,
+  textarea:focus {
+    outline: none;
+    border-bottom-color: var(--acento-300);
+  }
+
+  .form button {
+    justify-self: start;
+    margin-top: var(--e1);
+  }
+
+  .form__aviso {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    line-height: 1.5;
+    letter-spacing: 0.03em;
+    color: var(--cinza-400);
+    min-height: 1.2em;
+  }
+</style>
