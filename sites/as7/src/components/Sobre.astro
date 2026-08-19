@@ -1,0 +1,161 @@
+---
+import { sobre } from "../data/conteudo";
+import Icone from "./Icone.astro";
+import type { NomeIcone } from "./icones";
+---
+
+<section class="secao secao--papel" id="sobre">
+  <div class="container">
+    <div class="sobre__grade">
+      <div class="sobre__coluna">
+        <div class="cabeca" style="margin-bottom: 0; max-width: 14ch">
+          <span class="rotulo rotulo--marcado" data-surge>{sobre.rotulo}</span>
+          <h2 class="d2" data-texto>{sobre.titulo}</h2>
+        </div>
+
+        <!-- texto do cliente em corpo de leitura, não como manchete -->
+        <div class="sobre__texto" data-surge style="--atraso: 120ms">
+          {sobre.paragrafos.map((p) => <p class="corpo">{p}</p>)}
+        </div>
+      </div>
+
+      <ul class="atributos">
+        {
+          sobre.atributos.map((a, i) => (
+            <li class="atributo" data-surge style={`--atraso: ${i * 100}ms`}>
+              <span class:list={["badge", i === 0 && "badge--acento"]} aria-hidden="true">
+                <Icone nome={a.icone as NomeIcone} size={19} />
+              </span>
+              <div>
+                <h3 class="d4">{a.titulo}</h3>
+                <p class="corpo atributo__texto">{a.texto}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <aside class="missao secao--escura" data-surge="escala">
+      <span class="rotulo missao__rotulo">{sobre.missao.rotulo}</span>
+      <span class="aspas" aria-hidden="true">&ldquo;</span>
+      <blockquote class="missao__frase">{sobre.missao.frase}</blockquote>
+      <p class="corpo missao__texto">{sobre.missao.texto}</p>
+      <p class="missao__fecho">{sobre.missao.fecho}</p>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .sobre__grade {
+    display: grid;
+    gap: var(--e4);
+    align-items: start;
+  }
+
+  @media (min-width: 940px) {
+    .sobre__grade {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--e5);
+    }
+  }
+
+  .sobre__coluna {
+    display: grid;
+    gap: var(--e3);
+  }
+
+  .sobre__texto {
+    display: grid;
+    gap: var(--e2);
+    max-width: 48ch;
+  }
+
+  .atributos {
+    display: grid;
+    gap: var(--e2);
+  }
+
+  .atributo {
+    display: flex;
+    gap: var(--e2);
+    align-items: flex-start;
+    padding: var(--e3);
+    border-radius: var(--r-lg);
+    background: var(--papel-000);
+    border: 1px solid var(--cinza-200);
+    transition: border-color 0.4s var(--curva), transform 0.4s var(--curva),
+      box-shadow 0.4s var(--curva);
+  }
+
+  .atributo:hover {
+    border-color: var(--cinza-400);
+    transform: translateX(5px);
+    box-shadow: var(--sombra-card);
+  }
+
+  .atributo:hover .badge {
+    background: var(--tinta-950);
+    border-color: var(--tinta-950);
+    color: var(--texto-claro);
+  }
+
+  .atributo__texto {
+    margin-top: 0.35rem;
+    font-size: 0.94rem;
+  }
+
+  /*
+   * `secao--escura` no aside traz o grão e a clareada do topo, os mesmos das
+   * faixas escuras — assim o bloco não fica um retângulo preto chapado.
+   * `overflow: hidden` prende os pseudo-elementos dentro do raio da borda.
+   */
+  .missao {
+    margin-top: var(--e5);
+    padding: var(--e5) var(--e4);
+    border-radius: var(--r-xl);
+    overflow: hidden;
+    display: grid;
+    gap: var(--e2);
+    justify-items: center;
+    text-align: center;
+  }
+
+  .missao .aspas {
+    margin-bottom: -1.6rem;
+  }
+
+  .missao__rotulo {
+    color: var(--texto-claro-suave);
+  }
+
+  .missao__frase {
+    margin: 0;
+    max-width: 20ch;
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 1.2rem + 1.9vw, 2.6rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    font-style: italic;
+    text-wrap: balance;
+  }
+
+  .missao__texto {
+    max-width: 46ch;
+    color: var(--texto-claro-suave);
+  }
+
+  .missao__fecho {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cinza-500);
+  }
+
+  @media (min-width: 880px) {
+    .missao {
+      padding: var(--e6) var(--e5);
+    }
+  }
+</style>

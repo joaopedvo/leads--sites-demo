@@ -1,0 +1,228 @@
+---
+import { gruposServicos, servicosHead, linkWhatsapp } from "../data/conteudo";
+import Icone from "./Icone.astro";
+import type { NomeIcone } from "./icones";
+
+/*
+ * Linhas de largura inteira, e não cards lado a lado.
+ * Os grupos têm 5, 5 e 11 itens: em grid de três colunas, todos esticam até a
+ * altura do maior e os dois primeiros ficam com um vazio enorme no meio.
+ * Em linha, cada grupo tem a altura do próprio conteúdo e o problema some.
+ */
+---
+
+<section class="secao secao--branca" id="servicos">
+  <div class="container">
+    <div class="cabeca__linha">
+      <div class="cabeca" style="margin-bottom: 0; max-width: 12ch">
+        <span class="rotulo rotulo--marcado" data-surge>{servicosHead.rotulo}</span>
+        <h2 class="d2" data-texto>{servicosHead.titulo}</h2>
+      </div>
+
+      <p class="corpo cabeca__apoio" data-surge style="--atraso: 120ms">
+        {servicosHead.apoio}
+      </p>
+    </div>
+
+    <div class="grupos">
+      {
+        gruposServicos.map((grupo, i) => (
+          /*
+           * A animação NÃO fica no <article>: se ficasse, a linha inteira
+           * apareceria de uma vez. Cada peça tem o seu atraso, e a soma é a
+           * cascata — coluna da esquerda primeiro, itens caindo em seguida.
+           */
+          <article class="grupo">
+            <div class="grupo__lado">
+              <div class="grupo__marca" data-surge="cascata">
+                <span class="numeral grupo__numeral" aria-hidden="true">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span class:list={["badge", i === 1 && "badge--acento"]} aria-hidden="true">
+                  <Icone nome={grupo.icone as NomeIcone} size={19} />
+                </span>
+              </div>
+
+              <h3 class="d3 grupo__titulo" data-surge="cascata" style="--atraso: 70ms">
+                {grupo.titulo}
+              </h3>
+              <p class="corpo grupo__resumo" data-surge="cascata" style="--atraso: 130ms">
+                {grupo.resumo}
+              </p>
+
+              <a
+                class="link-sub grupo__link"
+                data-surge="cascata"
+                style="--atraso: 190ms"
+                href={linkWhatsapp(`Olá! Quero falar sobre ${grupo.titulo}.`)}
+                target="_blank"
+                rel="noopener"
+              >
+                Falar sobre isso
+              </a>
+            </div>
+
+            <ul class="grupo__itens">
+              {grupo.itens.map((item, j) => (
+                <li class="item" data-surge="cascata" style={`--atraso: ${120 + j * 55}ms`}>
+                  <span class="item__traco" aria-hidden="true" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .cabeca__linha {
+    display: grid;
+    gap: var(--e2);
+    align-items: end;
+    margin-bottom: var(--e5);
+  }
+
+  .cabeca__apoio {
+    max-width: 40ch;
+  }
+
+  @media (min-width: 940px) {
+    .cabeca__linha {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--e4);
+    }
+  }
+
+  /* fio contínuo separando as linhas, no lugar da borda fechada do card */
+  .grupos {
+    border-top: 1px solid var(--cinza-200);
+  }
+
+  .grupo {
+    display: grid;
+    gap: var(--e3);
+    padding-block: var(--e4);
+    border-bottom: 1px solid var(--cinza-200);
+    transition: background-color 0.4s var(--curva);
+  }
+
+  @media (min-width: 900px) {
+    .grupo {
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      gap: var(--e5);
+      padding-block: var(--e5);
+      /* respiro nas laterais para o hover ter área própria */
+      padding-inline: var(--e2);
+      margin-inline: calc(var(--e2) * -1);
+      border-radius: var(--r-md);
+    }
+
+    .grupo:hover {
+      background: var(--papel-050);
+    }
+  }
+
+  .grupo__lado {
+    display: grid;
+    justify-items: start;
+    gap: var(--e1);
+    align-content: start;
+  }
+
+  /*
+   * Na linha alta (11 itens), a coluna da esquerda acaba muito antes da lista.
+   * Sticky faz o título acompanhar a leitura em vez de deixar um vazio parado.
+   */
+  @media (min-width: 900px) {
+    .grupo__lado {
+      position: sticky;
+      top: calc(var(--e6) + 1rem);
+    }
+  }
+
+  .grupo__marca {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+    margin-bottom: var(--e2);
+  }
+
+  /* numeral em contorno, alinhado pela base com o badge */
+  .grupo__numeral {
+    font-size: clamp(3rem, 2.4rem + 2vw, 4.2rem);
+    transform: translateY(0.06em);
+  }
+
+  .grupo:hover .grupo__numeral {
+    -webkit-text-stroke-color: var(--cinza-500);
+    transition: -webkit-text-stroke-color 0.4s var(--curva);
+  }
+
+  .grupo:hover .badge {
+    background: var(--tinta-950);
+    border-color: var(--tinta-950);
+    color: var(--texto-claro);
+    transform: rotate(-6deg);
+  }
+
+  .grupo__titulo {
+    max-width: 14ch;
+  }
+
+  .grupo__resumo {
+    max-width: 32ch;
+    font-size: 0.96rem;
+  }
+
+  .grupo__link {
+    margin-top: var(--e2);
+  }
+
+  /*
+   * Duas colunas nos itens: 11 numa coluna só viravam uma torre estreita, e 5
+   * deixavam a direita vazia. Em duas, os dois casos ficam equilibrados.
+   */
+  .grupo__itens {
+    display: grid;
+    gap: 0.85rem;
+    align-content: start;
+  }
+
+  @media (min-width: 640px) {
+    .grupo__itens {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--e3);
+    }
+  }
+
+  .item {
+    display: flex;
+    gap: 0.7rem;
+    align-items: baseline;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--tinta-800);
+    transition: color 0.3s var(--curva);
+  }
+
+  .item__traco {
+    width: 12px;
+    height: 1px;
+    background: var(--cinza-400);
+    flex-shrink: 0;
+    transform: translateY(-0.35em);
+    transition: width 0.35s var(--curva), background-color 0.35s var(--curva);
+  }
+
+  .item:hover {
+    color: var(--tinta-950);
+  }
+
+  .item:hover .item__traco {
+    width: 20px;
+    background: var(--acento-500);
+  }
+</style>

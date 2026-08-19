@@ -1,0 +1,97 @@
+---
+import { informativoHead } from "../data/conteudo";
+import CardPost from "./CardPost.astro";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  posts: CollectionEntry<"informativo">[];
+}
+
+const { posts } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<section class="secao secao--branca" id="informativo">
+  <div class="container">
+    <div class="info__cabeca">
+      <div class="cabeca cabeca--larga" style="margin-bottom: 0">
+        <span class="rotulo rotulo--marcado" data-surge>{informativoHead.rotulo}</span>
+        <h2 class="d2" data-texto>{informativoHead.titulo}</h2>
+      </div>
+
+      <div class="info__lado" data-surge style="--atraso: 120ms">
+        <p class="corpo">{informativoHead.texto}</p>
+        <a class="link-sub" href={`${base}/informativo/`}>
+          {informativoHead.verTodos}
+        </a>
+      </div>
+    </div>
+
+    <div class="info__grade">
+      {
+        posts.map((post, i) => (
+          <div class="info__celula" data-surge style={`--atraso: ${i * 90}ms`}>
+            <CardPost
+              id={post.id}
+              titulo={post.data.titulo}
+              resumo={post.data.resumo}
+              data={post.data.data}
+              categoria={post.data.categoria}
+              tempoLeitura={post.data.tempoLeitura}
+              destaque={i === 0}
+            />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .info__cabeca {
+    display: grid;
+    gap: var(--e3);
+    align-items: end;
+    margin-bottom: var(--e5);
+  }
+
+  .info__lado {
+    display: grid;
+    justify-items: start;
+    gap: var(--e2);
+    max-width: 40ch;
+  }
+
+  @media (min-width: 940px) {
+    .info__cabeca {
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: var(--e4);
+    }
+  }
+
+  .info__grade {
+    display: grid;
+    gap: var(--e2);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 900px) {
+    .info__grade {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    /* o mais recente ocupa a linha inteira */
+    .info__celula:first-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* o wrapper da animação não pode achatar a altura do card */
+  .info__celula {
+    display: flex;
+  }
+
+  .info__celula > :global(*) {
+    width: 100%;
+  }
+</style>

@@ -1,0 +1,158 @@
+---
+import Icone from "./Icone.astro";
+import type { NomeIcone } from "./icones";
+
+/** Cada categoria tem seu ícone, para o card ser reconhecível de relance. */
+const iconePorCategoria: Record<string, NomeIcone> = {
+  Tributos: "balanca",
+  Finanças: "grafico",
+  Fiscal: "documento",
+  Societário: "escudo",
+};
+
+interface Props {
+  id: string;
+  titulo: string;
+  resumo: string;
+  data: Date;
+  categoria: string;
+  tempoLeitura: number;
+  destaque?: boolean;
+}
+
+const { id, titulo, resumo, data, categoria, tempoLeitura, destaque = false } =
+  Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+const dataLegivel = data.toLocaleDateString("pt-BR", {
+  day: "2-digit",
+  month: "short",
+  year: "numeric",
+});
+const dataISO = data.toISOString().slice(0, 10);
+---
+
+<article class:list={["post", destaque && "post--destaque"]}>
+  <a href={`${base}/informativo/${id}/`}>
+    <header class="post__topo">
+      <span class="badge badge--cheio post__icone" aria-hidden="true">
+        <Icone nome={iconePorCategoria[categoria] ?? "documento"} size={18} />
+      </span>
+      <span class="post__meta">
+        <span class="pilula">{categoria}</span>
+        <span class="rotulo post__tempo">{tempoLeitura} min</span>
+      </span>
+    </header>
+
+    <h3 class:list={["post__titulo", destaque ? "d2" : "d3"]}>{titulo}</h3>
+    <p class="corpo post__resumo">{resumo}</p>
+
+    <footer class="post__rodape">
+      <time class="rotulo" datetime={dataISO}>{dataLegivel}</time>
+      <span class="post__seta" aria-hidden="true">
+        <Icone nome="seta" size={16} />
+      </span>
+    </footer>
+  </a>
+</article>
+
+<style>
+  .post {
+    height: 100%;
+  }
+
+  .post a {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--e2);
+    height: 100%;
+    padding: var(--e3);
+    border-radius: var(--r-lg);
+    background: var(--papel-000);
+    border: 1px solid var(--cinza-200);
+    overflow: hidden;
+    transition: border-color 0.45s var(--curva), box-shadow 0.45s var(--curva),
+      transform 0.45s var(--curva);
+  }
+
+  .post a:hover {
+    border-color: var(--cinza-400);
+    box-shadow: var(--sombra-card);
+    transform: translateY(-5px);
+  }
+
+  .post__topo {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .post__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+  }
+
+  .post__tempo {
+    color: var(--cinza-400);
+  }
+
+  .post a:hover .post__icone {
+    background: var(--tinta-950);
+    color: var(--texto-claro);
+  }
+
+  .post__titulo {
+    text-wrap: balance;
+  }
+
+  .post__resumo {
+    font-size: 0.96rem;
+  }
+
+  .post__rodape {
+    margin-top: auto;
+    padding-top: var(--e2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--cinza-200);
+  }
+
+  .post__seta {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--cinza-300);
+    font-size: 0.85rem;
+    transition: background-color 0.4s var(--curva), color 0.4s var(--curva),
+      border-color 0.4s var(--curva), transform 0.4s var(--curva);
+  }
+
+  .post a:hover .post__seta {
+    background: var(--tinta-950);
+    border-color: var(--tinta-950);
+    color: var(--texto-claro);
+    transform: translateX(3px);
+  }
+
+  @media (min-width: 900px) {
+    .post--destaque a {
+      padding: var(--e4);
+    }
+
+    .post--destaque .post__resumo {
+      max-width: 60ch;
+      font-size: 1.05rem;
+    }
+
+    .post--destaque .post__titulo {
+      max-width: 20ch;
+    }
+  }
+</style>

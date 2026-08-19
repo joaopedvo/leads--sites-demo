@@ -1,0 +1,51 @@
+---
+import { gruposServicos } from "../data/conteudo";
+
+// Um item por serviço real — nada inventado só para preencher a faixa.
+// A lista é duplicada porque a animação desloca o trilho em -50%: ao terminar
+// a primeira cópia, a segunda está exatamente no lugar.
+const servicos = gruposServicos.flatMap((g) => g.itens);
+const itens = [...servicos, ...servicos];
+---
+
+<div class="faixa secao--escura">
+  <div class="marquee" aria-label="Serviços prestados">
+    <div class="marquee__trilho">
+      {
+        itens.map((item, i) => (
+          <span class="faixa__item" aria-hidden={i >= servicos.length ? "true" : undefined}>
+            <span class="faixa__ponto" />
+            {item}
+          </span>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<style>
+  .faixa {
+    padding-block: 1.15rem;
+  }
+
+  .faixa__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    padding-inline: 1.35rem;
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--texto-claro-suave);
+    white-space: nowrap;
+  }
+
+  .faixa__ponto {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--acento-500);
+    flex-shrink: 0;
+  }
+</style>

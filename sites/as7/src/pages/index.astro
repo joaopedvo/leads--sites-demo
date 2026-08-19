@@ -1,0 +1,31 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import Marquee from "../components/Marquee.astro";
+import Servicos from "../components/Servicos.astro";
+import Sobre from "../components/Sobre.astro";
+import Informativo from "../components/Informativo.astro";
+import Contato from "../components/Contato.astro";
+import Footer from "../components/Footer.astro";
+import { seo } from "../data/conteudo";
+
+// Do mais recente para o mais antigo; a home mostra os quatro primeiros.
+const posts = (await getCollection("informativo"))
+  .sort((a, b) => b.data.data.getTime() - a.data.data.getTime())
+  .slice(0, 4);
+---
+
+<Layout title={seo.titulo} description={seo.descricao}>
+  <Header />
+  <main id="conteudo">
+    <Hero />
+    <Marquee />
+    <Servicos />
+    <Sobre />
+    <Informativo posts={posts} />
+    <Contato />
+  </main>
+  <Footer />
+</Layout>
