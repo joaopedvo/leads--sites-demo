@@ -128,11 +128,11 @@ export const gruposServicos = [
 export const sobre = {
   rotulo: "Sobre nós",
   /** PROPOSTA — declaração curta, no lugar do parágrafo inteiro como manchete. */
-  titulo: "Experiência, competência e talento",
-  /** VERBATIM — o texto do cliente, agora em corpo de leitura e não em título. */
+  titulo: "Experiência que orienta decisões",
+  /** PROPOSTA — versão mais direta, baseada apenas nos fatos informados pelo cliente. */
   paragrafos: [
-    "Criada em 2009, por profissionais com mais de 20 anos de experiência nas áreas contábil, tributária, financeira e administrativa, ampla vivência em Empresas Nacionais e Multinacionais dos mais variados segmentos de mercado, a AS7 nasceu com o propósito de oferecer atendimento personalizado, flexível e objetivo.",
-    "A AS7 é uma Empresa inovadora, com diferenciais competitivos no mercado e formada por gente altamente qualificada.",
+    "A AS7 nasceu em 2009, fundada por profissionais com mais de 20 anos de experiência nas áreas contábil, tributária, financeira e administrativa.",
+    "A vivência em empresas nacionais e multinacionais se traduz em um atendimento próximo, flexível e objetivo para cada parceiro.",
   ],
   /** PROPOSTA — os três atributos que a copy do cliente já afirma, destacados. */
   atributos: [
@@ -143,7 +143,7 @@ export const sobre = {
     },
     {
       icone: "pessoas",
-      titulo: "Sócios com estrada",
+      titulo: "Experiência executiva",
       texto: "Mais de 20 anos em empresas nacionais e multinacionais.",
     },
     {
