@@ -10,7 +10,8 @@ import {
   clientesTitulo,
   sobre,
   pilares,
-  depoimento,
+  depoimentos,
+  depoimentosCabeca,
   contato,
 } from "../data/conteudo";
 
@@ -73,21 +74,28 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     <section class="clientes" aria-labelledby="clientes-titulo">
       <div class="shell" data-revelar>
         <p class="eyebrow" id="clientes-titulo">{clientesTitulo}</p>
-        <ul class="clientes-faixa">
+      </div>
+      {/* Os cinco logos somam ~557px. Meia volta com duas cópias não cobre
+          1280px e abriria buraco no laço, então cada ciclo tem três cópias e
+          o trilho leva dois ciclos — a animação desloca -50% e a emenda cai
+          exatamente onde a segunda começa. */}
+      <div class="marquee" role="group" aria-label="Clientes atendidos pela Etec">
+        <div class="marquee-trilho">
           {
-            clientes.map((cliente) => (
-              <li>
+            Array.from({ length: 6 }, (_, ciclo) =>
+              clientes.map((cliente) => (
                 <img
                   src={`${base}/img/clientes/${cliente.arquivo}`}
-                  alt={cliente.nome}
+                  alt={ciclo === 0 ? cliente.nome : ""}
+                  aria-hidden={ciclo === 0 ? undefined : "true"}
                   height="300"
                   loading="lazy"
                   decoding="async"
                 />
-              </li>
-            ))
+              )),
+            )
           }
-        </ul>
+        </div>
       </div>
     </section>
 
@@ -144,16 +152,28 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       </div>
     </section>
 
-    <section class="secao" aria-labelledby="depoimento-titulo">
+    <section class="secao" aria-labelledby="depoimentos-titulo">
       <div class="shell">
-        <figure class="depoimento" data-revelar>
-          <p class="eyebrow" id="depoimento-titulo">A voz do cliente</p>
-          <blockquote style="margin-top: 26px">{depoimento.texto}</blockquote>
-          <figcaption>
-            <b>{depoimento.autor}</b>
-            {depoimento.papel}
-          </figcaption>
-        </figure>
+        <div class="secao-cabeca" data-revelar>
+          <p class="eyebrow">{depoimentosCabeca.eyebrow}</p>
+          <h2 class="titulo" id="depoimentos-titulo">
+            {depoimentosCabeca.titulo.map((linha) => <span>{linha}</span>)}
+          </h2>
+        </div>
+
+        <div class="depoimentos">
+          {
+            depoimentos.map((dep) => (
+              <figure class="depoimento" data-revelar>
+                <blockquote>{dep.texto}</blockquote>
+                <figcaption>
+                  <b>{dep.autor}</b>
+                  <span>{dep.papel}</span>
+                </figcaption>
+              </figure>
+            ))
+          }
+        </div>
       </div>
     </section>
 
