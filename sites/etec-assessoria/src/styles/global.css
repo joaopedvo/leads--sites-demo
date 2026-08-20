@@ -1,0 +1,246 @@
+/*
+ * Etec — demonstração de redesign.
+ *
+ * Estrutura e disciplina tipográfica vêm da referência (Auria): rótulos em
+ * mono, manchete grande com tracking negativo, painel escuro no meio.
+ * A cor NÃO vem de lá: sai do próprio logo da Etec, amostrado pixel a pixel.
+ * O outro demo contábil da galeria (AS7) é acromático, então este precisava
+ * de identidade própria — e a marca já tinha uma.
+ */
+
+:root {
+  /* Amostradas de logo-etec.png */
+  --vermelho: #b01f24;
+  --vinho: #641810;
+  --grafite: #393b3c;
+
+  /* Neutros puxados para o quente do vermelho, não cinzas neutros */
+  --papel: #faf8f6;
+  --papel-2: #f1ece8;
+  --tinta: #17110f;
+  --tinta-suave: #6d635e;
+  --tinta-clara: #f7f3f1;
+  --tinta-clara-suave: #a99c96;
+  --linha: rgba(23, 17, 15, 0.14);
+  --linha-clara: rgba(247, 243, 241, 0.16);
+
+  --sans: "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "Roboto Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --largura: min(1180px, 92vw);
+  --raio: 10px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+.pular {
+  position: absolute; left: -9999px; top: 0; z-index: 50;
+  padding: 12px 18px; background: var(--tinta); color: var(--tinta-clara);
+  font: 500 13px/1 var(--mono); text-decoration: none;
+}
+.pular:focus { left: 12px; top: 12px; }
+
+.shell { width: var(--largura); margin-inline: auto; }
+
+/* ---- tipografia ---- */
+.eyebrow {
+  margin: 0;
+  font: 500 11px/1 var(--mono);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--vermelho);
+}
+.secao-escura .eyebrow { color: #e2726f; }
+
+.titulo {
+  margin: 22px 0 0;
+  font-size: clamp(40px, 6.2vw, 82px);
+  line-height: .96;
+  letter-spacing: -.045em;
+  font-weight: 500;
+  text-wrap: balance;
+}
+.titulo span { display: block; }
+.titulo span + span { color: var(--tinta-suave); }
+.secao-escura .titulo span + span { color: var(--tinta-clara-suave); }
+
+.apoio {
+  max-width: 46ch;
+  margin: 26px 0 0;
+  color: var(--tinta-suave);
+  font-size: clamp(16px, 1.3vw, 18px);
+}
+.secao-escura .apoio { color: var(--tinta-clara-suave); }
+
+/* ---- botões ---- */
+.btn {
+  display: inline-flex; align-items: center; gap: 14px;
+  min-height: 52px; padding: 0 10px 0 24px;
+  border: 1px solid var(--tinta); border-radius: var(--raio);
+  background: var(--tinta); color: var(--tinta-clara);
+  font: 500 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase;
+  text-decoration: none; white-space: nowrap;
+  transition: transform .3s cubic-bezier(.22,1,.36,1), background-color .3s, border-color .3s;
+}
+.btn i {
+  width: 34px; height: 34px; display: grid; place-items: center;
+  border: 1px solid rgba(247,243,241,.4); border-radius: 6px;
+  font-style: normal; font-size: 15px;
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1), border-color .3s;
+}
+.btn:hover { transform: translateY(-2px); background: var(--vermelho); border-color: var(--vermelho); }
+.btn:hover i { transform: translate(2px,-2px); border-color: rgba(247,243,241,.8); }
+.btn--vazado { background: transparent; color: var(--tinta); border-color: var(--linha); }
+.btn--vazado i { border-color: var(--linha); }
+.btn--vazado:hover { background: transparent; border-color: var(--tinta); color: var(--tinta); }
+.btn--vazado:hover i { border-color: var(--tinta); }
+.secao-escura .btn { background: var(--tinta-clara); color: var(--tinta); border-color: var(--tinta-clara); }
+.secao-escura .btn i { border-color: rgba(23,17,15,.32); }
+.secao-escura .btn:hover { background: var(--vermelho); border-color: var(--vermelho); color: var(--tinta-clara); }
+:where(a, button):focus-visible { outline: 2px solid var(--vermelho); outline-offset: 3px; }
+
+/* ---- cabeçalho ---- */
+.topo {
+  position: sticky; top: 0; z-index: 20;
+  background: color-mix(in srgb, var(--papel) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--linha);
+}
+.topo-in { display: flex; align-items: center; gap: 28px; padding: 14px 0; }
+.topo img { height: 42px; width: auto; }
+.topo nav { margin-left: auto; display: flex; gap: 26px; }
+.topo nav a {
+  color: var(--tinta); text-decoration: none;
+  font: 500 12px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase;
+}
+.topo nav a:hover { color: var(--vermelho); }
+
+/* ---- hero ---- */
+.hero { padding: clamp(72px, 9vw, 130px) 0 clamp(48px, 5vw, 72px); }
+.hero-grade { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(32px, 5vw, 80px); align-items: end; }
+.hero-acoes { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+
+.fatos {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  margin-top: clamp(48px, 6vw, 82px);
+  border-top: 1px solid var(--linha);
+}
+.fatos div { padding: 24px 20px 0 0; }
+.fatos strong {
+  display: block; font-size: clamp(30px, 3.4vw, 46px);
+  line-height: 1; letter-spacing: -.05em; font-weight: 500;
+}
+.fatos strong sup { font-size: .42em; letter-spacing: 0; top: -.9em; }
+.fatos span {
+  display: block; margin-top: 12px;
+  font: 400 12px/1.45 var(--mono); letter-spacing: .04em; color: var(--tinta-suave);
+}
+
+/* ---- seções ---- */
+.secao { padding: clamp(72px, 8vw, 120px) 0; }
+.secao-escura { background: var(--tinta); color: var(--tinta-clara); }
+.secao-papel { background: var(--papel-2); }
+.secao-cabeca { max-width: 720px; margin-bottom: clamp(40px, 5vw, 68px); }
+
+/* ---- serviços ---- */
+.servicos { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--linha); border-left: 1px solid var(--linha); }
+.servico { padding: 32px 28px 36px; border-right: 1px solid var(--linha); border-bottom: 1px solid var(--linha); background: var(--papel); }
+.servico small { font: 500 11px/1 var(--mono); letter-spacing: .14em; color: var(--vermelho); }
+.servico h3 { margin: 26px 0 12px; font-size: 24px; line-height: 1.1; letter-spacing: -.03em; font-weight: 500; }
+.servico p { margin: 0 0 22px; color: var(--tinta-suave); font-size: 15px; }
+.servico ul { margin: 0; padding: 18px 0 0; border-top: 1px solid var(--linha); list-style: none; display: grid; gap: 9px; }
+.servico li { padding-left: 18px; position: relative; font-size: 14px; color: var(--tinta-suave); }
+.servico li::before { content: ""; position: absolute; left: 0; top: .62em; width: 6px; height: 1px; background: var(--vermelho); }
+
+/* ---- sobre + pilares ---- */
+.sobre-grade { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 78px); align-items: start; }
+.sobre-texto p { margin: 0 0 20px; color: var(--tinta-clara-suave); font-size: 17px; }
+.pilares { display: grid; gap: 1px; background: var(--linha-clara); border: 1px solid var(--linha-clara); border-radius: var(--raio); overflow: hidden; }
+.pilar { padding: 26px 24px; background: var(--tinta); }
+.pilar strong { display: block; font: 500 11px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: #e2726f; }
+.pilar p { margin: 14px 0 0; color: var(--tinta-clara-suave); font-size: 15px; }
+
+/* ---- depoimento ---- */
+.depoimento { max-width: 900px; }
+.depoimento blockquote {
+  margin: 0; font-size: clamp(24px, 3.2vw, 42px); line-height: 1.18;
+  letter-spacing: -.035em; font-weight: 500; text-wrap: balance;
+}
+.depoimento figcaption { margin-top: 32px; font: 400 13px/1.5 var(--mono); color: var(--tinta-suave); }
+.depoimento figcaption b { display: block; color: var(--tinta); font-weight: 500; }
+
+/* ---- contato ---- */
+.contato-grade { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(32px, 5vw, 70px); align-items: start; }
+.contato-dados { display: grid; gap: 22px; margin: 0; }
+.contato-dados div { padding-top: 18px; border-top: 1px solid var(--linha-clara); }
+.contato-dados dt { font: 500 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: #e2726f; }
+.contato-dados dd { margin: 10px 0 0; font-size: 16px; color: var(--tinta-clara); }
+.contato-dados a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--linha-clara); }
+.contato-dados a:hover { border-color: var(--vermelho); }
+
+/* ---- rodapé ---- */
+.rodape { padding: 40px 0; background: var(--tinta); color: var(--tinta-clara-suave); border-top: 1px solid var(--linha-clara); }
+.rodape-in { display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: center; font: 400 12px/1.5 var(--mono); }
+.rodape-in .direita { margin-left: auto; }
+
+/* ---- revelação ---- */
+.js [data-revelar] { opacity: 0; transform: translateY(26px); transition: opacity .7s, transform .8s cubic-bezier(.22,1,.36,1); }
+.js [data-revelar].visivel { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .js [data-revelar] { opacity: 1; transform: none; transition: none; }
+}
+
+/* ---- responsivo ---- */
+@media (max-width: 900px) {
+  .hero-grade, .sobre-grade, .contato-grade { grid-template-columns: 1fr; }
+  .servicos { grid-template-columns: repeat(2, 1fr); }
+  .fatos { grid-template-columns: repeat(2, 1fr); }
+  .fatos div { padding-bottom: 22px; }
+  /* Três links curtos cabem em 375px; esconder o menu deixaria o topo sem
+     navegação nenhuma, já que não há botão de menu neste demo. */
+  .topo nav { gap: 14px; }
+  .topo nav a { font-size: 10.5px; letter-spacing: .06em; }
+}
+@media (max-width: 560px) {
+  .servicos { grid-template-columns: 1fr; }
+  .btn { width: 100%; justify-content: space-between; }
+  .rodape-in .direita { margin-left: 0; }
+}
+
+/* ---- faixa de clientes ----
+   Logos do cliente vêm em PNG colorido, alturas diferentes e miolos com peso
+   visual desigual. Normalizo pela altura, deixo em escala de cinza e devolvo
+   a cor no hover: a faixa lê como uma lista, não como cinco marcas brigando
+   com a da Etec logo acima. */
+.clientes { padding: clamp(40px, 5vw, 64px) 0; border-top: 1px solid var(--linha); border-bottom: 1px solid var(--linha); }
+.clientes-faixa {
+  list-style: none; margin: 28px 0 0; padding: 0;
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: clamp(28px, 5vw, 64px);
+}
+.clientes-faixa img {
+  height: 38px; width: auto;
+  filter: grayscale(1) contrast(.85); opacity: .62;
+  transition: filter .35s, opacity .35s;
+}
+.clientes-faixa img:hover { filter: none; opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .clientes-faixa img { transition: none; } }
+@media (max-width: 560px) {
+  .clientes-faixa { gap: 24px 28px; }
+  .clientes-faixa img { height: 30px; }
+}

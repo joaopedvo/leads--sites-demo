@@ -1,0 +1,203 @@
+---
+import Layout from "../layouts/Layout.astro";
+import {
+  empresa,
+  linkWhatsapp,
+  hero,
+  fatos,
+  servicos,
+  clientes,
+  clientesTitulo,
+  sobre,
+  pilares,
+  depoimento,
+  contato,
+} from "../data/conteudo";
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<Layout
+  title={`${empresa.nomeCompleto} — Contabilidade em ${empresa.cidade}, ${empresa.uf}`}
+  description="Escritório contábil em Castanhal desde 1987. Contabilidade, fiscal, folha de pagamento, operações rurais, declarações e legalização de empresas."
+>
+  <header class="topo">
+    <div class="shell topo-in">
+      <img src={`${base}/img/logo-etec.png`} alt={empresa.nomeCompleto} width="230" height="130" />
+      <nav aria-label="Navegação principal">
+        <a href="#servicos">Serviços</a>
+        <a href="#sobre">A casa</a>
+        <a href="#contato">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero">
+      <div class="shell">
+        <div class="hero-grade">
+          <div data-revelar>
+            <p class="eyebrow">{hero.eyebrow}</p>
+            <h1 class="titulo">{hero.titulo.map((linha) => <span>{linha}</span>)}</h1>
+          </div>
+          <div data-revelar>
+            <p class="apoio">{hero.apoio}</p>
+            <div class="hero-acoes">
+              <a class="btn" href={linkWhatsapp("abrir minha empresa")} target="_blank" rel="noopener noreferrer">
+                {hero.cta}<i aria-hidden="true">↗</i>
+              </a>
+              <a class="btn btn--vazado" href="#servicos">
+                {hero.ctaSecundario}<i aria-hidden="true">↓</i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="fatos" data-revelar>
+          {
+            fatos.map((fato) => (
+              <div>
+                <strong>
+                  {fato.valor}
+                  {fato.sufixo && <sup>{fato.sufixo}</sup>}
+                </strong>
+                <span>{fato.rotulo}</span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+
+    <section class="clientes" aria-labelledby="clientes-titulo">
+      <div class="shell" data-revelar>
+        <p class="eyebrow" id="clientes-titulo">{clientesTitulo}</p>
+        <ul class="clientes-faixa">
+          {
+            clientes.map((cliente) => (
+              <li>
+                <img
+                  src={`${base}/img/clientes/${cliente.arquivo}`}
+                  alt={cliente.nome}
+                  height="300"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="secao secao-papel" id="servicos" aria-labelledby="servicos-titulo">
+      <div class="shell">
+        <div class="secao-cabeca" data-revelar>
+          <p class="eyebrow">Serviços</p>
+          <h2 class="titulo" id="servicos-titulo">
+            <span>Seis frentes,</span><span>um escritório só.</span>
+          </h2>
+        </div>
+
+        <div class="servicos">
+          {
+            servicos.map((servico) => (
+              <article class="servico" data-revelar>
+                <small>{servico.n}</small>
+                <h3>{servico.nome}</h3>
+                <p>{servico.resumo}</p>
+                <ul>
+                  {servico.itens.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="secao secao-escura" id="sobre" aria-labelledby="sobre-titulo">
+      <div class="shell sobre-grade">
+        <div class="sobre-texto" data-revelar>
+          <p class="eyebrow">{sobre.eyebrow}</p>
+          <h2 class="titulo" id="sobre-titulo">
+            {sobre.titulo.map((linha) => <span>{linha}</span>)}
+          </h2>
+          <div style="margin-top: 34px">
+            {sobre.paragrafos.map((paragrafo) => <p>{paragrafo}</p>)}
+          </div>
+        </div>
+
+        <div class="pilares" data-revelar>
+          {
+            pilares.map((pilar) => (
+              <div class="pilar">
+                <strong>{pilar.rotulo}</strong>
+                <p>{pilar.texto}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="secao" aria-labelledby="depoimento-titulo">
+      <div class="shell">
+        <figure class="depoimento" data-revelar>
+          <p class="eyebrow" id="depoimento-titulo">A voz do cliente</p>
+          <blockquote style="margin-top: 26px">{depoimento.texto}</blockquote>
+          <figcaption>
+            <b>{depoimento.autor}</b>
+            {depoimento.papel}
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="secao secao-escura" id="contato" aria-labelledby="contato-titulo">
+      <div class="shell contato-grade">
+        <div data-revelar>
+          <p class="eyebrow">{contato.eyebrow}</p>
+          <h2 class="titulo" id="contato-titulo">
+            {contato.titulo.map((linha) => <span>{linha}</span>)}
+          </h2>
+          <p class="apoio">{contato.apoio}</p>
+          <div class="hero-acoes">
+            <a class="btn" href={linkWhatsapp("os serviços da Etec")} target="_blank" rel="noopener noreferrer">
+              Chamar no WhatsApp<i aria-hidden="true">↗</i>
+            </a>
+          </div>
+        </div>
+
+        <dl class="contato-dados" data-revelar>
+          <div>
+            <dt>Endereço</dt>
+            <dd>{empresa.endereco}<br />{empresa.bairro} · {empresa.cidade} — {empresa.uf}</dd>
+          </div>
+          <div>
+            <dt>Telefones</dt>
+            <dd>
+              {empresa.telefones.join(" · ")}<br />
+              {empresa.whatsappExibicao} (WhatsApp)
+            </dd>
+          </div>
+          <div>
+            <dt>E-mail</dt>
+            <dd><a href={`mailto:${empresa.email}`}>{empresa.email}</a></dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="shell rodape-in">
+      <span>© {new Date().getFullYear()} {empresa.nomeCompleto}</span>
+      <span>{empresa.cidade} — {empresa.uf}</span>
+      <span class="direita">Demonstração de redesign · não é o site oficial</span>
+    </div>
+  </footer>
+</Layout>
