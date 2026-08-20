@@ -1,0 +1,81 @@
+---
+import "../styles/global.css";
+import { empresa } from "../data/conteudo";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "AccountingService",
+  name: empresa.nomeCompleto,
+  description,
+  telephone: empresa.telefones[0],
+  email: empresa.email,
+  foundingDate: String(empresa.fundacao),
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: empresa.endereco,
+    addressLocality: empresa.cidade,
+    addressRegion: empresa.uf,
+    addressCountry: "BR",
+  },
+  areaServed: `${empresa.cidade} e região`,
+};
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {/* Demo de proposta: reproduz a identidade de uma empresa real, então não
+        pode ser indexado nem concorrer com o site verdadeiro dela. */}
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/png" href={`${base}/img/favicon-etec.png`} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Roboto+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#17110f" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+
+  <body>
+    <a href="#conteudo" class="pular">Pular para o conteúdo</a>
+    <slot />
+
+    <script>
+      document.documentElement.classList.add("js");
+
+      const alvos = document.querySelectorAll("[data-revelar]");
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        alvos.forEach((el) => el.classList.add("visivel"));
+      } else {
+        const observador = new IntersectionObserver(
+          (entradas) =>
+            entradas.forEach((entrada) => {
+              if (!entrada.isIntersecting) return;
+              entrada.target.classList.add("visivel");
+              observador.unobserve(entrada.target);
+            }),
+          { threshold: 0.12, rootMargin: "0px 0px -6% 0px" },
+        );
+        alvos.forEach((el) => observador.observe(el));
+      }
+    </script>
+  </body>
+</html>
