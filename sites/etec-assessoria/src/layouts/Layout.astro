@@ -41,7 +41,7 @@ const schema = {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Roboto+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
     <title>{title}</title>
@@ -59,22 +59,140 @@ const schema = {
     <slot />
 
     <script>
+      import { gsap } from "gsap";
+      import { ScrollTrigger } from "gsap/ScrollTrigger";
+
       document.documentElement.classList.add("js");
 
-      const alvos = document.querySelectorAll("[data-revelar]");
+      const botaoMenu = document.querySelector<HTMLButtonElement>(".menu-toggle");
+      const menu = document.querySelector<HTMLElement>("#menu-principal");
+
+      const fecharMenu = () => {
+        if (!botaoMenu || !menu) return;
+        botaoMenu.setAttribute("aria-expanded", "false");
+        botaoMenu.setAttribute("aria-label", "Abrir menu");
+        menu.classList.remove("aberto");
+        document.body.style.overflow = "";
+      };
+
+      botaoMenu?.addEventListener("click", () => {
+        if (!menu) return;
+        const aberto = botaoMenu.getAttribute("aria-expanded") === "true";
+        botaoMenu.setAttribute("aria-expanded", String(!aberto));
+        botaoMenu.setAttribute("aria-label", aberto ? "Abrir menu" : "Fechar menu");
+        menu.classList.toggle("aberto", !aberto);
+        document.body.style.overflow = aberto ? "" : "hidden";
+      });
+
+      menu?.querySelectorAll("a").forEach((link) => link.addEventListener("click", fecharMenu));
+      addEventListener("keydown", (evento) => {
+        if (evento.key === "Escape") fecharMenu();
+      });
+      matchMedia("(min-width: 901px)").addEventListener("change", fecharMenu);
+
+      const alvos = gsap.utils.toArray<HTMLElement>("[data-revelar]");
       if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
         alvos.forEach((el) => el.classList.add("visivel"));
       } else {
-        const observador = new IntersectionObserver(
-          (entradas) =>
-            entradas.forEach((entrada) => {
-              if (!entrada.isIntersecting) return;
-              entrada.target.classList.add("visivel");
-              observador.unobserve(entrada.target);
-            }),
-          { threshold: 0.12, rootMargin: "0px 0px -6% 0px" },
-        );
-        alvos.forEach((el) => observador.observe(el));
+        gsap.registerPlugin(ScrollTrigger);
+        alvos.forEach((el) => el.classList.add("visivel"));
+
+        const entrada = gsap.timeline({ defaults: { ease: "power3.out" } });
+        entrada
+          .from(".topo", { y: -90, autoAlpha: 0, duration: .8 })
+          .from(".hero .eyebrow", { x: -24, autoAlpha: 0, duration: .55 }, "-=.25")
+          .from(".hero .titulo span", { y: 48, autoAlpha: 0, filter: "blur(8px)", duration: .85, stagger: .13 }, "-=.25")
+          .from(".hero-selo", { scale: .82, rotate: -4, autoAlpha: 0, duration: .65 }, "-=.45")
+          .from(".hero .apoio, .hero-acoes", { y: 22, autoAlpha: 0, duration: .65, stagger: .12 }, "-=.4");
+
+        gsap.from(".fatos > div", {
+          immediateRender: false,
+          scale: .88,
+          autoAlpha: 0,
+          duration: .75,
+          stagger: .12,
+          ease: "back.out(1.35)",
+          scrollTrigger: { trigger: ".fatos", start: "top 86%", once: true },
+        });
+
+        gsap.from(".clientes .eyebrow", {
+          immediateRender: false,
+          letterSpacing: ".45em",
+          autoAlpha: 0,
+          duration: .8,
+          ease: "power2.out",
+          scrollTrigger: { trigger: ".clientes", start: "top 84%", once: true },
+        });
+        gsap.from(".marquee-trilho", {
+          immediateRender: false,
+          xPercent: 8,
+          autoAlpha: 0,
+          duration: 1.1,
+          ease: "power3.out",
+          scrollTrigger: { trigger: ".marquee", start: "top 90%", once: true },
+        });
+
+        document.querySelectorAll<HTMLElement>(".secao-cabeca").forEach((cabeca) => {
+          gsap.from(cabeca.children, {
+            immediateRender: false,
+            x: -42,
+            autoAlpha: 0,
+            duration: .75,
+            stagger: .12,
+            ease: "power3.out",
+            scrollTrigger: { trigger: cabeca, start: "top 84%", once: true },
+          });
+        });
+
+        gsap.from(".servico", {
+          immediateRender: false,
+          y: 60,
+          scale: .94,
+          autoAlpha: 0,
+          duration: .8,
+          stagger: { each: .1, from: "start" },
+          ease: "power3.out",
+          scrollTrigger: { trigger: ".servicos", start: "top 82%", once: true },
+        });
+
+        gsap.from(".sobre-texto", {
+          immediateRender: false,
+          x: -70,
+          autoAlpha: 0,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: { trigger: ".sobre-grade", start: "top 78%", once: true },
+        });
+        gsap.from(".pilar", {
+          immediateRender: false,
+          x: 70,
+          autoAlpha: 0,
+          duration: .8,
+          stagger: .14,
+          ease: "power3.out",
+          scrollTrigger: { trigger: ".pilares", start: "top 82%", once: true },
+        });
+
+        gsap.from(".depoimento", {
+          immediateRender: false,
+          y: 45,
+          rotate: (indice) => indice % 2 ? 2 : -2,
+          autoAlpha: 0,
+          duration: .85,
+          stagger: .13,
+          ease: "power3.out",
+          scrollTrigger: { trigger: ".depoimentos", start: "top 82%", once: true },
+        });
+
+        gsap.from(".contato-grade > *", {
+          immediateRender: false,
+          y: 50,
+          autoAlpha: 0,
+          duration: .9,
+          stagger: .16,
+          ease: "power3.out",
+          scrollTrigger: { trigger: ".contato-grade", start: "top 80%", once: true },
+        });
       }
     </script>
   </body>

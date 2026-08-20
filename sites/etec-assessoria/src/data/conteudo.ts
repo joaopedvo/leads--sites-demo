@@ -55,7 +55,6 @@ export const hero = {
 /** Todos VERBATIM — números que o próprio site já publica. */
 export const fatos = [
   { valor: "1987", rotulo: "Fundada em 11 de maio" },
-  { valor: "204", sufixo: "m²", rotulo: "Sede própria" },
   { valor: "20", rotulo: "Colaboradores" },
   { valor: "4", rotulo: "Estagiários em formação" },
 ];
