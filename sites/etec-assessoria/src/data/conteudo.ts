@@ -32,10 +32,10 @@ export const linkWhatsapp = (assunto: string) =>
  */
 export const clientes = [
   { nome: "Boi Bravo", arquivo: "boi-bravo.png" },
-  { nome: "CCA", arquivo: "cca.png" },
-  { nome: "Concecp Saúde", arquivo: "concecp-saude.png" },
+  { nome: "CCA Aparelhos Auditivos", arquivo: "cca.png" },
+  { nome: "Concept Saúde", arquivo: "concecp-saude.png" }, // o arquivo veio com "concecp"; o logo lê Concept
   { nome: "Lojas Marilar", arquivo: "marilar.png" },
-  { nome: "Via Norte", arquivo: "via-norte.png" },
+  { nome: "Via Norte Automóveis", arquivo: "via-norte.png" },
 ];
 
 export const clientesTitulo = "Quem confia na Etec"; // PROPOSTA
@@ -159,15 +159,40 @@ export const pilares = [
 ];
 
 /**
- * VERBATIM. No site de origem o depoimento aparece truncado no meio de uma
- * frase ("...de seu quadro de […]"). Cortei na última frase completa em vez de
- * inventar o final — vale pedir o texto integral ao cliente.
+ * VERBATIM, fornecidos pelo cliente.
+ *
+ * Dois vêm truncados na origem, cortados no meio de uma frase. Cortei na
+ * última frase completa em vez de inventar o final — vale pedir os textos
+ * integrais antes de publicar de verdade. O que foi omitido está anotado em
+ * `truncado`.
  */
-export const depoimento = {
-  texto:
-    "Sou cliente da ETEC desde 1987 e sempre a ETEC propôs soluções e resolveu os problemas que foram surgindo ao longo desse tempo de maneira ágil, eficiente, eficaz e com ética.",
-  autor: "Mário Filho",
-  papel: "Lojas Marilar · cliente desde 1987",
+export const depoimentos = [
+  {
+    texto:
+      "Na ETEC temos a total confiança naquilo que sabem fazer com primazia. Nós da SERAMA, Com. Coringa e W da Cruz Chagas sentimos muito orgulho de fazermos parte desta história.",
+    autor: "Walmir Chagas",
+    papel: "Serama · W da Cruz · Com. Coringa",
+    truncado: false,
+  },
+  {
+    texto:
+      "Sou cliente da ETEC desde 1987 e sempre a ETEC propôs soluções e resolveu os problemas que foram surgindo ao longo desse tempo de maneira ágil, eficiente, eficaz e com ética.",
+    autor: "Mário Filho",
+    papel: "Lojas Marilar · cliente desde 1987",
+    truncado: true, // segue "Fico feliz por ser cliente ETEC, pois ela sempre buscou..."
+  },
+  {
+    texto:
+      "Adoramos ser atendidos pelo melhor escritório de contabilidade de Castanhal! O melhor atendimento, a melhor equipe, o melhor ambiente. Que venham mais 30, 40, 50, 100 anos de sucesso.",
+    autor: "Jéssica e Roberto Mota",
+    papel: "Açaí Sabor do Norte",
+    truncado: true, // segue "A São João Polpas não tem do que reclamar, somos muito bem..."
+  },
+];
+
+export const depoimentosCabeca = {
+  eyebrow: "A voz do cliente", // VERBATIM — é o título da seção no site atual
+  titulo: ["Quem está há", "décadas na casa."], // PROPOSTA
 };
 
 export const contato = {

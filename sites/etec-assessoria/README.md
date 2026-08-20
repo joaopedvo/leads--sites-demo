@@ -33,8 +33,10 @@ dois precisam se distinguir.
 
 ## Pendências para conversar com o cliente
 
-- O depoimento do Mário Filho **está truncado no site de origem**, cortado no
-  meio de uma frase. Aqui ele termina na última frase completa; vale pedir o
-  texto integral.
+- **Dois dos três depoimentos vêm truncados**, cortados no meio de uma frase
+  (Mário Filho e Jéssica/Roberto). Aqui terminam na última frase completa; o
+  que ficou de fora está anotado em `conteudo.ts`. Vale pedir os integrais.
+- O depoimento da Açaí Sabor do Norte cita a **São João Polpas** — confirmar se
+  é o mesmo grupo antes de publicar.
 - Não existe versão vetorial do logo. Para aplicar em tamanho grande, precisa
   ser revetorizado.
