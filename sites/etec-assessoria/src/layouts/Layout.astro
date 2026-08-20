@@ -97,101 +97,41 @@ const schema = {
         gsap.registerPlugin(ScrollTrigger);
         alvos.forEach((el) => el.classList.add("visivel"));
 
-        const entrada = gsap.timeline({ defaults: { ease: "power3.out" } });
+        const entrada = gsap.timeline({ defaults: { ease: "power2.out" } });
         entrada
-          .from(".topo", { y: -90, autoAlpha: 0, duration: .8 })
-          .from(".hero .eyebrow", { x: -24, autoAlpha: 0, duration: .55 }, "-=.25")
-          .from(".hero .titulo span", { y: 48, autoAlpha: 0, filter: "blur(8px)", duration: .85, stagger: .13 }, "-=.25")
-          .from(".hero-selo", { scale: .82, rotate: -4, autoAlpha: 0, duration: .65 }, "-=.45")
-          .from(".hero .apoio, .hero-acoes", { y: 22, autoAlpha: 0, duration: .65, stagger: .12 }, "-=.4");
+          .from(".hero .eyebrow", { y: 10, autoAlpha: 0, duration: .45 })
+          .from(".hero .titulo span", { y: 18, autoAlpha: 0, duration: .6, stagger: .08 }, "-=.2")
+          .from(".hero-selo, .hero .apoio, .hero-acoes", { y: 14, autoAlpha: 0, duration: .5, stagger: .07 }, "-=.3");
 
-        gsap.from(".fatos > div", {
-          immediateRender: false,
-          scale: .88,
-          autoAlpha: 0,
-          duration: .75,
-          stagger: .12,
-          ease: "back.out(1.35)",
-          scrollTrigger: { trigger: ".fatos", start: "top 86%", once: true },
-        });
+        const animarGrupo = (seletor: string, gatilho: string, intervalo = .07) => {
+          gsap.from(seletor, {
+            immediateRender: false,
+            y: 20,
+            autoAlpha: 0,
+            duration: .58,
+            stagger: intervalo,
+            ease: "power2.out",
+            scrollTrigger: { trigger: gatilho, start: "top 88%", once: true },
+          });
+        };
 
-        gsap.from(".clientes .eyebrow", {
-          immediateRender: false,
-          letterSpacing: ".45em",
-          autoAlpha: 0,
-          duration: .8,
-          ease: "power2.out",
-          scrollTrigger: { trigger: ".clientes", start: "top 84%", once: true },
-        });
-        gsap.from(".marquee-trilho", {
-          immediateRender: false,
-          xPercent: 8,
-          autoAlpha: 0,
-          duration: 1.1,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ".marquee", start: "top 90%", once: true },
-        });
+        animarGrupo(".fatos > div", ".fatos", .06);
+        animarGrupo(".clientes .eyebrow, .marquee", ".clientes", .08);
+        animarGrupo(".servico", ".servicos", .06);
+        animarGrupo(".sobre-texto, .pilar", ".sobre-grade", .08);
+        animarGrupo(".depoimento", ".depoimentos", .07);
+        animarGrupo(".contato-grade > *", ".contato-grade", .08);
 
         document.querySelectorAll<HTMLElement>(".secao-cabeca").forEach((cabeca) => {
           gsap.from(cabeca.children, {
             immediateRender: false,
-            x: -42,
+            y: 16,
             autoAlpha: 0,
-            duration: .75,
-            stagger: .12,
-            ease: "power3.out",
-            scrollTrigger: { trigger: cabeca, start: "top 84%", once: true },
+            duration: .55,
+            stagger: .07,
+            ease: "power2.out",
+            scrollTrigger: { trigger: cabeca, start: "top 88%", once: true },
           });
-        });
-
-        gsap.from(".servico", {
-          immediateRender: false,
-          y: 60,
-          scale: .94,
-          autoAlpha: 0,
-          duration: .8,
-          stagger: { each: .1, from: "start" },
-          ease: "power3.out",
-          scrollTrigger: { trigger: ".servicos", start: "top 82%", once: true },
-        });
-
-        gsap.from(".sobre-texto", {
-          immediateRender: false,
-          x: -70,
-          autoAlpha: 0,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ".sobre-grade", start: "top 78%", once: true },
-        });
-        gsap.from(".pilar", {
-          immediateRender: false,
-          x: 70,
-          autoAlpha: 0,
-          duration: .8,
-          stagger: .14,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ".pilares", start: "top 82%", once: true },
-        });
-
-        gsap.from(".depoimento", {
-          immediateRender: false,
-          y: 45,
-          rotate: (indice) => indice % 2 ? 2 : -2,
-          autoAlpha: 0,
-          duration: .85,
-          stagger: .13,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ".depoimentos", start: "top 82%", once: true },
-        });
-
-        gsap.from(".contato-grade > *", {
-          immediateRender: false,
-          y: 50,
-          autoAlpha: 0,
-          duration: .9,
-          stagger: .16,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ".contato-grade", start: "top 80%", once: true },
         });
       }
     </script>

@@ -63,6 +63,7 @@ export const fatos = [
 export const servicos = [
   {
     n: "01",
+    icone: "grafico",
     nome: "Assessoria Contábil",
     resumo: "A escrituração completa, em dia com todas as exigências legais.", // PROPOSTA
     itens: [
@@ -75,6 +76,7 @@ export const servicos = [
   },
   {
     n: "02",
+    icone: "balanca",
     nome: "Assessoria Fiscal e Tributária",
     resumo: "Do enquadramento à apuração, com o regime certo para o seu caso.", // PROPOSTA
     itens: [
@@ -87,6 +89,7 @@ export const servicos = [
   },
   {
     n: "03",
+    icone: "pessoas",
     nome: "Folha de Pagamento",
     resumo: "Admissão, folha e rescisão conduzidas dentro do prazo.", // PROPOSTA
     itens: [
@@ -99,12 +102,14 @@ export const servicos = [
   },
   {
     n: "04",
+    icone: "escudo",
     nome: "Operações Rurais",
     resumo: "Contabilidade para o produtor rural, com o que a atividade exige.", // PROPOSTA
     itens: ["Registros contábeis", "Livro Caixa", "Contrato de trabalho"],
   },
   {
     n: "05",
+    icone: "documento",
     nome: "Declarações",
     resumo: "As obrigações anuais entregues sem correria de última hora.", // PROPOSTA
     itens: [
@@ -117,6 +122,7 @@ export const servicos = [
   },
   {
     n: "06",
+    icone: "alvo",
     nome: "Legalização de Empresas",
     resumo: "Da constituição à habilitação para licitar.", // PROPOSTA
     itens: [

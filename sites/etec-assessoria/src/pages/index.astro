@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Icone from "../components/Icone.astro";
 import {
   empresa,
   linkWhatsapp,
@@ -52,10 +53,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
             <p class="apoio">{hero.apoio}</p>
             <div class="hero-acoes">
               <a class="btn" href={linkWhatsapp("abrir minha empresa")} target="_blank" rel="noopener noreferrer">
-                {hero.cta}<i aria-hidden="true">→</i>
+                {hero.cta}<i aria-hidden="true"><Icone nome="zap" size={17} /></i>
               </a>
               <a class="btn btn--vazado" href="#servicos">
-                {hero.ctaSecundario}<i aria-hidden="true">⌄</i>
+                {hero.ctaSecundario}<i class="btn-mais" aria-hidden="true">+</i>
               </a>
             </div>
           </div>
@@ -119,7 +120,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
           {
             servicos.map((servico) => (
               <article class="servico" data-revelar>
-                <small>{servico.n}</small>
+                <div class="servico-topo">
+                  <span class="servico-icone"><Icone nome={servico.icone} /></span>
+                  <small>{servico.n}</small>
+                </div>
                 <h3>{servico.nome}</h3>
                 <p>{servico.resumo}</p>
                 <ul>
@@ -194,7 +198,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
           <p class="apoio">{contato.apoio}</p>
           <div class="hero-acoes">
             <a class="btn" href={linkWhatsapp("os serviços da Etec")} target="_blank" rel="noopener noreferrer">
-              Chamar no WhatsApp<i aria-hidden="true">→</i>
+              Chamar no WhatsApp<i aria-hidden="true"><Icone nome="zap" size={17} /></i>
             </a>
           </div>
         </div>
