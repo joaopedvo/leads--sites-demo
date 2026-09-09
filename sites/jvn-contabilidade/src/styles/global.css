@@ -1,17 +1,9 @@
-/*
- * Etec — demonstração de redesign.
- *
- * Estrutura e disciplina tipográfica vêm da referência (Auria): rótulos em
- * mono, manchete grande com tracking negativo, painel escuro no meio.
- * A cor NÃO vem de lá: sai do próprio logo da Etec, amostrado pixel a pixel.
- * O outro demo contábil da galeria (AS7) é acromático, então este precisava
- * de identidade própria — e a marca já tinha uma.
- */
+/* JVN Contabilidade — demonstração de redesign. */
 
 :root {
-  /* Amostradas de logo-etec.png */
-  --vermelho: #b01f24;
-  --vinho: #641810;
+  /* Identidade JVN */
+  --vermelho: #b50078;
+  --vinho: #620044;
   --grafite: #393b3c;
 
   /* Neutros puxados para o quente do vermelho, não cinzas neutros */
@@ -69,7 +61,7 @@ img { max-width: 100%; display: block; }
   color: var(--vermelho);
 }
 .eyebrow::before { content: ""; width: 22px; height: 2px; background: currentColor; border-radius: 2px; }
-.secao-escura .eyebrow { color: #e2726f; }
+.secao-escura .eyebrow { color: #ff70ca; }
 
 .titulo {
   margin: 22px 0 0;
@@ -96,7 +88,7 @@ img { max-width: 100%; display: block; }
   display: inline-flex; align-items: center; gap: 14px;
   min-height: 58px; padding: 0 9px 0 25px;
   border: 1px solid transparent; border-radius: 999px;
-  background: linear-gradient(135deg, var(--vermelho), #86181b); color: var(--tinta-clara);
+  background: linear-gradient(135deg, var(--vermelho), #850059); color: var(--tinta-clara);
   font: 700 11px/1 var(--mono); letter-spacing: .11em; text-transform: uppercase;
   text-decoration: none; white-space: nowrap;
   box-shadow: 0 10px 28px rgba(176,31,36,.16);
@@ -305,7 +297,7 @@ img { max-width: 100%; display: block; }
 .contato-grade { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(32px, 5vw, 70px); align-items: start; }
 .contato-dados { display: grid; gap: 22px; margin: 0; }
 .contato-dados div { padding-top: 18px; border-top: 1px solid var(--linha-clara); }
-.contato-dados dt { font: 500 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: #e2726f; }
+.contato-dados dt { font: 500 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: #ff70ca; }
 .contato-dados dd { margin: 10px 0 0; font-size: 16px; color: var(--tinta-clara); }
 .contato-dados a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--linha-clara); }
 .contato-dados a:hover { border-color: var(--vermelho); }
@@ -368,7 +360,7 @@ img { max-width: 100%; display: block; }
    Logos do cliente vêm em PNG colorido, alturas diferentes e miolos com peso
    visual desigual. Normalizo pela altura, deixo em escala de cinza e devolvo
    a cor no hover: a faixa lê como uma lista, não como cinco marcas brigando
-   com a da Etec logo acima. */
+   com a da JVN logo acima. */
 .clientes { position: relative; isolation: isolate; overflow: hidden; padding: clamp(58px, 6vw, 84px) 0; border-top: 1px solid var(--linha); border-bottom: 1px solid var(--linha); background: radial-gradient(circle at 88% 15%, rgba(176,31,36,.065), transparent 22%), linear-gradient(180deg, rgba(255,255,255,.78), rgba(243,237,230,.58)); }
 .clientes::before, .clientes::after { display: none; }
 .clientes > .shell { position: relative; z-index: 2; display: flex; justify-content: center; text-align: center; }
@@ -420,3 +412,6 @@ img { max-width: 100%; display: block; }
   .marquee-trilho { gap: 28px; padding-right: 28px; }
   .marquee-trilho img { height: 30px; }
 }
+
+.topo-in > img { width: 88px; height: 88px; object-fit: contain; }
+

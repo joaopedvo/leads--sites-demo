@@ -7,12 +7,8 @@ import {
   hero,
   fatos,
   servicos,
-  clientes,
-  clientesTitulo,
   sobre,
   pilares,
-  depoimentos,
-  depoimentosCabeca,
   contato,
 } from "../data/conteudo";
 
@@ -21,19 +17,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 <Layout
   title={`${empresa.nomeCompleto} — Contabilidade em ${empresa.cidade}, ${empresa.uf}`}
-  description="Escritório contábil em Castanhal desde 1987. Contabilidade, fiscal, folha de pagamento, operações rurais, declarações e legalização de empresas."
+  description="JVN Contabilidade em Uberlândia desde 1986. Abertura e encerramento de empresas, escrituração contábil e fiscal, rotinas trabalhistas e Imposto de Renda."
 >
   <header class="topo">
     <div class="shell topo-in">
-      <img src={`${base}/img/logo-etec.png`} alt={empresa.nomeCompleto} width="230" height="130" />
+      <img src={`${base}/img/logo-jvn-transparente.png`} alt={empresa.nomeCompleto} width="100" height="100" />
       <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-principal">
         <span></span><span></span><span></span>
       </button>
       <nav id="menu-principal" aria-label="Navegação principal">
         <a href="#inicio">Início</a>
-        <a href="#clientes">Clientes</a>
         <a href="#servicos">Serviços</a>
-        <a href="#sobre">A casa</a>
+        <a href="#sobre">Quem somos</a>
         <a href="#depoimentos">Depoimentos</a>
         <a class="nav-cta" href="#contato">Contato</a>
       </nav>
@@ -49,7 +44,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
             <h1 class="titulo">{hero.titulo.map((linha) => <span>{linha}</span>)}</h1>
           </div>
           <div data-revelar>
-            <p class="hero-selo"><strong>39 anos</strong><span>de parceria com<br />empresas do Pará</span></p>
+            <p class="hero-selo"><strong>Desde 1986</strong><span>contabilidade em<br />Uberlândia, MG</span></p>
             <p class="apoio">{hero.apoio}</p>
             <div class="hero-acoes">
               <a class="btn" href={linkWhatsapp("abrir minha empresa")} target="_blank" rel="noopener noreferrer">
@@ -68,7 +63,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
               <div>
                 <strong>
                   {fato.valor}
-                  {fato.sufixo && <sup>{fato.sufixo}</sup>}
+                  
                 </strong>
                 <span>{fato.rotulo}</span>
               </div>
@@ -79,33 +74,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     </section>
 
 
-    <section class="clientes" id="clientes" aria-labelledby="clientes-titulo">
-      <div class="shell" data-revelar>
-        <p class="eyebrow" id="clientes-titulo">{clientesTitulo}</p>
-      </div>
-      {/* Os cinco logos somam ~557px. Meia volta com duas cópias não cobre
-          1280px e abriria buraco no laço, então cada ciclo tem três cópias e
-          o trilho leva dois ciclos — a animação desloca -50% e a emenda cai
-          exatamente onde a segunda começa. */}
-      <div class="marquee" role="group" aria-label="Clientes atendidos pela Etec">
-        <div class="marquee-trilho">
-          {
-            Array.from({ length: 6 }, (_, ciclo) =>
-              clientes.map((cliente) => (
-                <img
-                  src={`${base}/img/clientes/${cliente.arquivo}`}
-                  alt={ciclo === 0 ? cliente.nome : ""}
-                  aria-hidden={ciclo === 0 ? undefined : "true"}
-                  height="300"
-                  loading="lazy"
-                  decoding="async"
-                />
-              )),
-            )
-          }
-        </div>
-      </div>
-    </section>
+
 
     <section class="secao secao-papel" id="servicos" aria-labelledby="servicos-titulo">
       <div class="shell">
@@ -163,31 +132,31 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       </div>
     </section>
 
+
+
     <section class="secao" id="depoimentos" aria-labelledby="depoimentos-titulo">
       <div class="shell">
-        <div class="secao-cabeca" data-revelar>
-          <p class="eyebrow">{depoimentosCabeca.eyebrow}</p>
-          <h2 class="titulo" id="depoimentos-titulo">
-            {depoimentosCabeca.titulo.map((linha) => <span>{linha}</span>)}
-          </h2>
+        <div class="secao-cabeca">
+          <p class="eyebrow">Depoimentos de exemplo</p>
+          <h2 class="titulo" id="depoimentos-titulo"><span>Atendimento que</span><span>faz a diferença.</span></h2>
+          <p class="apoio">Relatos fictícios para demonstrar esta seção. Não representam clientes ou avaliações reais da JVN.</p>
         </div>
-
         <div class="depoimentos">
-          {
-            depoimentos.map((dep) => (
-              <figure class="depoimento" data-revelar>
-                <blockquote>{dep.texto}</blockquote>
-                <figcaption>
-                  <b>{dep.autor}</b>
-                  <span>{dep.papel}</span>
-                </figcaption>
-              </figure>
-            ))
-          }
+          <figure class="depoimento">
+            <blockquote>“Na abertura da minha empresa, eu tinha muitas dúvidas. Ter alguém explicando cada etapa com clareza tornou o processo muito mais tranquilo.”</blockquote>
+            <figcaption><b>Mariana · personagem fictícia</b><span>Exemplo — abertura de empresa</span></figcaption>
+          </figure>
+          <figure class="depoimento">
+            <blockquote>“Com os documentos organizados e as orientações sobre a rotina fiscal, ficou mais fácil acompanhar as obrigações do meu negócio.”</blockquote>
+            <figcaption><b>Ricardo · personagem fictício</b><span>Exemplo — rotina contábil e fiscal</span></figcaption>
+          </figure>
+          <figure class="depoimento">
+            <blockquote>“Consegui entender quais documentos precisava reunir para o Imposto de Renda e esclarecer minhas dúvidas durante o atendimento.”</blockquote>
+            <figcaption><b>Fernanda · personagem fictícia</b><span>Exemplo — Imposto de Renda</span></figcaption>
+          </figure>
         </div>
       </div>
     </section>
-
     <section class="secao secao-escura" id="contato" aria-labelledby="contato-titulo">
       <div class="shell contato-grade">
         <div data-revelar>
@@ -197,7 +166,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
           </h2>
           <p class="apoio">{contato.apoio}</p>
           <div class="hero-acoes">
-            <a class="btn" href={linkWhatsapp("os serviços da Etec")} target="_blank" rel="noopener noreferrer">
+            <a class="btn" href={linkWhatsapp("os serviços da JVN")} target="_blank" rel="noopener noreferrer">
               Chamar no WhatsApp<i aria-hidden="true"><Icone nome="zap" size={17} /></i>
             </a>
           </div>
@@ -206,7 +175,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
         <dl class="contato-dados" data-revelar>
           <div>
             <dt>Endereço</dt>
-            <dd>{empresa.endereco}<br />{empresa.bairro} · {empresa.cidade} — {empresa.uf}</dd>
+            <dd>{empresa.endereco}<br />{empresa.cidade} — {empresa.uf}<br />CEP {empresa.cep}</dd>
           </div>
           <div>
             <dt>Telefones</dt>
@@ -219,6 +188,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
             <dt>E-mail</dt>
             <dd><a href={`mailto:${empresa.email}`}>{empresa.email}</a></dd>
           </div>
+          <div><dt>Atendimento</dt><dd>{empresa.horario}</dd></div>
         </dl>
       </div>
     </section>
@@ -232,3 +202,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     </div>
   </footer>
 </Layout>
+
+
+
