@@ -416,3 +416,6 @@ img { max-width: 100%; display: block; }
 .topo-in > img { width: 190px; height: auto; object-fit: contain; }
 @media (max-width: 600px) { .topo-in > img { width: 150px; } }
 
+
+/* Contain the closed off-canvas menu without widening the page. */
+html { overflow-x: clip; }
