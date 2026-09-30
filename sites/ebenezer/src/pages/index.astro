@@ -8,7 +8,7 @@ import Servicos from "../components/Servicos.astro";
 import Diferenciais from "../components/Diferenciais.astro";
 import Processo from "../components/Processo.astro";
 import Cobertura from "../components/Cobertura.astro";
-import Depoimentos from "../components/Depoimentos.astro";
+import Testimonials from "../components/Depoimentos.astro";
 import Faq from "../components/Faq.astro";
 import CtaBand from "../components/CtaBand.astro";
 import Footer from "../components/Footer.astro";
@@ -16,7 +16,7 @@ import WhatsappFlutuante from "../components/WhatsappFlutuante.astro";
 import { seo, depoimentos, faq } from "../data/conteudo";
 
 /**
- * Depoimentos e FAQ ficam desligados enquanto as listas em conteudo.ts estão
+ * Testimonials e FAQ ficam desligados enquanto as listas em conteudo.ts estão
  * vazias: é conteúdo que afirma coisas sobre a empresa e só entra com a
  * palavra do cliente. Preencher a lista liga a seção sozinha.
  */
@@ -32,7 +32,7 @@ import { seo, depoimentos, faq } from "../data/conteudo";
     <Diferenciais />
     <Processo />
     <Cobertura />
-    {depoimentos.length > 0 && <Depoimentos />}
+    {depoimentos.length > 0 && <Testimonials />}
     {faq.length > 0 && <Faq />}
     <CtaBand />
   </main>

@@ -4,10 +4,10 @@ import type { NomeIcone } from "./icones";
 
 /** Cada categoria tem seu ícone, para o card ser reconhecível de relance. */
 const iconePorCategoria: Record<string, NomeIcone> = {
-  Tributos: "balanca",
-  Finanças: "grafico",
-  Fiscal: "documento",
-  Societário: "escudo",
+  Business: "balanca",
+  Operations: "grafico",
+  Records: "documento",
+  Planning: "escudo",
 };
 
 interface Props {
@@ -25,7 +25,7 @@ const { id, titulo, resumo, data, categoria, tempoLeitura, destaque = false } =
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
-const dataLegivel = data.toLocaleDateString("pt-BR", {
+const dataLegivel = data.toLocaleDateString("en-US", {
   day: "2-digit",
   month: "short",
   year: "numeric",

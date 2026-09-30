@@ -9,14 +9,14 @@ const href = (d: string) => (d.startsWith("#") ? `${base}/${d}` : `${base}${d}`)
   <div class="container topo__interno">
     <a class="marca" href={`${base}/`} aria-label={empresa.nomeCompleto}>
       <img
-        src={`${base}/img/logo-as7.png`}
+        src={`${base}/img/demo-logo.svg`}
         alt={empresa.nomeCompleto}
         width="240"
         height="126"
       />
     </a>
 
-    <nav class="menu" aria-label="Seções do site">
+    <nav class="menu" aria-label="Site sections">
       {navegacao.map((item) => (
         <a class="menu__item" href={href(item.href)}>
           <span data-eco={item.rotulo}>{item.rotulo}</span>
@@ -25,7 +25,7 @@ const href = (d: string) => (d.startsWith("#") ? `${base}/${d}` : `${base}${d}`)
     </nav>
 
     <a class="btn btn--escuro topo__cta" href={linkWhatsapp()} target="_blank" rel="noopener">
-      Falar agora
+      Get in touch
       <span class="btn__seta" aria-hidden="true">→</span>
     </a>
   </div>

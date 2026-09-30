@@ -1,58 +1,151 @@
-/** Conteúdo adaptado das páginas públicas de https://www.jvncontabilidade.com/. */
+// All company details are fictional and used for this website concept.
 export const empresa = {
-  nome: "JVN",
-  nomeCompleto: "JVN Contabilidade",
-  fundacao: 1986,
-  fundador: "João Vicente Neto",
-  cidade: "Uberlândia",
-  uf: "MG",
-  endereco: "Rua República do Piratini, 137",
-  cep: "38402-028",
-  email: "jvncontabilidade@hotmail.com.br",
-  telefones: ["(34) 3213-8080", "(34) 3213-3138"],
-  whatsapp: "5534996912662",
-  whatsappExibicao: "(34) 99691-2662",
-  horario: "Segunda a sexta, das 07:42 às 11:00 e das 12:00 às 17:30",
+  "nome": "Westbrook",
+  "nomeCompleto": "Westbrook Accounting",
+  "fundacao": 1998,
+  "fundador": "James Westbrook",
+  "cidade": "Charlotte",
+  "uf": "NC",
+  "endereco": "360 Example Street, Suite 100",
+  "cep": "28202",
+  "email": "hello@westbrook-demo.example",
+  "telefones": [
+    "(704) 555-0121",
+    "(704) 555-0122"
+  ],
+  "whatsapp": "17045550123",
+  "whatsappExibicao": "(704) 555-0123",
+  "horario": "Monday–Friday, 9:00 AM–5:00 PM"
 };
-export const linkWhatsapp = (assunto: string) =>
-  `https://wa.me/${empresa.whatsapp}?text=${encodeURIComponent(`Olá! Vim pelo site e quero falar sobre ${assunto}.`)}`;
 export const hero = {
-  eyebrow: "CONTABILIDADE · UBERLÂNDIA, MG",
-  titulo: ["Sua contabilidade,", "com experiência."],
-  apoio: "Desde 1986, a JVN acompanha empresas e pessoas físicas com serviços contábeis, fiscais e trabalhistas em Uberlândia.",
-  cta: "Falar com a JVN",
-  ctaSecundario: "Ver serviços",
+  "eyebrow": "ACCOUNTING · CHARLOTTE, NC",
+  "titulo": [
+    "Your numbers,",
+    "in good hands."
+  ],
+  "apoio": "Practical accounting support for small businesses, independent professionals and individuals in Charlotte.",
+  "cta": "Talk to Westbrook",
+  "ctaSecundario": "Explore services"
 };
 export const fatos = [
-  { valor: "1986", rotulo: "Ano de fundação" },
-  { valor: "MG", rotulo: "Em Uberlândia" },
-  { valor: "PF e PJ", rotulo: "Atendimento contábil" },
+  {
+    "valor": "1998",
+    "rotulo": "Concept founding year"
+  },
+  {
+    "valor": "NC",
+    "rotulo": "Based in Charlotte"
+  },
+  {
+    "valor": "You",
+    "rotulo": "At the center of our work"
+  }
 ];
 export const servicos = [
-  { n: "01", icone: "alvo", nome: "Abertura e Encerramento", resumo: "Acompanhamento dos registros e cadastros da sua empresa.", itens: ["Requerimentos empresariais e contratos sociais", "Alterações e arquivamentos na Junta Comercial, OAB e cartórios", "Inscrição, alteração e baixa de CNPJ e inscrição estadual", "Cadastro municipal em Uberlândia", "Alvará e cadastro para emissão de nota fiscal de serviço"] },
-  { n: "02", icone: "grafico", nome: "Escrituração Contábil", resumo: "Organização dos registros para acompanhar a contabilidade do negócio.", itens: ["Escrituração contábil", "Elaboração de relatórios contábeis", "Relações de faturamento"] },
-  { n: "03", icone: "balanca", nome: "Escrituração Fiscal", resumo: "Apoio na rotina de documentos e obrigações fiscais.", itens: ["Escrituração, conferência e lançamento de notas fiscais", "Orientação e acompanhamento da emissão de notas fiscais", "Emissão de livros fiscais", "Elaboração de obrigações acessórias"] },
-  { n: "04", icone: "pessoas", nome: "Rotinas Trabalhistas", resumo: "Acompanhamento das rotinas de pessoal da admissão ao desligamento.", itens: ["Admissão e demissão de empregados", "Folha de pagamento e pró-labore", "Guias de recolhimento da folha", "Obrigações acessórias referentes à folha de pagamento", "Orientações trabalhistas"] },
-  { n: "05", icone: "documento", nome: "Imposto de Renda", resumo: "Atendimento para a preparação da declaração de Imposto de Renda.", itens: ["Declaração de Imposto de Renda", "Atendimento a pessoas físicas"] },
-  { n: "06", icone: "escudo", nome: "Carnê-Leão e Livro-Caixa", resumo: "Apoio na organização dos registros e das obrigações da pessoa física.", itens: ["Carnê-Leão", "Livro-caixa"] },
+  {
+    "n": "01",
+    "icone": "alvo",
+    "nome": "Business Setup",
+    "resumo": "Get organized from the start.",
+    "itens": [
+      "Business setup coordination",
+      "Registration document organization",
+      "Accounting workflow setup",
+      "Recordkeeping systems",
+      "A clear handoff to ongoing support"
+    ]
+  },
+  {
+    "n": "02",
+    "icone": "grafico",
+    "nome": "Bookkeeping",
+    "resumo": "A clear view of the everyday numbers.",
+    "itens": [
+      "Transaction categorization",
+      "Bank reconciliations",
+      "Monthly financial reports"
+    ]
+  },
+  {
+    "n": "03",
+    "icone": "balanca",
+    "nome": "Tax Preparation Support",
+    "resumo": "Keep your records ready for tax season.",
+    "itens": [
+      "Document collection and review",
+      "Income and expense summaries",
+      "Coordination with your tax professional",
+      "Year-end organization"
+    ]
+  },
+  {
+    "n": "04",
+    "icone": "pessoas",
+    "nome": "Payroll Support",
+    "resumo": "Stay organized as your team grows.",
+    "itens": [
+      "Employee record organization",
+      "Payroll processing coordination",
+      "Payroll report reviews",
+      "New hire and departure checklists",
+      "Help with routine payroll questions"
+    ]
+  },
+  {
+    "n": "05",
+    "icone": "documento",
+    "nome": "Individual Support",
+    "resumo": "Bring your personal financial records together.",
+    "itens": [
+      "Personal document organization",
+      "Income summaries",
+      "Preparation checklists"
+    ]
+  },
+  {
+    "n": "06",
+    "icone": "escudo",
+    "nome": "Self-Employed Services",
+    "resumo": "Practical support for independent work.",
+    "itens": [
+      "Freelancer bookkeeping",
+      "Business expense tracking",
+      "Regular reporting"
+    ]
+  }
 ];
 export const sobre = {
-  eyebrow: "QUEM SOMOS",
-  titulo: ["Uma história que", "começou em 1986."],
-  paragrafos: [
-    "A JVN Contabilidade foi fundada em 1986 e atua em Uberlândia com serviços contábeis para empresas e pessoas físicas. Sua trajetória é orientada pela qualidade, eficiência e agilidade no atendimento.",
-    "O escritório busca atualização profissional e tecnológica para acompanhar a legislação e as necessidades de seus clientes.",
-    "João Vicente Neto — sócio fundador. CRC-MG nº 038.233/O-0.",
-    "Dalva Maria de Souza Ferreira — sócia, in memoriam.",
+  "eyebrow": "ABOUT US",
+  "titulo": [
+    "Good relationships.",
+    "Clearer numbers."
   ],
+  "paragrafos": [
+    "Westbrook Accounting is a fictional Charlotte firm created for this website demonstration. Its story begins with a simple idea: accounting should feel approachable.",
+    "This concept brings together personal attention, organized processes and clear reporting for businesses and individuals.",
+    "James Westbrook — fictional founding partner."
+  ]
 };
 export const pilares = [
-  { rotulo: "Missão", texto: "Prestar serviços contábeis com qualidade, eficiência e confiança, atendendo às necessidades dos clientes e buscando segurança, excelência e atualização contínua." },
-  { rotulo: "Visão", texto: "Ser uma organização contábil reconhecida pela ética e pela excelência dos serviços." },
-  { rotulo: "Valores", texto: "Honestidade, idoneidade, ética, compromisso, clareza e agilidade." },
+  {
+    "rotulo": "Our mission",
+    "texto": "Make accounting clear, approachable and useful in everyday decisions."
+  },
+  {
+    "rotulo": "Our vision",
+    "texto": "A lasting partnership built on understanding and open communication."
+  },
+  {
+    "rotulo": "Our values",
+    "texto": "Honesty, clarity, care, responsiveness and respect."
+  }
 ];
 export const contato = {
-  eyebrow: "CONTATO",
-  titulo: ["Como podemos", "ajudar você?"],
-  apoio: "Fale com a JVN sobre a abertura da sua empresa, as rotinas do seu negócio ou o atendimento para pessoa física.",
+  "eyebrow": "CONTACT",
+  "titulo": [
+    "How can we",
+    "help you?"
+  ],
+  "apoio": "Tell us about your business, your bookkeeping or the records you would like to organize."
 };
+export const linkWhatsapp = (assunto: string) => `mailto:${empresa.email}?subject=${encodeURIComponent(`Hello! I would like to discuss ${assunto}.`)}`;
