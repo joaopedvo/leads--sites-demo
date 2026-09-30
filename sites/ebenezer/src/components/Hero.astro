@@ -53,11 +53,11 @@ import Icone from "./Icone.astro";
 
       <ul class="painel__contatos">
         <li>
-          <a href={linkWhatsapp()} target="_blank" rel="noopener">
-            <span class="painel__icone painel__icone--zap"><IconeWhatsapp size={18} /></span>
+          <a href={`tel:+${empresa.whatsapp}`}>
+            <span class="painel__icone"><Icone nome="telefone" size={18} /></span>
             <span class="painel__dados">
               <strong>{empresa.whatsappExibicao}</strong>
-              <small>Contact</small>
+              <small>Appointments</small>
             </span>
           </a>
         </li>

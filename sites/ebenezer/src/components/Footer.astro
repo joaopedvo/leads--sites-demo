@@ -24,8 +24,8 @@ const ano = new Date().getFullYear();
         <a href={`tel:+${empresa.telefone}`}>{empresa.telefoneExibicao}</a>
       </p>
       <p class="rodape__linha">
-        <a href={linkWhatsapp()} target="_blank" rel="noopener">{empresa.whatsappExibicao}</a>
-        <span class="rodape__tag">Contact</span>
+        <a href={`tel:+${empresa.whatsapp}`}>{empresa.whatsappExibicao}</a>
+        <span class="rodape__tag">Appointments</span>
       </p>
       {
         empresa.email && (
