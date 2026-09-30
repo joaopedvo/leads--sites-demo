@@ -88,3 +88,8 @@
 .header{top:30px}
 .hero{padding-top:calc(clamp(8rem,12vh,11rem) + 30px)}
 @media(max-width:980px){.header nav{inset:102px 0 auto}.demo-bar b{display:none}}
+
+/* The word badge replaces a numerical business claim in the fictional demo. */
+.hero-badge { flex-direction: column; gap: .3rem; }
+.hero-badge strong { font-size: 2.3rem; letter-spacing: -.04em; }
+.hero-badge span { text-align: center; }

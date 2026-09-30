@@ -413,5 +413,6 @@ img { max-width: 100%; display: block; }
   .marquee-trilho img { height: 30px; }
 }
 
-.topo-in > img { width: 88px; height: 88px; object-fit: contain; }
+.topo-in > img { width: 190px; height: auto; object-fit: contain; }
+@media (max-width: 600px) { .topo-in > img { width: 150px; } }
 
