@@ -1,0 +1,35 @@
+name: Validate demo sites
+on:
+  push:
+    branches-ignore: [master]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: sites/*/package-lock.json
+      - name: Build all demos and gallery
+        env:
+          ASTRO_TELEMETRY_DISABLED: '1'
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          for dir in sites/*/; do
+            slug=$(basename "$dir")
+            (cd "$dir" && npm ci && npm run build)
+            mkdir -p "dist/$slug"
+            cp -r "$dir"dist/. "dist/$slug/"
+          done
+          node scripts/gerar-indice.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: demo-preview
+          path: dist
+          retention-days: 7

@@ -14,8 +14,8 @@ const categorias = [...new Set(posts.map((p) => p.data.categoria))].sort();
 ---
 
 <Layout
-  title={`Informativo — ${empresa.nomeCompleto}`}
-  description="Publicações da AS7 sobre tributos, obrigações fiscais e gestão financeira para empresas."
+  title={`Insights — ${empresa.nomeCompleto}`}
+  description="Sample Alder articles about business records, reporting and everyday operations."
 >
   <Header />
 
@@ -32,7 +32,7 @@ const categorias = [...new Set(posts.map((p) => p.data.categoria))].sort();
           <ul class="capa__categorias" data-surge style="--atraso: 220ms">
             {categorias.map((c) => <li class="pilula">{c}</li>)}
             <li class="rotulo capa__contagem">
-              {posts.length} publicaç{posts.length === 1 ? "ão" : "ões"}
+              {posts.length} article{posts.length === 1 ? "" : "s"}
             </li>
           </ul>
         </div>

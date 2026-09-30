@@ -37,7 +37,7 @@ for (const entrada of entradas) {
   });
 }
 
-demos.sort((a, b) => a.cliente.localeCompare(b.cliente, 'pt-BR'));
+demos.sort((a, b) => a.cliente.localeCompare(b.cliente, 'en-US'));
 
 const cards = demos
   .map((demo) => {
@@ -52,19 +52,19 @@ const cards = demos
           <h2>${escapar(demo.cliente)}</h2>
           ${linhaCidade}
           ${linhaDescricao}
-          <span class="link">Abrir demonstração →</span>
+          <span class="link">View website →</span>
         </a>
       </li>`;
   })
   .join('\n');
 
 const html = `<!doctype html>
-<html lang="pt-BR">
+<html lang="en-US">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>Demonstrações de redesign</title>
+    <title>Website Design Concepts</title>
     <style>
       :root {
         color-scheme: light dark;
@@ -115,13 +115,13 @@ const html = `<!doctype html>
   </head>
   <body>
     <main>
-      <h1>Demonstrações de redesign</h1>
+      <h1>Website Design Concepts</h1>
       <p class="intro">
-        Cada link abaixo é uma proposta visual construída para um negócio específico.
-        São páginas de demonstração, não sites oficiais das empresas.
+        Explore website concepts for fictional American businesses.
+        All names, addresses and contact details are sample content. These are not operating businesses.
       </p>
-${cards || '      <p class="vazio">Nenhuma demonstração publicada ainda.</p>'}
-      <footer>${demos.length} demonstração(ões) publicada(s).</footer>
+${cards ? `<ul>${cards}</ul>` : '<p class="vazio">No website concepts published yet.</p>'}
+      <footer>Fictional businesses. Real design possibilities.</footer>
     </main>
   </body>
 </html>

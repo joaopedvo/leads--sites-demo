@@ -25,7 +25,7 @@ const ano = new Date().getFullYear();
       </p>
       <p class="rodape__linha">
         <a href={linkWhatsapp()} target="_blank" rel="noopener">{empresa.whatsappExibicao}</a>
-        <span class="rodape__tag">WhatsApp</span>
+        <span class="rodape__tag">Contact</span>
       </p>
       {
         empresa.email && (
@@ -46,15 +46,15 @@ const ano = new Date().getFullYear();
     </div>
 
     <div class="rodape__bloco">
-      <strong class="rodape__titulo">Navegar</strong>
+      <strong class="rodape__titulo">Explore</strong>
       <ul class="rodape__lista">
         {navegacao.map((item) => <li><a href={item.href}>{item.rotulo}</a></li>)}
-        <li><a href="#contato">Contato</a></li>
+        <li><a href="#contato">Contact</a></li>
       </ul>
     </div>
 
     <div class="rodape__bloco">
-      <strong class="rodape__titulo">Onde atendemos</strong>
+      <strong class="rodape__titulo">Service area</strong>
       <ul class="rodape__lista">
         {cobertura.cidades.map((cidade) => <li>{cidade}</li>)}
       </ul>
@@ -63,7 +63,7 @@ const ano = new Date().getFullYear();
 
   <div class="container rodape__base">
     {empresa.licenca && <p>{empresa.licenca}</p>}
-    <p>© {ano} {empresa.nomeCompleto}. Todos os direitos reservados.</p>
+    <p>© {ano} {empresa.nomeCompleto}. All rights reserved.</p><p>Fictional business. All company and contact details are for demonstration only.</p>
   </div>
 </footer>
 

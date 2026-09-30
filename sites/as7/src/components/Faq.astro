@@ -10,24 +10,24 @@ import { linkWhatsapp } from "../data/conteudo";
  */
 const perguntas = [
   {
-    pergunta: "Quais áreas a AS7 cobre?",
+    pergunta: "What does Alder help with?",
     resposta:
-      "Três frentes: a rotina obrigatória de contabilidade e tributos, soluções em finanças para o que vem depois do balanço, e um grupo de temas que normalmente só aparece na fiscalização — societário, folha, classificação fiscal e correlatos.",
+      "Three connected areas: accounting and reporting, financial advisory, and practical business support. Explore the service list for examples.",
   },
   {
-    pergunta: "Como funciona a troca de escritório de contabilidade?",
+    pergunta: "What would switching accounting firms involve?",
     resposta:
-      "O levantamento do histórico fiscal e contábil começa em paralelo à operação atual, para não haver interrupção de obrigação nenhuma durante a transição.",
+      "A transition starts with understanding your current records, systems and deadlines, followed by an agreed handover plan.",
   },
   {
-    pergunta: "O que é o Informativo?",
+    pergunta: "What is the Insights section?",
     resposta:
-      "Publicações sobre tributos, obrigações e gestão financeira, escritas para quem toca a empresa — sem jargão que só interessa a quem já é da área.",
+      "Sample articles about business records, reporting and day-to-day organization. They illustrate how a firm can share useful content.",
   },
   {
-    pergunta: "Como falo com o escritório?",
+    pergunta: "Can I contact this business?",
     resposta:
-      "Pelo WhatsApp, telefone ou e-mail — todos no rodapé da página. O diagnóstico inicial parte de uma mensagem contando o porte e o regime tributário da empresa.",
+      "This is a fictional business website. The phone numbers, email addresses and office details are examples, and the form does not send messages.",
   },
 ];
 ---
@@ -35,8 +35,8 @@ const perguntas = [
 <section class="secao secao--branca" id="faq">
   <div class="container container--estreita">
     <div class="cabeca" style="margin-bottom: var(--e4)">
-      <span class="rotulo rotulo--marcado" data-surge>Dúvidas</span>
-      <h2 class="d2" data-texto>Perguntas frequentes</h2>
+      <span class="rotulo rotulo--marcado" data-surge>Questions</span>
+      <h2 class="d2" data-texto>Frequently asked questions</h2>
     </div>
 
     <div class="faq__lista">
@@ -57,9 +57,9 @@ const perguntas = [
     </div>
 
     <p class="faq__rodape">
-      Não achou a resposta?
-      <a class="link-sub" href={linkWhatsapp("Olá! Tenho uma dúvida sobre a AS7.")} target="_blank" rel="noopener">
-        Fale pelo WhatsApp
+      Still have a question?
+      <a class="link-sub" href={linkWhatsapp("Hello! I have a question about Alder.")} target="_blank" rel="noopener">
+        Send an email
       </a>
     </p>
   </div>

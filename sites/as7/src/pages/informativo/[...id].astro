@@ -17,7 +17,7 @@ const { Content } = await render(post);
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
-const dataLegivel = post.data.data.toLocaleDateString("pt-BR", {
+const dataLegivel = post.data.data.toLocaleDateString("en-US", {
   day: "2-digit",
   month: "long",
   year: "numeric",
@@ -42,13 +42,13 @@ const relacionados = (await getCollection("informativo"))
         <div class="container">
           <div class="capa__interno">
             <a class="link-sub voltar" href={`${base}/informativo/`}>
-              <span aria-hidden="true">←</span> Informativo
+              <span aria-hidden="true">←</span> Insights
             </a>
 
             <div class="capa__meta" data-surge>
               <span class="pilula">{post.data.categoria}</span>
               <time class="rotulo" datetime={dataISO}>{dataLegivel}</time>
-              <span class="rotulo capa__tempo">{post.data.tempoLeitura} min de leitura</span>
+              <span class="rotulo capa__tempo">{post.data.tempoLeitura} min read</span>
             </div>
 
             <h1 class="d1 capa__titulo" data-texto>{post.data.titulo}</h1>
@@ -66,19 +66,19 @@ const relacionados = (await getCollection("informativo"))
           </div>
 
           <aside class="chamada" data-surge="escala">
-            <span class="rotulo chamada__rotulo">Próximo passo</span>
-            <p class="d3 chamada__titulo">Esse assunto afeta a sua empresa?</p>
+            <span class="rotulo chamada__rotulo">Next step</span>
+            <p class="d3 chamada__titulo">Thinking about your own business?</p>
             <p class="corpo chamada__texto">
-              A AS7 faz o diagnóstico e diz o que dá para melhorar, sem compromisso.
+              Explore what an initial conversation with an accounting partner could look like.
             </p>
             <div class="chamada__acoes">
               <a
                 class="btn btn--claro"
-                href={linkWhatsapp(`Olá! Li a publicação "${post.data.titulo}" e queria falar sobre isso.`)}
+                href={linkWhatsapp(`Hello! I read "${post.data.titulo}" and would like to discuss it.`)}
                 target="_blank"
                 rel="noopener"
               >
-                Falar no WhatsApp
+                Send an email
                 <span class="btn__seta" aria-hidden="true">→</span>
               </a>
               <a class="btn btn--contorno" href={`tel:+${empresa.telefone}`}>
@@ -95,7 +95,7 @@ const relacionados = (await getCollection("informativo"))
         <section class="secao secao--papel">
           <div class="container">
             <div class="cabeca" style="margin-bottom: var(--e4)">
-              <span class="rotulo" data-surge>Continue lendo</span>
+              <span class="rotulo" data-surge>Keep reading</span>
             </div>
             <div class="relacionados">
               {relacionados.map((p, i) => (

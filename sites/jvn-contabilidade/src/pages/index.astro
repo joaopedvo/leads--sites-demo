@@ -16,21 +16,21 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
 <Layout
-  title={`${empresa.nomeCompleto} — Contabilidade em ${empresa.cidade}, ${empresa.uf}`}
-  description="JVN Contabilidade em Uberlândia desde 1986. Abertura e encerramento de empresas, escrituração contábil e fiscal, rotinas trabalhistas e Imposto de Renda."
+  title={`${empresa.nomeCompleto} — Accounting in ${empresa.cidade}, ${empresa.uf}`}
+  description="A fictional Charlotte accounting firm offering a website concept for bookkeeping, business and individual support."
 >
   <header class="topo">
     <div class="shell topo-in">
-      <img src={`${base}/img/logo-jvn-transparente.png`} alt={empresa.nomeCompleto} width="100" height="100" />
-      <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-principal">
+      <img src={`${base}/img/demo-logo.svg`} alt={empresa.nomeCompleto} width="240" height="80" />
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu-principal">
         <span></span><span></span><span></span>
       </button>
-      <nav id="menu-principal" aria-label="Navegação principal">
-        <a href="#inicio">Início</a>
-        <a href="#servicos">Serviços</a>
-        <a href="#sobre">Quem somos</a>
-        <a href="#depoimentos">Depoimentos</a>
-        <a class="nav-cta" href="#contato">Contato</a>
+      <nav id="menu-principal" aria-label="Main navigation">
+        <a href="#inicio">Home</a>
+        <a href="#servicos">Services</a>
+        <a href="#sobre">About us</a>
+        <a href="#depoimentos">Testimonials</a>
+        <a class="nav-cta" href="#contato">Contact</a>
       </nav>
     </div>
   </header>
@@ -44,11 +44,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
             <h1 class="titulo">{hero.titulo.map((linha) => <span>{linha}</span>)}</h1>
           </div>
           <div data-revelar>
-            <p class="hero-selo"><strong>Desde 1986</strong><span>contabilidade em<br />Uberlândia, MG</span></p>
+            <p class="hero-selo"><strong>Since 1998</strong><span>accounting in<br />Charlotte, NC</span></p>
             <p class="apoio">{hero.apoio}</p>
             <div class="hero-acoes">
-              <a class="btn" href={linkWhatsapp("abrir minha empresa")} target="_blank" rel="noopener noreferrer">
-                {hero.cta}<i aria-hidden="true"><Icone nome="zap" size={17} /></i>
+              <a class="btn" href={linkWhatsapp("setting up my business")} target="_blank" rel="noopener noreferrer">
+                {hero.cta}<i aria-hidden="true"><Icone nome="documento" size={17} /></i>
               </a>
               <a class="btn btn--vazado" href="#servicos">
                 {hero.ctaSecundario}<i class="btn-mais" aria-hidden="true">+</i>
@@ -79,9 +79,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     <section class="secao secao-papel" id="servicos" aria-labelledby="servicos-titulo">
       <div class="shell">
         <div class="secao-cabeca" data-revelar>
-          <p class="eyebrow">Serviços</p>
+          <p class="eyebrow">Services</p>
           <h2 class="titulo" id="servicos-titulo">
-            <span>Seis frentes,</span><span>um escritório só.</span>
+            <span>Six services,</span><span>one familiar team.</span>
           </h2>
         </div>
 
@@ -137,22 +137,22 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     <section class="secao" id="depoimentos" aria-labelledby="depoimentos-titulo">
       <div class="shell">
         <div class="secao-cabeca">
-          <p class="eyebrow">Depoimentos de exemplo</p>
-          <h2 class="titulo" id="depoimentos-titulo"><span>Atendimento que</span><span>faz a diferença.</span></h2>
-          <p class="apoio">Relatos fictícios para demonstrar esta seção. Não representam clientes ou avaliações reais da JVN.</p>
+          <p class="eyebrow">Sample testimonials</p>
+          <h2 class="titulo" id="depoimentos-titulo"><span>Personal attention</span><span>makes a difference.</span></h2>
+          <p class="apoio">Fictional testimonials shown to demonstrate this layout. These are not real customer reviews.</p>
         </div>
         <div class="depoimentos">
           <figure class="depoimento">
-            <blockquote>“Na abertura da minha empresa, eu tinha muitas dúvidas. Ter alguém explicando cada etapa com clareza tornou o processo muito mais tranquilo.”</blockquote>
-            <figcaption><b>Mariana · personagem fictícia</b><span>Exemplo — abertura de empresa</span></figcaption>
+            <blockquote>“Starting my business came with plenty of questions. Having each step explained clearly made the whole process feel more manageable.”</blockquote>
+            <figcaption><b>Emily · fictional customer</b><span>Sample — business setup</span></figcaption>
           </figure>
           <figure class="depoimento">
-            <blockquote>“Com os documentos organizados e as orientações sobre a rotina fiscal, ficou mais fácil acompanhar as obrigações do meu negócio.”</blockquote>
-            <figcaption><b>Ricardo · personagem fictício</b><span>Exemplo — rotina contábil e fiscal</span></figcaption>
+            <blockquote>“With my records organized and a clearer monthly routine, it became much easier to understand what was happening in my business.”</blockquote>
+            <figcaption><b>Michael · fictional customer</b><span>Sample — monthly bookkeeping</span></figcaption>
           </figure>
           <figure class="depoimento">
-            <blockquote>“Consegui entender quais documentos precisava reunir para o Imposto de Renda e esclarecer minhas dúvidas durante o atendimento.”</blockquote>
-            <figcaption><b>Fernanda · personagem fictícia</b><span>Exemplo — Imposto de Renda</span></figcaption>
+            <blockquote>“I finally understood which documents to gather and had a chance to ask the questions that had been on my mind.”</blockquote>
+            <figcaption><b>Sarah · fictional customer</b><span>Sample — document preparation</span></figcaption>
           </figure>
         </div>
       </div>
@@ -166,29 +166,29 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
           </h2>
           <p class="apoio">{contato.apoio}</p>
           <div class="hero-acoes">
-            <a class="btn" href={linkWhatsapp("os serviços da JVN")} target="_blank" rel="noopener noreferrer">
-              Chamar no WhatsApp<i aria-hidden="true"><Icone nome="zap" size={17} /></i>
+            <a class="btn" href={linkWhatsapp("Westbrook services")} target="_blank" rel="noopener noreferrer">
+              Send an email<i aria-hidden="true"><Icone nome="documento" size={17} /></i>
             </a>
           </div>
         </div>
 
         <dl class="contato-dados" data-revelar>
           <div>
-            <dt>Endereço</dt>
-            <dd>{empresa.endereco}<br />{empresa.cidade} — {empresa.uf}<br />CEP {empresa.cep}</dd>
+            <dt>Address</dt>
+            <dd>{empresa.endereco}<br />{empresa.cidade} — {empresa.uf}<br />ZIP {empresa.cep}</dd>
           </div>
           <div>
-            <dt>Telefones</dt>
+            <dt>Phone numbers</dt>
             <dd>
               {empresa.telefones.join(" · ")}<br />
-              {empresa.whatsappExibicao} (WhatsApp)
+              {empresa.whatsappExibicao} (Office)
             </dd>
           </div>
           <div>
             <dt>E-mail</dt>
             <dd><a href={`mailto:${empresa.email}`}>{empresa.email}</a></dd>
           </div>
-          <div><dt>Atendimento</dt><dd>{empresa.horario}</dd></div>
+          <div><dt>Service</dt><dd>{empresa.horario}</dd></div>
         </dl>
       </div>
     </section>
@@ -198,7 +198,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     <div class="shell rodape-in">
       <span>© {new Date().getFullYear()} {empresa.nomeCompleto}</span>
       <span>{empresa.cidade} — {empresa.uf}</span>
-      <span class="direita">Demonstração de redesign · não é o site oficial</span>
+      <span class="direita">Fictional business · website demonstration</span>
     </div>
   </footer>
 </Layout>

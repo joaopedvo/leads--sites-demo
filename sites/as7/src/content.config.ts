@@ -15,7 +15,7 @@ const informativo = defineCollection({
     titulo: z.string(),
     resumo: z.string(),
     data: z.coerce.date(),
-    categoria: z.enum(["Tributos", "Finanças", "Fiscal", "Societário"]),
+    categoria: z.enum(["Business", "Operations", "Records", "Planning"]),
     tempoLeitura: z.number(),
     revisao: z.enum(["pendente", "aprovado"]).default("pendente"),
   }),

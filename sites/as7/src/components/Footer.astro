@@ -11,19 +11,19 @@ const href = (d: string) => (d.startsWith("#") ? `${base}/${d}` : `${base}${d}`)
     <div class="rodape__grade">
       <div class="rodape__marca">
         <img
-          src={`${base}/img/logo-as7.png`}
+          src={`${base}/img/demo-logo.svg`}
           alt={empresa.nomeCompleto}
           width="240"
           height="126"
           loading="lazy"
         />
         <p class="corpo rodape__descricao">
-          Assessoria contábil, fiscal e financeira em {empresa.cidade} desde {empresa.fundacao}.
+          Accounting, reporting and business advisory in {empresa.cidade}.
         </p>
       </div>
 
-      <nav class="rodape__coluna" aria-label="Seções">
-        <span class="rotulo">Navegar</span>
+      <nav class="rodape__coluna" aria-label="Sections">
+        <span class="rotulo">Explore</span>
         <ul>
           {navegacao.map((item) => (
             <li><a class="rodape__link" href={href(item.href)}>{item.rotulo}</a></li>
@@ -32,7 +32,7 @@ const href = (d: string) => (d.startsWith("#") ? `${base}/${d}` : `${base}${d}`)
       </nav>
 
       <div class="rodape__coluna">
-        <span class="rotulo">Contato</span>
+        <span class="rotulo">Contact</span>
         <ul>
           {canais.map((c) => (
             <li>
@@ -50,13 +50,13 @@ const href = (d: string) => (d.startsWith("#") ? `${base}/${d}` : `${base}${d}`)
       </div>
 
       <div class="rodape__coluna">
-        <span class="rotulo">Escritório</span>
+        <span class="rotulo">Office</span>
         <p class="rodape__endereco">
           {empresa.endereco}<br />
-          {empresa.bairro} — CEP {empresa.cep}<br />
+          {empresa.bairro} — ZIP {empresa.cep}<br />
           {empresa.cidade} / {empresa.uf}
         </p>
-        <p class="rodape__endereco">CNPJ {empresa.cnpj}</p>
+        
       </div>
     </div>
 
@@ -64,7 +64,7 @@ const href = (d: string) => (d.startsWith("#") ? `${base}/${d}` : `${base}${d}`)
 
     <div class="rodape__base">
       <p>© {ano} {empresa.nomeCompleto}</p>
-      <p class="rodape__aviso">Página de demonstração, sem vínculo oficial com a empresa.</p>
+      <p class="rodape__aviso">Fictional business. All company and contact details are demonstration content.</p>
     </div>
   </div>
 </footer>
@@ -75,7 +75,7 @@ const href = (d: string) => (d.startsWith("#") ? `${base}/${d}` : `${base}${d}`)
   }
 
   /*
-   * O rodapé vem logo depois de Contato, outra seção escura — cada
+   * O rodapé vem logo depois de Contact, outra seção escura — cada
    * `secao--escura` desenha o próprio brilho radial (::after), e duas
    * seguidas criam uma emenda clara visível na fronteira entre as duas.
    * Aqui a cor fica só o preto chapado + grão, sem o brilho.

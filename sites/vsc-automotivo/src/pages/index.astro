@@ -1,78 +1,78 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const whatsapp = 'https://wa.me/5511953408436?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20VSC%20e%20quero%20agendar%20uma%20avalia%C3%A7%C3%A3o.';
+const whatsapp = 'mailto:hello@summit-demo.example?subject=Appointment%20request';
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 const asset = (path: string) => `${basePath}/${path}`;
 const services = [
-  ['01', 'Mecânica geral', 'Manutenção preventiva e corretiva para qualquer marca e modelo.'],
-  ['02', 'Freios e suspensão', 'Controle, estabilidade e segurança revisados nos mínimos detalhes.'],
-  ['03', 'Alinhamento e balanceamento', 'Mais conforto ao dirigir e desgaste uniforme dos pneus.'],
-  ['04', 'Elétrica e diagnóstico', 'Leitura precisa de falhas e soluções para os sistemas eletrônicos.'],
-  ['05', 'Óleo e filtros', 'Produtos adequados e troca no intervalo correto para proteger o motor.'],
-  ['06', 'Ar-condicionado', 'Manutenção, higienização e eficiência térmica para todos os trajetos.']
+  ['01', 'General repair', 'Routine maintenance and repairs tailored to your vehicle.'],
+  ['02', 'Brakes & suspension', 'Careful checks for stopping power, stability and ride comfort.'],
+  ['03', 'Alignment & balancing', 'Smoother handling and more even tire wear.'],
+  ['04', 'Electrical & diagnostics', 'System testing to help identify electrical and electronic issues.'],
+  ['05', 'Oil & filters', 'The right oil and filters for your engine and maintenance schedule.'],
+  ['06', 'Air conditioning', 'Keep your cabin comfortable with AC checks and maintenance.']
 ];
 ---
 
-<Layout title="VSC Serviços Automotivos | Oficina em Santo André" description="Mecânica, revisão, freios, alinhamento, elétrica e ar-condicionado em Santo André. Agende sua avaliação na VSC.">
-  <div class="demo-bar"><span>Projeto demonstrativo</span><b>Site conceito criado para apresentação · informações sujeitas à validação</b></div>
+<Layout title="Summit Auto Care | Auto Repair in Portland, OR" description="A fictional Portland auto repair shop. Explore maintenance, diagnostics and repair services in this website concept.">
+  <div class="demo-bar"><span>Website concept</span><b>Fictional business · sample information for demonstration only</b></div>
 
   <div class="site-loader" aria-hidden="true">
     <div class="loader-inner">
-      <img class="loader-logo" src={asset('images/logo-vsc.png')} alt="" />
+      <img class="loader-logo" src={asset('images/demo-logo.svg')} alt="" />
       <div class="loader-line"><span></span></div>
-      <small>Serviços automotivos · Santo André</small>
+      <small>Auto repair · Portland, OR</small>
     </div>
   </div>
 
   <header class="header" data-header>
-    <a href="#inicio" class="logo" aria-label="VSC — início"><img src={asset('images/logo-vsc.png')} alt="VSC Serviços Automotivos" /></a>
-    <nav aria-label="Navegação principal">
-      <a href="#sobre">A VSC</a><a href="#servicos">Serviços</a><a href="#processo">Como funciona</a><a href="#contato">Contato</a>
+    <a href="#inicio" class="logo" aria-label="Summit — home"><img src={asset('images/demo-logo.svg')} alt="Summit Auto Care" /></a>
+    <nav aria-label="Main navigation">
+      <a href="#sobre">About Summit</a><a href="#servicos">Services</a><a href="#processo">How it works</a><a href="#contato">Contact</a>
     </nav>
-    <a href={whatsapp} class="nav-cta" target="_blank" rel="noopener">Agendar <span>↗</span></a>
-    <button class="menu" aria-label="Abrir menu" aria-expanded="false"><i></i><i></i></button>
+    <a href={whatsapp} class="nav-cta" target="_blank" rel="noopener">Book now <span>↗</span></a>
+    <button class="menu" aria-label="Open menu" aria-expanded="false"><i></i><i></i></button>
   </header>
 
   <main>
     <section class="hero" id="inicio">
       <div class="hero-copy">
-        <p class="kicker" data-reveal><span></span> Oficina automotiva · Santo André</p>
-        <h1><span data-line>Precisão para</span><span data-line>o seu carro.</span><span data-line><em>Confiança</em> para você.</span></h1>
+        <p class="kicker" data-reveal><span></span> Independent auto repair · Portland, OR</p>
+        <h1><span data-line>Precision for</span><span data-line>your car.</span><span data-line><em>Confidence</em> for you.</span></h1>
         <div class="hero-note" data-reveal>
-          <p>Experiência técnica, diagnóstico claro e o cuidado de quem trabalha há mais de 25 anos para manter você em movimento.</p>
-          <a href={whatsapp} target="_blank" rel="noopener">Agendar avaliação <b>↗</b></a>
+          <p>Clear diagnostics, thoughtful repairs and personal attention to keep your everyday journeys running smoothly.</p>
+          <a href={whatsapp} target="_blank" rel="noopener">Book an inspection <b>↗</b></a>
         </div>
       </div>
       <div class="hero-visual">
-        <img src={asset('images/hero-oficina.webp')} alt="Oficina automotiva moderna com veículo em avaliação" fetchpriority="high" />
-        <div class="hero-badge"><strong>25<sup>+</sup></strong><span>anos de<br/>experiência</span></div>
-        <p>Diagnóstico · Mecânica · Segurança</p>
+        <img src={asset('images/hero-oficina.webp')} alt="A vehicle being inspected in a modern auto repair shop" fetchpriority="high" />
+        <div class="hero-badge"><strong>Care</strong><span>for every<br/>mile</span></div>
+        <p>Diagnostics · Repairs · Confidence</p>
       </div>
-      <a href="#sobre" class="scroll">Role para descobrir <span>↓</span></a>
+      <a href="#sobre" class="scroll">Scroll to explore <span>↓</span></a>
     </section>
 
     <section class="manifesto" id="sobre">
-      <div class="section-label" data-reveal>01 <span>A VSC</span></div>
+      <div class="section-label" data-reveal>01 <span>About Summit</span></div>
       <div class="manifesto-copy">
-        <h2 data-reveal>Seu carro não precisa de promessas. Precisa do <em>cuidado certo.</em></h2>
+        <h2 data-reveal>Your car deserves more than promises. It deserves <em>the right care.</em></h2>
         <div class="manifesto-text" data-reveal>
-          <p>Na VSC, cada serviço começa com uma boa conversa e uma avaliação responsável. Você entende o que precisa ser feito, por que precisa ser feito e aprova antes de começarmos.</p>
-          <p>É assim que construímos relações duradouras em Santo André: com transparência, experiência e trabalho bem-feito.</p>
+          <p>At Summit, every service starts with a conversation and a careful inspection. We explain what needs attention, why it matters and what it costs before you approve the work.</p>
+          <p>That is our approach to lasting relationships in Portland: honest communication, careful work and respect for your time.</p>
         </div>
       </div>
     </section>
 
-    <section class="image-break" aria-label="Diagnóstico automotivo profissional">
-      <img src={asset('images/diagnostico.jpg')} alt="Profissionais realizando diagnóstico eletrônico em um veículo" loading="lazy" data-parallax />
-      <div class="image-caption"><span>Precisão antes da decisão</span><p>Tecnologia ajuda a encontrar o problema. Experiência ajuda a escolher a solução certa.</p></div>
+    <section class="image-break" aria-label="Professional vehicle diagnostics">
+      <img src={asset('images/diagnostico.jpg')} alt="Technicians running electronic diagnostics on a vehicle" loading="lazy" data-parallax />
+      <div class="image-caption"><span>Understand the problem first</span><p>The right tools help us find the issue. Careful judgment helps us plan the repair.</p></div>
     </section>
 
     <section class="services" id="servicos">
       <div class="services-head">
-        <div class="section-label" data-reveal>02 <span>Serviços</span></div>
-        <h2 data-reveal>Da revisão de rotina ao diagnóstico mais preciso.</h2>
-        <p data-reveal>Uma oficina completa para cuidar do desempenho, do conforto e, principalmente, da sua segurança.</p>
+        <div class="section-label" data-reveal>02 <span>Services</span></div>
+        <h2 data-reveal>From everyday maintenance to a deeper diagnosis.</h2>
+        <p data-reveal>A full-service shop focused on the performance, comfort and confidence you expect from your car.</p>
       </div>
       <div class="services-layout">
         <div class="service-list">
@@ -83,45 +83,45 @@ const services = [
           ))}
         </div>
         <aside class="service-photo" data-reveal>
-          <img src={asset('images/servico-freios.webp')} alt="Manutenção profissional do sistema de freios" loading="lazy" />
-          <div><span>Segurança em cada detalhe</span><strong>Seu carro pronto para responder quando você mais precisa.</strong></div>
+          <img src={asset('images/servico-freios.webp')} alt="Professional brake system maintenance" loading="lazy" />
+          <div><span>Care in every detail</span><strong>Ready for the moments when your car matters most.</strong></div>
         </aside>
       </div>
     </section>
 
     <section class="promise">
-      <p class="kicker" data-reveal><span></span> O jeito VSC de cuidar</p>
-      <h2 data-reveal>Sem surpresa.<br/>Sem complicação.<br/><em>Só clareza.</em></h2>
+      <p class="kicker" data-reveal><span></span> The Summit approach</p>
+      <h2 data-reveal>No guesswork.<br/>No runaround.<br/><em>Just clarity.</em></h2>
       <div class="promise-items">
-        <div data-reveal><b>01</b><h3>Avaliação responsável</h3><p>Investigamos os sinais antes de recomendar qualquer intervenção.</p></div>
-        <div data-reveal><b>02</b><h3>Orientação transparente</h3><p>Você recebe uma explicação objetiva e decide como deseja seguir.</p></div>
-        <div data-reveal><b>03</b><h3>Execução cuidadosa</h3><p>Serviço realizado com atenção, conferência e compromisso técnico.</p></div>
+        <div data-reveal><b>01</b><h3>Careful inspection</h3><p>We investigate the symptoms before recommending a repair.</p></div>
+        <div data-reveal><b>02</b><h3>Straight answers</h3><p>You get a clear explanation and choose how to move forward.</p></div>
+        <div data-reveal><b>03</b><h3>Thoughtful workmanship</h3><p>We work carefully and check the details before handing back your keys.</p></div>
       </div>
     </section>
 
     <section class="process" id="processo">
-      <div class="process-title"><div class="section-label" data-reveal>03 <span>Como funciona</span></div><h2 data-reveal>Da mensagem à estrada em quatro passos.</h2></div>
+      <div class="process-title"><div class="section-label" data-reveal>03 <span>How it works</span></div><h2 data-reveal>From first hello to back on the road.</h2></div>
       <ol>
-        <li data-reveal><span>01</span><strong>Chame no WhatsApp</strong><p>Conte o que está acontecendo com seu veículo.</p></li>
-        <li data-reveal><span>02</span><strong>Agende a avaliação</strong><p>Escolha o melhor momento para trazer o carro.</p></li>
-        <li data-reveal><span>03</span><strong>Aprove o serviço</strong><p>Entenda a recomendação antes de autorizar.</p></li>
-        <li data-reveal><span>04</span><strong>Siga tranquilo</strong><p>Retire seu carro revisado e pronto para rodar.</p></li>
+        <li data-reveal><span>01</span><strong>Get in touch</strong><p>Tell us what you have noticed about your vehicle.</p></li>
+        <li data-reveal><span>02</span><strong>Schedule an inspection</strong><p>Find a convenient time to bring your car in.</p></li>
+        <li data-reveal><span>03</span><strong>Approve the work</strong><p>Review the recommendation and estimate before we start.</p></li>
+        <li data-reveal><span>04</span><strong>Drive with confidence</strong><p>Pick up your car with a clear explanation of the completed work.</p></li>
       </ol>
     </section>
 
     <section class="contact" id="contato">
       <div class="contact-copy">
-        <p class="kicker" data-reveal><span></span> Agende sua avaliação</p>
-        <h2 data-reveal>Mais tranquilidade começa com uma <em>boa avaliação.</em></h2>
-        <p class="contact-intro" data-reveal>Conte o que está acontecendo com seu carro. A equipe da VSC orienta você e encontra o melhor horário para a avaliação.</p>
-        <a class="contact-action" href={whatsapp} target="_blank" rel="noopener" data-reveal><span>Conversar pelo WhatsApp</span><b>↗</b></a>
+        <p class="kicker" data-reveal><span></span> Book your inspection</p>
+        <h2 data-reveal>Peace of mind starts with <em>a closer look.</em></h2>
+        <p class="contact-intro" data-reveal>Tell us what is happening with your car. The Summit team will help you plan the next step and find an appointment.</p>
+        <a class="contact-action" href={whatsapp} target="_blank" rel="noopener" data-reveal><span>Request an appointment</span><b>↗</b></a>
       </div>
       <div class="contact-visual" data-reveal>
-        <img src={asset('images/veiculo-vsc.png')} alt="Veículo em manutenção dentro de uma oficina" loading="lazy" />
+        <img src={asset('images/veiculo-vsc.png')} alt="A vehicle receiving maintenance in an auto shop" loading="lazy" />
         <div class="contact-card">
-          <div><small>WhatsApp</small><strong>(11) 95340-8436</strong></div>
-          <div><small>Funcionamento</small><strong>Seg–Sex · 08h às 18h</strong></div>
-          <div><small>Endereço</small><strong>Rua Oratório, 483 · Santo André</strong></div>
+          <div><small>Contact</small><strong>(503) 555-0131</strong></div>
+          <div><small>Hours</small><strong>Mon–Fri · 8:00 AM–6:00 PM</strong></div>
+          <div><small>Address</small><strong>480 Example Drive · Portland, OR</strong></div>
         </div>
       </div>
     </section>
@@ -129,12 +129,12 @@ const services = [
 
   <footer>
     <div class="footer-main">
-      <img src={asset('images/logo-vsc.png')} alt="VSC Serviços Automotivos" />
-      <p>Rua Oratório, 483 — Bangu<br/>Santo André, SP · 09280-550</p>
-      <p><a href="tel:+551143162840">(11) 4316-2840</a><br/><a href="mailto:contato@vscauto.com.br">contato@vscauto.com.br</a></p>
-      <p><a href="https://www.instagram.com/vsc.automotivo/" target="_blank" rel="noopener">Instagram ↗</a><br/><a href="https://www.facebook.com/vscautobr/" target="_blank" rel="noopener">Facebook ↗</a></p>
+      <img src={asset('images/demo-logo.svg')} alt="Summit Auto Care" />
+      <p>480 Example Drive<br/>Portland, OR 97205</p>
+      <p><a href="tel:+15035550132">(503) 555-0132</a><br/><a href="mailto:hello@summit-demo.example">hello@summit-demo.example</a></p>
+      <p>Independent auto care<br/>Portland, Oregon</p>
     </div>
-    <div class="footer-meta"><span>© 2026 VSC Serviços Automotivos</span><span>CNPJ 13.364.877/0001-03</span></div>
+    <div class="footer-meta"><span>© 2026 Summit Auto Care</span><span>Fictional business · website demonstration</span></div>
   </footer>
 
   <script>
